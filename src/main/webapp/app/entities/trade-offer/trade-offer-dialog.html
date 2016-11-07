@@ -1,0 +1,83 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myTradeOfferLabel">Create or edit a Trade Offer</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.tradeOffer.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.tradeOffer.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_payment">Payment</label>
+            <input type="number" class="form-control" name="payment" id="field_payment"
+                    ng-model="vm.tradeOffer.payment"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_timestamp">Timestamp</label>
+                <div class="input-group">
+                    <input id="field_timestamp" type="text" class="form-control" name="timestamp" datetime-picker="{{dateformat}}" ng-model="vm.tradeOffer.timestamp" is-open="vm.datePickerOpenStatus.timestamp"
+                    required  />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('timestamp')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+            <div ng-show="editForm.timestamp.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.timestamp.$error.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.timestamp.$error.ZonedDateTimelocal">
+                    This field should be a date and time.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_status">Status</label>
+            <select class="form-control" name="status" ng-model="vm.tradeOffer.status" id="field_status" required>
+                <option value="PENDING">PENDING</option>
+                <option value="REJECTED">REJECTED</option>
+                <option value="ACCEPTED">ACCEPTED</option>
+                <option value="CANCELLED">CANCELLED</option>
+            </select>
+            <div ng-show="editForm.status.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.status.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="field_offerGames">Offer Games</label>
+            <select class="form-control" id="field_offerGames" multiple name="offerGames" ng-model="vm.tradeOffer.offerGames" ng-options="game as game.id for game in vm.games track by game.id"></select>
+        </div>
+        <div class="form-group">
+            <label for="field_createProfile">Create Profile</label>
+            <select class="form-control" id="field_createProfile" name="createProfile" ng-model="vm.tradeOffer.createProfile" ng-options="gamerProfile as gamerProfile.id for gamerProfile in vm.gamerprofiles track by gamerProfile.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_marketOffer">Market Offer</label>
+            <select class="form-control" id="field_marketOffer" name="marketOffer" ng-model="vm.tradeOffer.marketOffer" ng-options="marketOffer as marketOffer.id for marketOffer in vm.marketoffers track by marketOffer.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,86 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myAdressLabel">Create or edit a Adress</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.adress.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.adress.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_streetName">Street Name</label>
+            <input type="text" class="form-control" name="streetName" id="field_streetName"
+                    ng-model="vm.adress.streetName"
+                    required />
+            <div ng-show="editForm.streetName.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.streetName.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_houseNo">House No</label>
+            <input type="text" class="form-control" name="houseNo" id="field_houseNo"
+                    ng-model="vm.adress.houseNo"
+                    required />
+            <div ng-show="editForm.houseNo.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.houseNo.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_city">City</label>
+            <input type="text" class="form-control" name="city" id="field_city"
+                    ng-model="vm.adress.city"
+                    required />
+            <div ng-show="editForm.city.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.city.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_zipCode">Zip Code</label>
+            <input type="text" class="form-control" name="zipCode" id="field_zipCode"
+                    ng-model="vm.adress.zipCode"
+                    required ng-minlength="6" ng-maxlength="6" ng-pattern="/[0-9]{2}\-[0-9]{3}/" />
+            <div ng-show="editForm.zipCode.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.zipCode.$error.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.zipCode.$error.minlength" translate-value-min="6">
+                    This field is required to be at least 6 characters.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.zipCode.$error.maxlength">
+                    This field cannot be longer than 6 characters.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.zipCode.$error.pattern" translate-value-pattern="[0-9]{2}\-[0-9]{3}">
+                    This field should follow pattern "[0-9]{2}\-[0-9]{3}".
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

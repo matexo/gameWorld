@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <include file="classpath:config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161107213623_added_entity_GameType.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161107213624_added_entity_Platform.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161107213625_added_entity_Game.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161107213626_added_entity_GamerProfile.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161107213627_added_entity_MarketOffer.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161107213628_added_entity_TradeOffer.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161107213629_added_entity_Comment.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161107213630_added_entity_Adress.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161107213631_added_entity_Conversation.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161107213632_added_entity_Message.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="classpath:config/liquibase/changelog/20161107213625_added_entity_constraints_Game.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161107213626_added_entity_constraints_GamerProfile.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161107213627_added_entity_constraints_MarketOffer.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161107213628_added_entity_constraints_TradeOffer.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161107213629_added_entity_constraints_Comment.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161107213632_added_entity_constraints_Message.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+</databaseChangeLog>

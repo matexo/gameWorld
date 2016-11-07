@@ -1,0 +1,39 @@
+
+<div>
+    <h2><span>Comment</span> {{vm.comment.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Comment</span></dt>
+        <dd>
+            <span>{{vm.comment.comment}}</span>
+        </dd>
+        <dt><span>Rating</span></dt>
+        <dd>
+            <span>{{vm.comment.rating}}</span>
+        </dd>
+        <dt><span>Timestamp</span></dt>
+        <dd>
+            <span>{{vm.comment.timestamp | date:'medium'}}</span>
+        </dd>
+        <dt><span>Author Profile</span></dt>
+        <dd>
+            <a ui-sref="gamer-profile-detail({id:vm.comment.authorProfile.id})">{{vm.comment.authorProfile.id}}</a>
+        </dd>
+        <dt><span>Market Offer</span></dt>
+        <dd>
+            <a ui-sref="market-offer-detail({id:vm.comment.marketOffer.id})">{{vm.comment.marketOffer.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="comment-detail.edit({id:vm.comment.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Edit</span>
+    </button>
+</div>

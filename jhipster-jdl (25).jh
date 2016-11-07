@@ -1,0 +1,105 @@
+enum OfferType {
+	SELL , BUY , EXCHANGE
+}
+enum Rating{
+	POSITIVE , NEUTRAL , NEGATIVE 
+}
+
+enum OfferStatus {
+	NEW , ENDED , CANCELLED
+}
+
+enum TradeOfferStatus {
+	PENDING , REJECTED , ACCEPTED , CANCELLED
+}
+
+entity GameType {
+	gameType String required
+}
+
+entity Platform {
+	platform String required
+}
+
+entity Game {
+    title String required
+    producer String required
+    yearOfProduction Integer required
+    description String 
+    coverImage ImageBlob
+    timestamp ZonedDateTime required
+    blockade Boolean required
+}
+
+entity GamerProfile {
+	name String
+}
+
+entity MarketOffer {
+	createDate ZonedDateTime required
+    endDate ZonedDateTime
+    offerType OfferType required
+    price Double required min(0) max(1000)
+    offerStatus OfferStatus required
+}
+
+entity TradeOffer {
+	payment Double
+    timestamp ZonedDateTime required
+    status TradeOfferStatus required
+}
+
+entity Comment {
+	comment String required
+    rating Rating required
+    timestamp ZonedDateTime
+}
+
+entity Adress {
+    streetName String required
+    houseNo String required
+    city String required
+	zipCode String required minlength(6) maxlength(6) pattern("[0-9]{2}\-[0-9]{3}")
+} 
+
+entity Conversation {
+	
+}
+
+entity Message {
+	text String required
+    sendTime ZonedDateTime
+    isNew Boolean
+}
+
+relationship ManyToMany {
+	GamerProfile{searchedGames} to Game,
+    TradeOffer{offerGames} to Game,
+    GamerProfile{conversations} to Conversation{profiles}
+}
+
+relationship OneToMany {
+	GamerProfile{marketOffers} to MarketOffer{createProfile},
+    GamerProfile{tradeOffers} to TradeOffer{createProfile},
+    MarketOffer{offers} to TradeOffer{marketOffer},
+    MarketOffer{comments} to Comment{marketOffer},
+    Conversation{messages} to Message{conversation}
+}
+
+relationship OneToOne {
+    Game{gameType} to GameType,
+    Game{platform} to Platform,
+	MarketOffer{game} to Game,
+    GamerProfile{adress} to Adress{gamerProfile},
+    MarketOffer{endOfferProfile} to GamerProfile
+}
+
+relationship ManyToOne {
+	Message{authorProfile} to GamerProfile,
+    Comment{authorProfile} to GamerProfile{comments}
+}
+
+
+paginate all with infinite-scroll
+service all with serviceImpl
+

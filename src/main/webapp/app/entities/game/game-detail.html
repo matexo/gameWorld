@@ -1,0 +1,60 @@
+
+<div>
+    <h2><span>Game</span> {{vm.game.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Title</span></dt>
+        <dd>
+            <span>{{vm.game.title}}</span>
+        </dd>
+        <dt><span>Producer</span></dt>
+        <dd>
+            <span>{{vm.game.producer}}</span>
+        </dd>
+        <dt><span>Year Of Production</span></dt>
+        <dd>
+            <span>{{vm.game.yearOfProduction}}</span>
+        </dd>
+        <dt><span>Description</span></dt>
+        <dd>
+            <span>{{vm.game.description}}</span>
+        </dd>
+        <dt><span>Cover Image</span></dt>
+        <dd>
+            <div ng-if="vm.game.coverImage">
+                <a ng-click="vm.openFile(vm.game.coverImageContentType, vm.game.coverImage)">
+                    <img data-ng-src="{{'data:' + vm.game.coverImageContentType + ';base64,' + vm.game.coverImage}}" style="max-width: 100%;"/>
+                </a>
+                {{vm.game.coverImageContentType}}, {{vm.byteSize(vm.game.coverImage)}}
+            </div>
+        </dd>
+        <dt><span>Timestamp</span></dt>
+        <dd>
+            <span>{{vm.game.timestamp | date:'medium'}}</span>
+        </dd>
+        <dt><span>Blockade</span></dt>
+        <dd>
+            <span>{{vm.game.blockade}}</span>
+        </dd>
+        <dt><span>Game Type</span></dt>
+        <dd>
+            <a ui-sref="game-type-detail({id:vm.game.gameType.id})">{{vm.game.gameType.id}}</a>
+        </dd>
+        <dt><span>Platform</span></dt>
+        <dd>
+            <a ui-sref="platform-detail({id:vm.game.platform.id})">{{vm.game.platform.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="game-detail.edit({id:vm.game.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Edit</span>
+    </button>
+</div>
