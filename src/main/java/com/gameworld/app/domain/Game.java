@@ -56,11 +56,11 @@ public class Game implements Serializable {
     private Boolean blockade;
 
     @OneToOne
-    @JoinColumn(unique = true)
+    @JoinColumn
     private GameType gameType;
 
     @OneToOne
-    @JoinColumn(unique = true)
+    @JoinColumn
     private Platform platform;
 
     public Long getId() {

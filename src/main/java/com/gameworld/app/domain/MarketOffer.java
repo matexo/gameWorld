@@ -56,11 +56,11 @@ public class MarketOffer implements Serializable {
     private OfferStatus offerStatus;
 
     @OneToOne
-    @JoinColumn(unique = true)
+    @JoinColumn
     private Game game;
 
     @OneToOne
-    @JoinColumn(unique = true)
+    @JoinColumn
     private GamerProfile endOfferProfile;
 
     @OneToMany(mappedBy = "marketOffer")

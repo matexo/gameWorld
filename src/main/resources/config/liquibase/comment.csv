@@ -1,0 +1,4 @@
+id;comment;rating;timestamp;author_profile_id;market_offer_id
+1;test;POSITIVE;now();1;1
+2;test2;NEGATIVE;now();2;2
+3;test2;NEUTRAL;now();2;1

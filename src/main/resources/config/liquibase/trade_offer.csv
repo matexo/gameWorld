@@ -1,0 +1,7 @@
+id;payment;timestamp;status;create_profile_id;market_offer_id
+1;30;now();PENDING;1;2
+2;30;now();REJECTED;1;2
+3;30.55;now();ACCEPTED;2;3
+4;-30;now();PENDING;1;4
+5;0;now();PENDING;3;1
+

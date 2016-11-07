@@ -62,6 +62,11 @@ public class GamerProfile implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Comment> comments = new HashSet<>();
 
+    @OneToOne(mappedBy = "gamerProfile")
+    @JoinColumn(unique = true)
+    @JsonIgnore
+    private User user;
+
     public Long getId() {
         return id;
     }
@@ -215,6 +220,14 @@ public class GamerProfile implements Serializable {
         return this;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
     }
@@ -233,6 +246,7 @@ public class GamerProfile implements Serializable {
         }
         return Objects.equals(id, gamerProfile.id);
     }
+
 
     @Override
     public int hashCode() {

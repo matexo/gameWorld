@@ -92,6 +92,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<PersistentToken> persistentTokens = new HashSet<>();
 
+    @OneToOne
+    @JoinColumn(unique = true)
+    private GamerProfile gamerProfile;
+
     public Long getId() {
         return id;
     }
@@ -213,6 +217,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
         }
 
         return true;
+    }
+
+    public GamerProfile getGamerProfile() {
+        return gamerProfile;
+    }
+
+    public void setGamerProfile(GamerProfile gamerProfile) {
+        this.gamerProfile = gamerProfile;
     }
 
     @Override

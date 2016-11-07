@@ -1,0 +1,7 @@
+id;create_date;offer_type;price;offer_status;game_id;create_profile_id;end_date
+1;now();SELL;50;NEW;1;1;null
+2;now();SELL;50;NEW;2;1;null
+3;now();SELL;50;NEW;2;1;null
+4;now();BUY;50;NEW;2;2;null
+5;now();EXCHANGE;0;NEW;3;3;null
+6;now();EXCHANGE;0;NEW;3;4;null

@@ -1,0 +1,7 @@
+id;title;producer;year_of_production;description;timestamp;game_type_id;platform_id;blockade
+1;TestGame1;TestProducer1;2012;TestDescription1;now();1;1;false
+2;TestGame2;TestProducer2;2013;TestDescription2;now();1;2;false
+3;TestGame3;TestProducer3;2013;TestDescription3;now();1;2;false
+4;TestGame4;TestProducer4;2014;TestDescription4;now();3;1;false
+5;TestGame5;TestProducer5;2015;TestDescription5;now();3;1;false
+6;TestGame6;TestProducer6;2016;TestDescription6;now();3;4;false
