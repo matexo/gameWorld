@@ -116,13 +116,13 @@
 
         <div class="form-group">
             <label for="field_gameType">Game Type</label>
-            <select class="form-control" id="field_gameType" name="gameType" ng-model="vm.game.gameType" ng-options="gameType as gameType.id for gameType in vm.gametypes | orderBy:'id' track by gameType.id">
+            <select class="form-control" id="field_gameType" name="gameType" ng-model="vm.game.gameType" ng-options="gameType as gameType.gameType for gameType in vm.gametypes | orderBy:'gameType' track by gameType.gameType">
                 <option value=""></option>
             </select>
         </div>
         <div class="form-group">
             <label for="field_platform">Platform</label>
-            <select class="form-control" id="field_platform" name="platform" ng-model="vm.game.platform" ng-options="platform as platform.id for platform in vm.platforms | orderBy:'id' track by platform.id">
+            <select class="form-control" id="field_platform" name="platform" ng-model="vm.game.platform" ng-options="platform as platform.platform for platform in vm.platforms | orderBy:'platform' track by platform.platform">
                 <option value=""></option>
             </select>
         </div>

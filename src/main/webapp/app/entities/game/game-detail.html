@@ -1,60 +1,53 @@
+<jhi-alert-error></jhi-alert-error>
+<div ng-class="vm.game.platform.platform.indexOf('Playstation') != -1 ?
+                 'panel panel-primary' : vm.game.platform.platform.indexOf('Xbox') != -1 ? 'panel panel-success' : 'panel panel-warning'">
 
-<div>
-    <h2><span>Game</span> {{vm.game.id}}</h2>
-    <hr>
-    <jhi-alert-error></jhi-alert-error>
-    <dl class="dl-horizontal jh-entity-details">
-        <dt><span>Title</span></dt>
-        <dd>
-            <span>{{vm.game.title}}</span>
-        </dd>
-        <dt><span>Producer</span></dt>
-        <dd>
-            <span>{{vm.game.producer}}</span>
-        </dd>
-        <dt><span>Year Of Production</span></dt>
-        <dd>
-            <span>{{vm.game.yearOfProduction}}</span>
-        </dd>
-        <dt><span>Description</span></dt>
-        <dd>
-            <span>{{vm.game.description}}</span>
-        </dd>
-        <dt><span>Cover Image</span></dt>
-        <dd>
-            <div ng-if="vm.game.coverImage">
-                <a ng-click="vm.openFile(vm.game.coverImageContentType, vm.game.coverImage)">
-                    <img data-ng-src="{{'data:' + vm.game.coverImageContentType + ';base64,' + vm.game.coverImage}}" style="max-width: 100%;"/>
-                </a>
-                {{vm.game.coverImageContentType}}, {{vm.byteSize(vm.game.coverImage)}}
-            </div>
-        </dd>
-        <dt><span>Timestamp</span></dt>
-        <dd>
-            <span>{{vm.game.timestamp | date:'medium'}}</span>
-        </dd>
-        <dt><span>Blockade</span></dt>
-        <dd>
-            <span>{{vm.game.blockade}}</span>
-        </dd>
-        <dt><span>Game Type</span></dt>
-        <dd>
-            <a ui-sref="game-type-detail({id:vm.game.gameType.id})">{{vm.game.gameType.id}}</a>
-        </dd>
-        <dt><span>Platform</span></dt>
-        <dd>
-            <a ui-sref="platform-detail({id:vm.game.platform.id})">{{vm.game.platform.id}}</a>
-        </dd>
-    </dl>
+<div class="panel-heading">
+        <p class="text-center">{{vm.game.title}} ({{vm.game.yearOfProduction}})</p>
+    </div>
+    <div class="panel-body">
+        <div class="col-lg-4">
+            <a ng-if="vm.game.coverImage"
+               ng-click="vm.openFile(vm.game.coverImageContentType, vm.game.coverImage)" class="thumbnail">
+                <img
+                    data-ng-src="{{'data:' + vm.game.coverImageContentType + ';base64,' + vm.game.coverImage}}"/>
+            </a>
+            <a ng-if="!vm.game.coverImage" class="thumbnail">
+                <img src="/content/images/hipster.png">
+            </a>
+        </div>
+        <div class="col-lg-8">
+            <p>Title : {{vm.game.title}}</p>
+            <p>Producer: {{vm.game.producer}}</p>
+            <p>Description: {{vm.game.description}}</p>
+            <p>Game type: {{vm.game.gameType.gameType}}</p>
+            <p>Platform : {{vm.game.platform.platform}}</p>
 
-    <button type="submit"
-            ui-sref="{{ vm.previousState }}"
-            class="btn btn-info">
-        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
-    </button>
+            <button type="submit"
+                    ui-sref="{{ vm.previousState }}"
+                    class="btn btn-info">
+                <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+            </button>
 
-    <button type="button" ui-sref="game-detail.edit({id:vm.game.id})" class="btn btn-primary">
-        <span class="glyphicon glyphicon-pencil"></span>
-        <span class="hidden-xs hidden-sm"> Edit</span>
-    </button>
+            <button type="button" ui-sref="game-detail.edit({id:vm.game.id})" class="btn btn-primary"
+                    has-authority="ROLE_ADMIN">
+                <span class="glyphicon glyphicon-pencil"></span>
+                <span class="hidden-xs hidden-sm"> Edit</span>
+            </button>
+
+            <button type="submit"
+                    ui-sref="game.delete({id:vm.game.id})"
+                    class="btn btn-danger"
+                    has-authority="ROLE_ADMIN">
+                <span class="glyphicon glyphicon-remove-circle"></span>
+                <span class="hidden-xs hidden-sm">Delete it</span>
+            </button>
+            <button type="submit"
+                    ui-sref="game-detail({id:vm.game.id})"
+                    class="btn btn-warning">
+                <span class="glyphicon glyphicon-plus"></span>
+                <span class="hidden-xs hidden-sm">Want it!</span>
+            </button>
+        </div>
+    </div>
 </div>
