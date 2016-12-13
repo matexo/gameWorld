@@ -1,5 +1,7 @@
 package com.gameworld.app.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -36,9 +38,11 @@ public class Message implements Serializable {
     private Boolean isNew;
 
     @ManyToOne
+    @JsonBackReference
     private GamerProfile authorProfile;
 
     @ManyToOne
+    @JsonBackReference
     private Conversation conversation;
 
     public Long getId() {

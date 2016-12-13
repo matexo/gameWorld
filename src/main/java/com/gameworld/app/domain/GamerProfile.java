@@ -1,6 +1,8 @@
 package com.gameworld.app.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -55,6 +57,7 @@ public class GamerProfile implements Serializable {
     @JoinTable(name = "gamer_profile_conversations",
                joinColumns = @JoinColumn(name="gamer_profiles_id", referencedColumnName="ID"),
                inverseJoinColumns = @JoinColumn(name="conversations_id", referencedColumnName="ID"))
+    @JsonIgnore
     private Set<Conversation> conversations = new HashSet<>();
 
     @OneToMany(mappedBy = "authorProfile")

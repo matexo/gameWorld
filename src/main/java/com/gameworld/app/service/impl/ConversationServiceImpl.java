@@ -1,5 +1,9 @@
 package com.gameworld.app.service.impl;
 
+import com.gameworld.app.domain.Message;
+import com.gameworld.app.repository.MessageRepository;
+import com.gameworld.app.security.AuthoritiesConstants;
+import com.gameworld.app.security.SecurityUtils;
 import com.gameworld.app.service.ConversationService;
 import com.gameworld.app.domain.Conversation;
 import com.gameworld.app.repository.ConversationRepository;
@@ -12,8 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -26,12 +32,15 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class ConversationServiceImpl implements ConversationService{
 
     private final Logger log = LoggerFactory.getLogger(ConversationServiceImpl.class);
-    
+
     @Inject
     private ConversationRepository conversationRepository;
 
     @Inject
     private ConversationSearchRepository conversationSearchRepository;
+
+    @Inject
+    private MessageRepository messageRepository;
 
     /**
      * Save a conversation.
@@ -48,14 +57,18 @@ public class ConversationServiceImpl implements ConversationService{
 
     /**
      *  Get all the conversations.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Page<Conversation> findAll(Pageable pageable) {
         log.debug("Request to get all Conversations");
-        Page<Conversation> result = conversationRepository.findAll(pageable);
+        Page<Conversation> result = null;
+        if(SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN))
+            result = conversationRepository.findAll(pageable);
+        else result = conversationRepository.findByUserName(SecurityUtils.getCurrentUserLogin() , pageable);
+        result.getContent().forEach(conversation -> conversation.setMessages(messageRepository.getLastMessage(conversation.getId())));
         return result;
     }
 
@@ -65,7 +78,7 @@ public class ConversationServiceImpl implements ConversationService{
      *  @param id the id of the entity
      *  @return the entity
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Conversation findOne(Long id) {
         log.debug("Request to get Conversation : {}", id);
         Conversation conversation = conversationRepository.findOne(id);

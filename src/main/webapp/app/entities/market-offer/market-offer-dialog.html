@@ -33,7 +33,7 @@
                 </p>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" has-authority="ROLE_ADMIN">
             <label class="control-label" for="field_endDate">End Date</label>
                 <div class="input-group">
                     <input id="field_endDate" type="text" class="form-control" name="endDate" datetime-picker="{{dateformat}}" ng-model="vm.marketOffer.endDate" is-open="vm.datePickerOpenStatus.endDate"
@@ -81,7 +81,7 @@
                 </p>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" has-authority="ROLE_ADMIN">
             <label class="control-label" for="field_offerStatus">Offer Status</label>
             <select class="form-control" name="offerStatus" ng-model="vm.marketOffer.offerStatus" id="field_offerStatus" required>
                 <option value="NEW">NEW</option>
@@ -102,15 +102,15 @@
                 <option value=""></option>
             </select>
         </div>
-        <div class="form-group">
+        <div class="form-group" has-authority="ROLE_ADMIN">
             <label for="field_endOfferProfile">End Offer Profile</label>
-            <select class="form-control" id="field_endOfferProfile" name="endOfferProfile" ng-model="vm.marketOffer.endOfferProfile" ng-options="gamerProfile as gamerProfile.id for gamerProfile in vm.endofferprofiles | orderBy:'id' track by gamerProfile.id">
+            <select class="form-control" id="field_endOfferProfile" name="endOfferProfile" ng-model="vm.marketOffer.endOfferProfile" ng-options="gamerProfile as gamerProfile.name for gamerProfile in vm.endofferprofiles | orderBy:'name' track by gamerProfile.name">
                 <option value=""></option>
             </select>
         </div>
-        <div class="form-group">
+        <div class="form-group" has-authority="ROLE_ADMIN">
             <label for="field_createProfile">Create Profile</label>
-            <select class="form-control" id="field_createProfile" name="createProfile" ng-model="vm.marketOffer.createProfile" ng-options="gamerProfile as gamerProfile.id for gamerProfile in vm.gamerprofiles track by gamerProfile.id">
+            <select class="form-control" id="field_createProfile" name="createProfile" ng-model="vm.marketOffer.createProfile" ng-options="gamerProfile as gamerProfile.name for gamerProfile in vm.gamerprofiles track by gamerProfile.name">
                 <option value=""></option>
             </select>
         </div>

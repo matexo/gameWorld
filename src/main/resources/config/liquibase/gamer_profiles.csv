@@ -1,5 +1,5 @@
 id;name;adress_id
-1;test1;1
-2;test2;2
+1;admin;1
+2;user;2
 3;test3;3
 4;test4;4

@@ -35,59 +35,91 @@
         <table class="jh-table table table-striped">
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
-                    <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="createDate"><span>Create Date</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="endDate"><span>End Date</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="offerType"><span>Offer Type</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="price"><span>Price</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="offerStatus"><span>Offer Status</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="game.id"><span>Game</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="endOfferProfile.id"><span>End Offer Profile</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="createProfile.id"><span>Create Profile</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="game.title"><span>Game</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
-            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
-                <tr ng-repeat="marketOffer in vm.marketOffers track by marketOffer.id">
-                    <td><a ui-sref="market-offer-detail({id:marketOffer.id})">{{marketOffer.id}}</a></td>
-                    <td>{{marketOffer.createDate | date:'medium'}}</td>
-                    <td>{{marketOffer.endDate | date:'medium'}}</td>
-                    <td>{{marketOffer.offerType}}</td>
-                    <td>{{marketOffer.price}}</td>
-                    <td>{{marketOffer.offerStatus}}</td>
-                    <td>
-                        <a ui-sref="game-detail({id:marketOffer.game.id})">{{marketOffer.game.id}}</a>
-                    </td>
-                    <td>
-                        <a ui-sref="gamer-profile-detail({id:marketOffer.endOfferProfile.id})">{{marketOffer.endOfferProfile.id}}</a>
-                    </td>
-                    <td>
-                        <a ui-sref="gamer-profile-detail({id:marketOffer.createProfile.id})">{{marketOffer.createProfile.id}}</a>
-                    </td>
-                    <td class="text-right">
+        </table>
+        <div infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+            <div ng-repeat="marketOffer in vm.marketOffers track by marketOffer.id">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <p class="text-center">{{marketOffer.game.title}} ({{marketOffer.game.yearOfProduction}})</p>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                        <div class="col-lg-4">
+                            <a ng-if="game.coverImage"
+                               ng-click="vm.openFile(game.coverImageContentType, game.coverImage)" class="thumbnail" style="height: 160px;width: 120px;>
+                                <img
+                                    data-ng-src="{{'data:' + game.coverImageContentType + ';base64,' + game.coverImage}}"/>
+                            </a>
+                            <a ng-if="!game.coverImage" class="thumbnail" style="height: 160px;width: 120px;">
+                                <img src="/content/images/hipster.png">
+                            </a>
+                        </div>
+                        <div class="col-lg-4">
+                            <p ng-class="marketOffer.game.platform.platform.indexOf('Playstation') != -1 ?
+                 'label label-primary' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">Title : {{marketOffer.game.title}}</p></br>
+                            <p ng-class="marketOffer.game.platform.platform.indexOf('Playstation') != -1 ?
+                 'label label-primary' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">Producer: {{marketOffer.game.producer}}</p></br>
+                            <p ng-class="marketOffer.game.platform.platform.indexOf('Playstation') != -1 ?
+                 'label label-primary' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">Game type: {{marketOffer.game.gameType.gameType}}</p></br>
+                            <p ng-class="marketOffer.game.platform.platform.indexOf('Playstation') != -1 ?
+                 'label label-primary' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">
+                                Platform : {{marketOffer.game.platform.platform}}
+                            </p>
+                        </div>
+                        <div class="col-lg-4">
+                            <p>{{marketOffer.createDate}}</p>
+                            <p>{{marketOffer.offerType}}</p>
+                            <p>{{marketOffer.price}}</p>
+                            <p>{{marketOffer.createProfile.name}}</p>
+                            <p>{{marketOffer.createProfile.adress.city}}</p>
+                        </div>
+                            </div>
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
                                     ui-sref="market-offer-detail({id:marketOffer.id})"
                                     class="btn btn-info btn-sm">
                                 <span class="glyphicon glyphicon-eye-open"></span>
-                                <span class="hidden-xs hidden-sm"></span>
+                                <span class="hidden-xs hidden-sm">Show this offer</span>
                             </button>
                             <button type="submit"
-                                    ui-sref="market-offer.edit({id:marketOffer.id})"
-                                    class="btn btn-primary btn-sm">
+                                    ui-sref="game.edit({id:game.id})"
+                                    class="btn btn-primary btn-sm"
+                                    has-authority="ROLE_ADMIN">
                                 <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="hidden-xs hidden-sm"></span>
+                                <span class="hidden-xs hidden-sm">Edit</span>
                             </button>
                             <button type="submit"
-                                    ui-sref="market-offer.delete({id:marketOffer.id})"
-                                    class="btn btn-danger btn-sm">
+                                    ui-sref="game.delete({id:game.id})"
+                                    class="btn btn-danger btn-sm"
+                                    has-authority="ROLE_ADMIN">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
-                                <span class="hidden-xs hidden-sm"></span>
+                                <span class="hidden-xs hidden-sm">Delete</span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="game.delete({id:game.id})"
+                                    class="btn btn-danger btn-sm"
+                                    ng-if="marketOffer.offerType == 'SELL' || marketOffer.offerType == 'BUY'">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm">Make transaction</span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="game.delete({id:game.id})"
+                                    class="btn btn-danger btn-sm"
+                                    ng-if="marketOffer.offerType == 'EXCHANGE'">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm">Make a trade offer</span>
                             </button>
                         </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    </div>
+                </div>
+            </div>
     </div>
+</div>
 </div>
