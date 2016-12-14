@@ -1,0 +1,39 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "authorProfile",
+            "otherEntityName": "gamerProfile",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "conversation",
+            "otherEntityName": "conversation",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "text",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "sendTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "isNew",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20161107213632",
+    "entityTableName": "message",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "serviceImpl"
+}

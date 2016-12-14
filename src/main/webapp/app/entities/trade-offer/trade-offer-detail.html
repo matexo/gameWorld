@@ -1,0 +1,45 @@
+
+<div>
+    <h2><span>Trade Offer</span> {{vm.tradeOffer.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Payment</span></dt>
+        <dd>
+            <span>{{vm.tradeOffer.payment}}</span>
+        </dd>
+        <dt><span>Timestamp</span></dt>
+        <dd>
+            <span>{{vm.tradeOffer.timestamp | date:'medium'}}</span>
+        </dd>
+        <dt><span>Status</span></dt>
+        <dd>
+            <span>{{vm.tradeOffer.status}}</span>
+        </dd>
+        <dt><span>Offer Games</span></dt>
+        <dd>
+            <span ng-repeat="offerGames in vm.tradeOffer.offerGames">
+                <a ui-sref="game-detail({id: offerGames.id})">{{offerGames.id}}</a>{{$last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span>Create Profile</span></dt>
+        <dd>
+            <a ui-sref="gamer-profile-detail({id:vm.tradeOffer.createProfile.id})">{{vm.tradeOffer.createProfile.id}}</a>
+        </dd>
+        <dt><span>Market Offer</span></dt>
+        <dd>
+            <a ui-sref="market-offer-detail({id:vm.tradeOffer.marketOffer.id})">{{vm.tradeOffer.marketOffer.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="trade-offer-detail.edit({id:vm.tradeOffer.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Edit</span>
+    </button>
+</div>

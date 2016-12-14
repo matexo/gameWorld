@@ -1,0 +1,58 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "adress",
+            "otherEntityName": "adress",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "gamerProfile"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "marketOffers",
+            "otherEntityName": "marketOffer",
+            "otherEntityRelationshipName": "createProfile"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "tradeOffers",
+            "otherEntityName": "tradeOffer",
+            "otherEntityRelationshipName": "createProfile"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
+            "relationshipName": "searchedGames",
+            "otherEntityName": "game",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "profiles",
+            "relationshipName": "conversations",
+            "otherEntityName": "conversation",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "comments",
+            "otherEntityName": "comment",
+            "otherEntityRelationshipName": "authorProfile"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20161107213626",
+    "entityTableName": "gamer_profile",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "serviceImpl"
+}

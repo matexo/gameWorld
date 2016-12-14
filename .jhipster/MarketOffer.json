@@ -1,0 +1,84 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "game",
+            "otherEntityName": "game",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "marketOffer"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "endOfferProfile",
+            "otherEntityName": "gamerProfile",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "marketOffer"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "offers",
+            "otherEntityName": "tradeOffer",
+            "otherEntityRelationshipName": "marketOffer"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "comments",
+            "otherEntityName": "comment",
+            "otherEntityRelationshipName": "marketOffer"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "createProfile",
+            "otherEntityName": "gamerProfile",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "createDate",
+            "fieldType": "ZonedDateTime",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "endDate",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "offerType",
+            "fieldType": "OfferType",
+            "fieldValues": "SELL,BUY,EXCHANGE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "price",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required",
+                "min",
+                "max"
+            ],
+            "fieldValidateRulesMin": 0,
+            "fieldValidateRulesMax": 1000
+        },
+        {
+            "fieldName": "offerStatus",
+            "fieldType": "OfferStatus",
+            "fieldValues": "NEW,ENDED,CANCELLED",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20161107213627",
+    "entityTableName": "market_offer",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "serviceImpl"
+}

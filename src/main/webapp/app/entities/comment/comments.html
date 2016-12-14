@@ -1,0 +1,85 @@
+<div>
+    <h2>Comments</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="comment.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span class="hidden-xs" >
+                        Create new Comment
+                    </span>
+                </button>
+            </div>
+            <div class="col-xs-8 no-padding-right">
+                <form name="searchForm" class="form-inline">
+                    <div class="input-group pull-right" >
+                        <input type="text" class="form-control" ng-model="vm.searchQuery" id="searchQuery" placeholder="Query">
+                        <span  class="input-group-btn width-min" >
+                            <button class="btn btn-info" ng-click="vm.search(vm.searchQuery)">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                        <span class="input-group-btn width-min" ng-if="vm.currentSearch">
+                            <button class="btn btn-info" ng-click="vm.clear()">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
+                    <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="comment"><span>Comment</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="rating"><span>Rating</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="timestamp"><span>Timestamp</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="authorProfile.id"><span>Author Profile</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="marketOffer.id"><span>Market Offer</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+                <tr ng-repeat="comment in vm.comments track by comment.id">
+                    <td><a ui-sref="comment-detail({id:comment.id})">{{comment.id}}</a></td>
+                    <td>{{comment.comment}}</td>
+                    <td>{{comment.rating}}</td>
+                    <td>{{comment.timestamp | date:'medium'}}</td>
+                    <td>
+                        <a ui-sref="gamer-profile-detail({id:comment.authorProfile.id})">{{comment.authorProfile.id}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="market-offer-detail({id:comment.marketOffer.id})">{{comment.marketOffer.id}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="comment-detail({id:comment.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="comment.edit({id:comment.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="comment.delete({id:comment.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

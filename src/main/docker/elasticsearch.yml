@@ -1,0 +1,10 @@
+version: '2'
+services:
+    gameworld-elasticsearch:
+        container_name: gameworld-elasticsearch
+        image: elasticsearch:2.4.0
+        # volumes:
+        #     - ~/volumes/jhipster/gameWorld/elasticsearch/:/usr/share/elasticsearch/data/
+        ports:
+            - 9200:9200
+            - 9300:9300

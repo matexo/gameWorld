@@ -1,0 +1,138 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myGameLabel">Create or edit a Game</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.game.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.game.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_title">Title</label>
+            <input type="text" class="form-control" name="title" id="field_title"
+                    ng-model="vm.game.title"
+                    required />
+            <div ng-show="editForm.title.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.title.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_producer">Producer</label>
+            <input type="text" class="form-control" name="producer" id="field_producer"
+                    ng-model="vm.game.producer"
+                    required />
+            <div ng-show="editForm.producer.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.producer.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_yearOfProduction">Year Of Production</label>
+            <input type="number" class="form-control" name="yearOfProduction" id="field_yearOfProduction"
+                    ng-model="vm.game.yearOfProduction"
+                    required />
+            <div ng-show="editForm.yearOfProduction.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.yearOfProduction.$error.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.yearOfProduction.$error.number">
+                    This field should be a number.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                    ng-model="vm.game.description"
+                     />
+        </div>
+        <div class="form-group" ngf-drop ngf-change="vm.setCoverImage($file, vm.game)" ngf-pattern="'image/*'">
+            <label class="control-label" for="field_coverImage">Cover Image</label>
+            <div>
+                <img data-ng-src="{{'data:' + vm.game.coverImageContentType + ';base64,' + vm.game.coverImage}}" style="max-height: 100px;" ng-if="vm.game.coverImage"/>
+                <div ng-if="vm.game.coverImage" class="help-block clearfix">
+                    <span class="pull-left">{{vm.game.coverImageContentType}}, {{vm.byteSize(vm.game.coverImage)}}</span>
+                    <button type="button" ng-click="vm.game.coverImage=null;vm.game.coverImageContentType=null;"
+                            class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <button type="button" ngf-select class="btn btn-default btn-block"
+                        ngf-change="vm.setCoverImage($file, vm.game)" accept="image/*">
+                    Add image
+                </button>
+            </div>
+            <input type="hidden" class="form-control" name="coverImage" id="field_coverImage"
+                    ng-model="vm.game.coverImage"
+                     />
+            <input type="hidden" class="form-control" name="coverImageContentType" id="field_coverImageContentType"
+                    ng-model="vm.game.coverImageContentType" />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_timestamp">Timestamp</label>
+                <div class="input-group">
+                    <input id="field_timestamp" type="text" class="form-control" name="timestamp" datetime-picker="{{dateformat}}" ng-model="vm.game.timestamp" is-open="vm.datePickerOpenStatus.timestamp"
+                    required  />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('timestamp')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+            <div ng-show="editForm.timestamp.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.timestamp.$error.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.timestamp.$error.ZonedDateTimelocal">
+                    This field should be a date and time.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_blockade">Blockade</label>
+            <input type="checkbox" class="form-control" name="blockade" id="field_blockade"
+                    ng-model="vm.game.blockade"
+                     />
+            <div ng-show="editForm.blockade.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.blockade.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="field_gameType">Game Type</label>
+            <select class="form-control" id="field_gameType" name="gameType" ng-model="vm.game.gameType" ng-options="gameType as gameType.id for gameType in vm.gametypes | orderBy:'id' track by gameType.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_platform">Platform</label>
+            <select class="form-control" id="field_platform" name="platform" ng-model="vm.game.platform" ng-options="platform as platform.id for platform in vm.platforms | orderBy:'id' track by platform.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity TradeOffer.
+    -->
+    <changeSet id="20161107213628-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="trade_offers_id"
+                                 baseTableName="trade_offer_offer_games"
+                                 constraintName="fk_trade_offer_offer_games_trade_offers_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="trade_offer"/>
+        <addForeignKeyConstraint baseColumnNames="offer_games_id"
+                                 baseTableName="trade_offer_offer_games"
+                                 constraintName="fk_trade_offer_offer_games_offer_games_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="game"/>
+        
+        <addForeignKeyConstraint baseColumnNames="create_profile_id"
+                                 baseTableName="trade_offer"
+                                 constraintName="fk_trade_offer_create_profile_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="gamer_profile"/>
+
+        <addForeignKeyConstraint baseColumnNames="market_offer_id"
+                                 baseTableName="trade_offer"
+                                 constraintName="fk_trade_offer_market_offer_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="market_offer"/>
+
+    </changeSet>
+</databaseChangeLog>

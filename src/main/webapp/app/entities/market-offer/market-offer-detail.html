@@ -1,0 +1,51 @@
+
+<div>
+    <h2><span>Market Offer</span> {{vm.marketOffer.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Create Date</span></dt>
+        <dd>
+            <span>{{vm.marketOffer.createDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>End Date</span></dt>
+        <dd>
+            <span>{{vm.marketOffer.endDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>Offer Type</span></dt>
+        <dd>
+            <span>{{vm.marketOffer.offerType}}</span>
+        </dd>
+        <dt><span>Price</span></dt>
+        <dd>
+            <span>{{vm.marketOffer.price}}</span>
+        </dd>
+        <dt><span>Offer Status</span></dt>
+        <dd>
+            <span>{{vm.marketOffer.offerStatus}}</span>
+        </dd>
+        <dt><span>Game</span></dt>
+        <dd>
+            <a ui-sref="game-detail({id:vm.marketOffer.game.id})">{{vm.marketOffer.game.id}}</a>
+        </dd>
+        <dt><span>End Offer Profile</span></dt>
+        <dd>
+            <a ui-sref="gamer-profile-detail({id:vm.marketOffer.endOfferProfile.id})">{{vm.marketOffer.endOfferProfile.id}}</a>
+        </dd>
+        <dt><span>Create Profile</span></dt>
+        <dd>
+            <a ui-sref="gamer-profile-detail({id:vm.marketOffer.createProfile.id})">{{vm.marketOffer.createProfile.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="market-offer-detail.edit({id:vm.marketOffer.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Edit</span>
+    </button>
+</div>

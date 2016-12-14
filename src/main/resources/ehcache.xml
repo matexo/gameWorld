@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+         name="CM1"
+         updateCheck="false"
+         maxBytesLocalHeap="16M">
+
+    <!--
+      This is a default configuration, it is re-configured by the CacheConfiguration Spring Bean, using the
+      properties from the resources/config/*.yml files.
+    -->
+
+    <diskStore path="java.io.tmpdir"/>
+
+    <defaultCache
+            eternal="false"
+            overflowToDisk="false"
+            />
+
+    <cache name="com.gameworld.app.domain.User"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.Authority"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.User.authorities"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.PersistentToken"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.User.persistentTokens"
+           timeToLiveSeconds="3600">
+    </cache>
+    
+    <cache name="com.gameworld.app.domain.GameType"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.Platform"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.Game"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.GamerProfile"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.GamerProfile.marketOffers"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.GamerProfile.tradeOffers"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.GamerProfile.searchedGames"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.GamerProfile.conversations"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.GamerProfile.comments"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.MarketOffer"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.MarketOffer.offers"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.MarketOffer.comments"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.TradeOffer"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.TradeOffer.offerGames"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.Comment"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.Adress"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.Conversation"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.Conversation.messages"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.Conversation.profiles"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.gameworld.app.domain.Message"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <!-- jhipster-needle-ehcache-add-entry -->
+</ehcache>

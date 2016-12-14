@@ -1,0 +1,24 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "messages",
+            "otherEntityName": "message",
+            "otherEntityRelationshipName": "conversation"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "profiles",
+            "otherEntityName": "gamerProfile",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "conversations"
+        }
+    ],
+    "fields": [],
+    "changelogDate": "20161107213631",
+    "entityTableName": "conversation",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "serviceImpl"
+}

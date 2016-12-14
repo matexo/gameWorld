@@ -1,0 +1,39 @@
+
+<div>
+    <h2><span>Gamer Profile</span> {{vm.gamerProfile.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Name</span></dt>
+        <dd>
+            <span>{{vm.gamerProfile.name}}</span>
+        </dd>
+        <dt><span>Adress</span></dt>
+        <dd>
+            <a ui-sref="adress-detail({id:vm.gamerProfile.adress.id})">{{vm.gamerProfile.adress.id}}</a>
+        </dd>
+        <dt><span>Searched Games</span></dt>
+        <dd>
+            <span ng-repeat="searchedGames in vm.gamerProfile.searchedGames">
+                <a ui-sref="game-detail({id: searchedGames.id})">{{searchedGames.id}}</a>{{$last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span>Conversations</span></dt>
+        <dd>
+            <span ng-repeat="conversations in vm.gamerProfile.conversations">
+                <a ui-sref="conversation-detail({id: conversations.id})">{{conversations.id}}</a>{{$last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="gamer-profile-detail.edit({id:vm.gamerProfile.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Edit</span>
+    </button>
+</div>

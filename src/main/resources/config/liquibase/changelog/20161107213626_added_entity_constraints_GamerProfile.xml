@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity GamerProfile.
+    -->
+    <changeSet id="20161107213626-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="adress_id"
+                                 baseTableName="gamer_profile"
+                                 constraintName="fk_gamer_profile_adress_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="adress"/>
+
+        <addForeignKeyConstraint baseColumnNames="gamer_profiles_id"
+                                 baseTableName="gamer_profile_searched_games"
+                                 constraintName="fk_gamer_profile_searched_games_gamer_profiles_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="gamer_profile"/>
+        <addForeignKeyConstraint baseColumnNames="searched_games_id"
+                                 baseTableName="gamer_profile_searched_games"
+                                 constraintName="fk_gamer_profile_searched_games_searched_games_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="game"/>
+        
+        <addForeignKeyConstraint baseColumnNames="gamer_profiles_id"
+                                 baseTableName="gamer_profile_conversations"
+                                 constraintName="fk_gamer_profile_conversations_gamer_profiles_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="gamer_profile"/>
+        <addForeignKeyConstraint baseColumnNames="conversations_id"
+                                 baseTableName="gamer_profile_conversations"
+                                 constraintName="fk_gamer_profile_conversations_conversations_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="conversation"/>
+        
+    </changeSet>
+</databaseChangeLog>
