@@ -13,26 +13,26 @@
             <input type="text" class="form-control" id="id" name="id"
                     ng-model="vm.marketOffer.id" readonly />
         </div>
-        <div class="form-group">
-            <label class="control-label" for="field_createDate">Create Date</label>
-                <div class="input-group">
-                    <input id="field_createDate" type="text" class="form-control" name="createDate" datetime-picker="{{dateformat}}" ng-model="vm.marketOffer.createDate" is-open="vm.datePickerOpenStatus.createDate"
-                    required  />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('createDate')"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                </div>
-            <div ng-show="editForm.createDate.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.createDate.$error.required">
-                    This field is required.
-                </p>
-                <p class="help-block"
-                    ng-show="editForm.createDate.$error.ZonedDateTimelocal">
-                    This field should be a date and time.
-                </p>
-            </div>
-        </div>
+        <!--<div class="form-group">-->
+            <!--<label class="control-label" for="field_createDate">Create Date</label>-->
+                <!--<div class="input-group">-->
+                    <!--<input id="field_createDate" type="text" class="form-control" name="createDate" datetime-picker="{{dateformat}}" ng-model="vm.marketOffer.createDate" is-open="vm.datePickerOpenStatus.createDate"-->
+                    <!--required  />-->
+                    <!--<span class="input-group-btn">-->
+                        <!--<button type="button" class="btn btn-default" ng-click="vm.openCalendar('createDate')"><i class="glyphicon glyphicon-calendar"></i></button>-->
+                    <!--</span>-->
+                <!--</div>-->
+            <!--<div ng-show="editForm.createDate.$invalid">-->
+                <!--<p class="help-block"-->
+                    <!--ng-show="editForm.createDate.$error.required">-->
+                    <!--This field is required.-->
+                <!--</p>-->
+                <!--<p class="help-block"-->
+                    <!--ng-show="editForm.createDate.$error.ZonedDateTimelocal">-->
+                    <!--This field should be a date and time.-->
+                <!--</p>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="form-group" has-authority="ROLE_ADMIN">
             <label class="control-label" for="field_endDate">End Date</label>
                 <div class="input-group">
@@ -83,22 +83,51 @@
         </div>
         <div class="form-group" has-authority="ROLE_ADMIN">
             <label class="control-label" for="field_offerStatus">Offer Status</label>
-            <select class="form-control" name="offerStatus" ng-model="vm.marketOffer.offerStatus" id="field_offerStatus" required>
+            <select class="form-control" name="offerStatus" ng-model="vm.marketOffer.offerStatus" id="field_offerStatus">
                 <option value="NEW">NEW</option>
                 <option value="ENDED">ENDED</option>
                 <option value="CANCELLED">CANCELLED</option>
             </select>
-            <div ng-show="editForm.offerStatus.$invalid">
+            <!--<div ng-show="editForm.offerStatus.$invalid">-->
+                <!--<p class="help-block"-->
+                    <!--ng-show="editForm.offerStatus.$error.required">-->
+                    <!--This field is required.-->
+                <!--</p>-->
+            <!--</div>-->
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                    ng-model="vm.marketOffer.description"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_gameState">Game State</label>
+            <select class="form-control" name="gameState" ng-model="vm.marketOffer.gameState" id="field_gameState">
+                <option value="NEW">NEW</option>
+                <option value="USED">USED</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_shippingCost">Shipping Cost</label>
+            <input type="number" class="form-control" name="shippingCost" id="field_shippingCost"
+                    ng-model="vm.marketOffer.shippingCost"
+                    min="0" />
+            <div ng-show="editForm.shippingCost.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.offerStatus.$error.required">
-                    This field is required.
+                    ng-show="editForm.shippingCost.$error.min" translate-value-min="0">
+                    This field should be more than 0.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.shippingCost.$error.number">
+                    This field should be a number.
                 </p>
             </div>
         </div>
 
         <div class="form-group">
             <label for="field_game">Game</label>
-            <select class="form-control" id="field_game" name="game" ng-model="vm.marketOffer.game" ng-options="game as game.id for game in vm.games | orderBy:'id' track by game.id">
+            <select class="form-control" id="field_game" name="game" ng-model="vm.marketOffer.game" ng-options="game as game.title for game in vm.games | orderBy:'name' track by game.title">
                 <option value=""></option>
             </select>
         </div>

@@ -67,7 +67,7 @@ class MarketOfferGatlingTest extends Simulation {
             .exec(http("Create new marketOffer")
             .post("/api/market-offers")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "createDate":"2020-01-01T00:00:00.000Z", "endDate":"2020-01-01T00:00:00.000Z", "offerType":null, "price":null, "offerStatus":null}""")).asJSON
+            .body(StringBody("""{"id":null, "createDate":"2020-01-01T00:00:00.000Z", "endDate":"2020-01-01T00:00:00.000Z", "offerType":null, "price":null, "offerStatus":null, "description":"SAMPLE_TEXT", "gameState":null, "shippingCost":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_marketOffer_url"))).exitHereIfFailed
             .pause(10)

@@ -33,7 +33,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class MarketOfferResource {
 
     private final Logger log = LoggerFactory.getLogger(MarketOfferResource.class);
-        
+
     @Inject
     private MarketOfferService marketOfferService;
 
@@ -132,7 +132,7 @@ public class MarketOfferResource {
      * SEARCH  /_search/market-offers?query=:query : search for the marketOffer corresponding
      * to the query.
      *
-     * @param query the query of the marketOffer search 
+     * @param query the query of the marketOffer search
      * @param pageable the pagination information
      * @return the result of the search
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
@@ -147,5 +147,11 @@ public class MarketOfferResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
+    @GetMapping("/market-offers/my")
+    public ResponseEntity<List<MarketOffer>> getMarketOffersForProfile(Pageable pageable) throws URISyntaxException {
+        Page<MarketOffer> page = marketOfferService.findAllMarketOfferCreatedByUser(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/market-offers/my");
+        return new ResponseEntity<>(page.getContent() , headers , HttpStatus.OK);
+    }
 
 }

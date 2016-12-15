@@ -1,7 +1,6 @@
 package com.gameworld.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -18,6 +17,8 @@ import com.gameworld.app.domain.enumeration.OfferType;
 
 import com.gameworld.app.domain.enumeration.OfferStatus;
 
+import com.gameworld.app.domain.enumeration.GameState;
+
 /**
  * A MarketOffer.
  */
@@ -33,7 +34,6 @@ public class MarketOffer implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
     @Column(name = "create_date", nullable = false)
     private ZonedDateTime createDate;
 
@@ -51,10 +51,20 @@ public class MarketOffer implements Serializable {
     @Column(name = "price", nullable = false)
     private Double price;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "offer_status", nullable = false)
     private OfferStatus offerStatus;
+
+    @Column(name = "description")
+    private String description;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "game_state")
+    private GameState gameState;
+
+    @DecimalMin(value = "0")
+    @Column(name = "shipping_cost")
+    private Double shippingCost;
 
     @OneToOne
     @JoinColumn
@@ -150,6 +160,45 @@ public class MarketOffer implements Serializable {
         this.offerStatus = offerStatus;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public MarketOffer description(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public MarketOffer gameState(GameState gameState) {
+        this.gameState = gameState;
+        return this;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    public Double getShippingCost() {
+        return shippingCost;
+    }
+
+    public MarketOffer shippingCost(Double shippingCost) {
+        this.shippingCost = shippingCost;
+        return this;
+    }
+
+    public void setShippingCost(Double shippingCost) {
+        this.shippingCost = shippingCost;
+    }
+
     public Game getGame() {
         return game;
     }
@@ -239,6 +288,12 @@ public class MarketOffer implements Serializable {
         this.createProfile = gamerProfile;
     }
 
+    public void initNewMarketOffer(GamerProfile authorProfile ,ZonedDateTime createDate) {
+        if(this.createProfile == null) this.createProfile = authorProfile;
+        if(this.offerStatus == null) this.offerStatus = OfferStatus.NEW;
+        if(this.createDate == null) this.createDate = createDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -268,6 +323,9 @@ public class MarketOffer implements Serializable {
             ", offerType='" + offerType + "'" +
             ", price='" + price + "'" +
             ", offerStatus='" + offerStatus + "'" +
+            ", description='" + description + "'" +
+            ", gameState='" + gameState + "'" +
+            ", shippingCost='" + shippingCost + "'" +
             '}';
     }
 }

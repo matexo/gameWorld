@@ -24,6 +24,18 @@
         <dd>
             <span>{{vm.marketOffer.offerStatus}}</span>
         </dd>
+        <dt><span>Description</span></dt>
+        <dd>
+            <span>{{vm.marketOffer.description}}</span>
+        </dd>
+        <dt><span>Game State</span></dt>
+        <dd>
+            <span>{{vm.marketOffer.gameState}}</span>
+        </dd>
+        <dt><span>Shipping Cost</span></dt>
+        <dd>
+            <span>{{vm.marketOffer.shippingCost}}</span>
+        </dd>
         <dt><span>Game</span></dt>
         <dd>
             <a ui-sref="game-detail({id:vm.marketOffer.game.id})">{{vm.marketOffer.game.id}}</a>

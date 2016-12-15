@@ -43,6 +43,12 @@ public class GamerProfileResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAA";
     private static final String UPDATED_NAME = "BBBBB";
 
+    private static final String DEFAULT_SURNAME = "AAAAA";
+    private static final String UPDATED_SURNAME = "BBBBB";
+
+    private static final Integer DEFAULT_PHONE = 1;
+    private static final Integer UPDATED_PHONE = 2;
+
     @Inject
     private GamerProfileRepository gamerProfileRepository;
 
@@ -83,7 +89,9 @@ public class GamerProfileResourceIntTest {
      */
     public static GamerProfile createEntity(EntityManager em) {
         GamerProfile gamerProfile = new GamerProfile()
-                .name(DEFAULT_NAME);
+                .name(DEFAULT_NAME)
+                .surname(DEFAULT_SURNAME)
+                .phone(DEFAULT_PHONE);
         return gamerProfile;
     }
 
@@ -110,6 +118,8 @@ public class GamerProfileResourceIntTest {
         assertThat(gamerProfiles).hasSize(databaseSizeBeforeCreate + 1);
         GamerProfile testGamerProfile = gamerProfiles.get(gamerProfiles.size() - 1);
         assertThat(testGamerProfile.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testGamerProfile.getSurname()).isEqualTo(DEFAULT_SURNAME);
+        assertThat(testGamerProfile.getPhone()).isEqualTo(DEFAULT_PHONE);
 
         // Validate the GamerProfile in ElasticSearch
         GamerProfile gamerProfileEs = gamerProfileSearchRepository.findOne(testGamerProfile.getId());
@@ -127,7 +137,9 @@ public class GamerProfileResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(gamerProfile.getId().intValue())))
-                .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
+                .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+                .andExpect(jsonPath("$.[*].surname").value(hasItem(DEFAULT_SURNAME.toString())))
+                .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE)));
     }
 
     @Test
@@ -141,7 +153,9 @@ public class GamerProfileResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(gamerProfile.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.surname").value(DEFAULT_SURNAME.toString()))
+            .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE));
     }
 
     @Test
@@ -163,7 +177,9 @@ public class GamerProfileResourceIntTest {
         // Update the gamerProfile
         GamerProfile updatedGamerProfile = gamerProfileRepository.findOne(gamerProfile.getId());
         updatedGamerProfile
-                .name(UPDATED_NAME);
+                .name(UPDATED_NAME)
+                .surname(UPDATED_SURNAME)
+                .phone(UPDATED_PHONE);
 
         restGamerProfileMockMvc.perform(put("/api/gamer-profiles")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -175,6 +191,8 @@ public class GamerProfileResourceIntTest {
         assertThat(gamerProfiles).hasSize(databaseSizeBeforeUpdate);
         GamerProfile testGamerProfile = gamerProfiles.get(gamerProfiles.size() - 1);
         assertThat(testGamerProfile.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testGamerProfile.getSurname()).isEqualTo(UPDATED_SURNAME);
+        assertThat(testGamerProfile.getPhone()).isEqualTo(UPDATED_PHONE);
 
         // Validate the GamerProfile in ElasticSearch
         GamerProfile gamerProfileEs = gamerProfileSearchRepository.findOne(testGamerProfile.getId());
@@ -214,6 +232,8 @@ public class GamerProfileResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(gamerProfile.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].surname").value(hasItem(DEFAULT_SURNAME.toString())))
+            .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE)));
     }
 }

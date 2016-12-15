@@ -74,6 +74,23 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "gameState",
+            "fieldType": "GameState",
+            "fieldValues": "NEW,USED"
+        },
+        {
+            "fieldName": "shippingCost",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
         }
     ],
     "changelogDate": "20161107213627",

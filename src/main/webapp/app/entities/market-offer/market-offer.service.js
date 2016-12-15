@@ -22,7 +22,19 @@
                     return data;
                 }
             },
-            'update': { method:'PUT' }
+            'update': { method:'PUT' },
+            'getMy': { method:'GET',
+                url: 'api/market-offers/my',
+                isArray: true,
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                        data.createDate = DateUtils.convertDateTimeFromServer(data.createDate);
+                        data.endDate = DateUtils.convertDateTimeFromServer(data.endDate);
+                    }
+                    return data;
+                }
+            }
         });
     }
 })();

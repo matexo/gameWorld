@@ -24,26 +24,38 @@
             <column name="create_date" type="timestamp">
                 <constraints nullable="false" />
             </column>
-            
+
             <column name="end_date" type="timestamp">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="offer_type" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            
+
             <column name="price" type="double">
                 <constraints nullable="false" />
             </column>
-            
+
             <column name="offer_status" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
+
+            <column name="description" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="game_state" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="shipping_cost" type="double">
+                <constraints nullable="true" />
+            </column>
                         <column name="game_id" type="bigint">
-                <constraints unique="true" nullable="true" />
+                <constraints nullable="true" />
             </column>            <column name="end_offer_profile_id" type="bigint">
-                <constraints unique="true" nullable="true" />
+                <constraints nullable="true" />
             </column>
             <column name="create_profile_id" type="bigint">
                 <constraints nullable="true" />
@@ -53,6 +65,6 @@
         </createTable>
         <dropDefaultValue tableName="market_offer" columnName="create_date" columnDataType="datetime"/>
         <dropDefaultValue tableName="market_offer" columnName="end_date" columnDataType="datetime"/>
-        
+
     </changeSet>
 </databaseChangeLog>

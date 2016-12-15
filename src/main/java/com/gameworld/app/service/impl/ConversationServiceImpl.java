@@ -1,6 +1,5 @@
 package com.gameworld.app.service.impl;
 
-import com.gameworld.app.domain.Message;
 import com.gameworld.app.repository.MessageRepository;
 import com.gameworld.app.security.AuthoritiesConstants;
 import com.gameworld.app.security.SecurityUtils;
@@ -16,10 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;

@@ -24,6 +24,14 @@
             <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            
+            <column name="surname" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="phone" type="integer">
+                <constraints nullable="true" />
+            </column>
                         <column name="adress_id" type="bigint">
                 <constraints unique="true" nullable="true" />
             </column>

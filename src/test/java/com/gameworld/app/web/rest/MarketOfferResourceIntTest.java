@@ -37,6 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.gameworld.app.domain.enumeration.OfferType;
 import com.gameworld.app.domain.enumeration.OfferStatus;
+import com.gameworld.app.domain.enumeration.GameState;
 /**
  * Test class for the MarketOfferResource REST controller.
  *
@@ -62,6 +63,15 @@ public class MarketOfferResourceIntTest {
 
     private static final OfferStatus DEFAULT_OFFER_STATUS = OfferStatus.NEW;
     private static final OfferStatus UPDATED_OFFER_STATUS = OfferStatus.ENDED;
+
+    private static final String DEFAULT_DESCRIPTION = "AAAAA";
+    private static final String UPDATED_DESCRIPTION = "BBBBB";
+
+    private static final GameState DEFAULT_GAME_STATE = GameState.NEW;
+    private static final GameState UPDATED_GAME_STATE = GameState.USED;
+
+    private static final Double DEFAULT_SHIPPING_COST = 0D;
+    private static final Double UPDATED_SHIPPING_COST = 1D;
 
     @Inject
     private MarketOfferRepository marketOfferRepository;
@@ -107,7 +117,10 @@ public class MarketOfferResourceIntTest {
                 .endDate(DEFAULT_END_DATE)
                 .offerType(DEFAULT_OFFER_TYPE)
                 .price(DEFAULT_PRICE)
-                .offerStatus(DEFAULT_OFFER_STATUS);
+                .offerStatus(DEFAULT_OFFER_STATUS)
+                .description(DEFAULT_DESCRIPTION)
+                .gameState(DEFAULT_GAME_STATE)
+                .shippingCost(DEFAULT_SHIPPING_COST);
         return marketOffer;
     }
 
@@ -138,6 +151,9 @@ public class MarketOfferResourceIntTest {
         assertThat(testMarketOffer.getOfferType()).isEqualTo(DEFAULT_OFFER_TYPE);
         assertThat(testMarketOffer.getPrice()).isEqualTo(DEFAULT_PRICE);
         assertThat(testMarketOffer.getOfferStatus()).isEqualTo(DEFAULT_OFFER_STATUS);
+        assertThat(testMarketOffer.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testMarketOffer.getGameState()).isEqualTo(DEFAULT_GAME_STATE);
+        assertThat(testMarketOffer.getShippingCost()).isEqualTo(DEFAULT_SHIPPING_COST);
 
         // Validate the MarketOffer in ElasticSearch
         MarketOffer marketOfferEs = marketOfferSearchRepository.findOne(testMarketOffer.getId());
@@ -231,7 +247,10 @@ public class MarketOfferResourceIntTest {
                 .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE_STR)))
                 .andExpect(jsonPath("$.[*].offerType").value(hasItem(DEFAULT_OFFER_TYPE.toString())))
                 .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
-                .andExpect(jsonPath("$.[*].offerStatus").value(hasItem(DEFAULT_OFFER_STATUS.toString())));
+                .andExpect(jsonPath("$.[*].offerStatus").value(hasItem(DEFAULT_OFFER_STATUS.toString())))
+                .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+                .andExpect(jsonPath("$.[*].gameState").value(hasItem(DEFAULT_GAME_STATE.toString())))
+                .andExpect(jsonPath("$.[*].shippingCost").value(hasItem(DEFAULT_SHIPPING_COST.doubleValue())));
     }
 
     @Test
@@ -249,7 +268,10 @@ public class MarketOfferResourceIntTest {
             .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE_STR))
             .andExpect(jsonPath("$.offerType").value(DEFAULT_OFFER_TYPE.toString()))
             .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()))
-            .andExpect(jsonPath("$.offerStatus").value(DEFAULT_OFFER_STATUS.toString()));
+            .andExpect(jsonPath("$.offerStatus").value(DEFAULT_OFFER_STATUS.toString()))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
+            .andExpect(jsonPath("$.gameState").value(DEFAULT_GAME_STATE.toString()))
+            .andExpect(jsonPath("$.shippingCost").value(DEFAULT_SHIPPING_COST.doubleValue()));
     }
 
     @Test
@@ -275,7 +297,10 @@ public class MarketOfferResourceIntTest {
                 .endDate(UPDATED_END_DATE)
                 .offerType(UPDATED_OFFER_TYPE)
                 .price(UPDATED_PRICE)
-                .offerStatus(UPDATED_OFFER_STATUS);
+                .offerStatus(UPDATED_OFFER_STATUS)
+                .description(UPDATED_DESCRIPTION)
+                .gameState(UPDATED_GAME_STATE)
+                .shippingCost(UPDATED_SHIPPING_COST);
 
         restMarketOfferMockMvc.perform(put("/api/market-offers")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -291,6 +316,9 @@ public class MarketOfferResourceIntTest {
         assertThat(testMarketOffer.getOfferType()).isEqualTo(UPDATED_OFFER_TYPE);
         assertThat(testMarketOffer.getPrice()).isEqualTo(UPDATED_PRICE);
         assertThat(testMarketOffer.getOfferStatus()).isEqualTo(UPDATED_OFFER_STATUS);
+        assertThat(testMarketOffer.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testMarketOffer.getGameState()).isEqualTo(UPDATED_GAME_STATE);
+        assertThat(testMarketOffer.getShippingCost()).isEqualTo(UPDATED_SHIPPING_COST);
 
         // Validate the MarketOffer in ElasticSearch
         MarketOffer marketOfferEs = marketOfferSearchRepository.findOne(testMarketOffer.getId());
@@ -334,6 +362,9 @@ public class MarketOfferResourceIntTest {
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE_STR)))
             .andExpect(jsonPath("$.[*].offerType").value(hasItem(DEFAULT_OFFER_TYPE.toString())))
             .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
-            .andExpect(jsonPath("$.[*].offerStatus").value(hasItem(DEFAULT_OFFER_STATUS.toString())));
+            .andExpect(jsonPath("$.[*].offerStatus").value(hasItem(DEFAULT_OFFER_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].gameState").value(hasItem(DEFAULT_GAME_STATE.toString())))
+            .andExpect(jsonPath("$.[*].shippingCost").value(hasItem(DEFAULT_SHIPPING_COST.doubleValue())));
     }
 }

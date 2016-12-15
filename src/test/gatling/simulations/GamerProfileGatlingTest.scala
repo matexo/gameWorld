@@ -67,7 +67,7 @@ class GamerProfileGatlingTest extends Simulation {
             .exec(http("Create new gamerProfile")
             .post("/api/gamer-profiles")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "name":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "name":"SAMPLE_TEXT", "surname":"SAMPLE_TEXT", "phone":"0"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_gamerProfile_url"))).exitHereIfFailed
             .pause(10)

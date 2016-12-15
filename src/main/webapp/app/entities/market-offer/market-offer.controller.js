@@ -9,7 +9,7 @@
 
     function MarketOfferController ($scope, $state, MarketOffer, MarketOfferSearch, ParseLinks, AlertService) {
         var vm = this;
-        
+
         vm.marketOffers = [];
         vm.loadPage = loadPage;
         vm.page = 0;
@@ -26,9 +26,17 @@
         loadAll();
 
         function loadAll () {
+            if(($state.$current.toString() == 'market-offer-my'))
+                vm.my = 1;
             if (vm.currentSearch) {
                 MarketOfferSearch.query({
                     query: vm.currentSearch,
+                    page: vm.page,
+                    size: 20,
+                    sort: sort()
+                }, onSuccess, onError);
+            } else if(vm.my == 1) {
+                MarketOffer.getMy({
                     page: vm.page,
                     size: 20,
                     sort: sort()

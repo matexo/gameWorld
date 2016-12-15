@@ -24,6 +24,24 @@
                 }
             },
             resolve: {
+
+            }
+        })
+        .state('market-offer-my', {
+            parent: 'entity',
+            url: '/market-offer/my',
+            data: {
+                authorities: ['ROLE_USER'],
+                pageTitle: 'MarketOffers'
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'app/entities/market-offer/my-market-offers.html',
+                    controller: 'MarketOfferController',
+                    controllerAs: 'vm'
+                }
+            },
+            resolve: {
             }
         })
         .state('market-offer-detail', {
@@ -100,6 +118,9 @@
                                 offerType: null,
                                 price: null,
                                 offerStatus: null,
+                                description: null,
+                                gameState: null,
+                                shippingCost: null,
                                 id: null
                             };
                         }

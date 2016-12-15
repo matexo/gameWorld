@@ -37,6 +37,8 @@
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
                     <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="name"><span>Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="surname"><span>Surname</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="phone"><span>Phone</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="adress.id"><span>Adress</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
@@ -45,6 +47,8 @@
                 <tr ng-repeat="gamerProfile in vm.gamerProfiles track by gamerProfile.id">
                     <td><a ui-sref="gamer-profile-detail({id:gamerProfile.id})">{{gamerProfile.id}}</a></td>
                     <td>{{gamerProfile.name}}</td>
+                    <td>{{gamerProfile.surname}}</td>
+                    <td>{{gamerProfile.phone}}</td>
                     <td>
                         <a ui-sref="adress-detail({id:gamerProfile.adress.id})">{{gamerProfile.adress.id}}</a>
                     </td>

@@ -1,8 +1,6 @@
 package com.gameworld.app.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -30,6 +28,12 @@ public class GamerProfile implements Serializable {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "surname")
+    private String surname;
+
+    @Column(name = "phone")
+    private Integer phone;
 
     @OneToOne
     @JoinColumn(unique = true)
@@ -89,6 +93,32 @@ public class GamerProfile implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public GamerProfile surname(String surname) {
+        this.surname = surname;
+        return this;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public Integer getPhone() {
+        return phone;
+    }
+
+    public GamerProfile phone(Integer phone) {
+        this.phone = phone;
+        return this;
+    }
+
+    public void setPhone(Integer phone) {
+        this.phone = phone;
     }
 
     public Adress getAdress() {
