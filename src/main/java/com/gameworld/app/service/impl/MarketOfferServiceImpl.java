@@ -15,6 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.yaml.snakeyaml.error.Mark;
+
 import javax.inject.Inject;
 import java.util.Optional;
 
@@ -55,7 +57,7 @@ public class MarketOfferServiceImpl implements MarketOfferService{
     @Transactional(readOnly = true)
     public Page<MarketOffer> findAll(Pageable pageable) {
         log.debug("Request to get all MarketOffers");
-        Page<MarketOffer> result = marketOfferRepository.findAll(pageable);
+        Page<MarketOffer> result = marketOfferRepository.findAllCurrentOffers(pageable);
         return result;
     }
 
@@ -86,5 +88,17 @@ public class MarketOfferServiceImpl implements MarketOfferService{
         if(user.isPresent())
             marketOffers = marketOfferRepository.findAllMarketOfferCreatedByUser(user.get().getGamerProfile().getId() , pageable);
         return marketOffers;
+    }
+
+    @Transactional
+    public void finalizeOffer(Long id) {
+        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
+        if(user.isPresent()) {
+            MarketOffer marketOffer = marketOfferRepository.findOne(id);
+            if(marketOffer != null && marketOffer.isCurrent()) {
+                marketOffer.finalizeOffer(user.get().getGamerProfile());
+                marketOfferRepository.save(marketOffer);
+            }
+        }
     }
 }

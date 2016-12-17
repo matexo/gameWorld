@@ -154,4 +154,11 @@ public class MarketOfferResource {
         return new ResponseEntity<>(page.getContent() , headers , HttpStatus.OK);
     }
 
+    @PutMapping("/market-offers/buy")
+    public ResponseEntity<Void> finalizeOffer(@RequestBody MarketOffer marketOffer) {
+        log.debug("REST request to finalize MarketOffer : {}", marketOffer.getId());
+        marketOfferService.finalizeOffer(marketOffer.getId());
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert("marketOffer", marketOffer.getId().toString())).build();
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.gameworld.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gameworld.app.util.DateUtil;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -292,6 +293,16 @@ public class MarketOffer implements Serializable {
         if(this.createProfile == null) this.createProfile = authorProfile;
         if(this.offerStatus == null) this.offerStatus = OfferStatus.NEW;
         if(this.createDate == null) this.createDate = createDate;
+    }
+
+    public void finalizeOffer(GamerProfile buyerProfile) {
+        this.endOfferProfile = buyerProfile;
+        this.endDate = DateUtil.getNowDateTime();
+        this.offerStatus = OfferStatus.ENDED;
+    }
+
+    public boolean isCurrent() {
+        return endDate == null && offerStatus == OfferStatus.NEW;
     }
 
     @Override

@@ -20,4 +20,8 @@ public interface MarketOfferRepository extends JpaRepository<MarketOffer,Long> {
         countQuery = "SELECT count(marketOffer) FROM MarketOffer marketOffer JOIN marketOffer.createProfile gp WHERE gp.id = :id")
     Page<MarketOffer> findAllMarketOfferCreatedByUser(@Param("id") Long id , Pageable pageable);
 
+    @Query(value = "SELECT mo FROM MarketOffer mo WHERE mo.offerStatus = 'NEW' AND mo.endDate is null",
+    countQuery = "SELECT count(mo) FROM MarketOffer mo WHERE mo.offerStatus = 'NEW' AND mo.endDate is null")
+    Page<MarketOffer> findAllCurrentOffers(Pageable pageable);
+
 }

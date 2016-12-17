@@ -22,6 +22,7 @@
         vm.clear = clear;
         vm.loadAll = loadAll;
         vm.search = search;
+        vm.finalizeOffer = finalizeOffer;
 
         loadAll();
 
@@ -106,6 +107,13 @@
             vm.reverse = false;
             vm.currentSearch = searchQuery;
             vm.loadAll();
+        }
+
+        function finalizeOffer(id) {
+            MarketOffer.finalize({id: id},
+                function() {
+                    $state.go('market-offer-my');
+                });
         }
     }
 })();

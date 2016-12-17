@@ -60,4 +60,11 @@
         <span class="glyphicon glyphicon-pencil"></span>
         <span class="hidden-xs hidden-sm"> Edit</span>
     </button>
+    <button type="button"
+            class="btn btn-danger btn-sm"
+            ng-if="vm.marketOffer.offerType == 'SELL' || vm.marketOffer.offerType == 'BUY'"
+            ng-click="vm.finalizeOffer(marketOffer.id);">
+        <span class="glyphicon glyphicon-remove-circle"></span>
+        <span class="hidden-xs hidden-sm">Make transaction</span>
+    </button>
 </div>

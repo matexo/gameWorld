@@ -127,7 +127,7 @@
 
         <div class="form-group">
             <label for="field_game">Game</label>
-            <select class="form-control" id="field_game" name="game" ng-model="vm.marketOffer.game" ng-options="game as game.title for game in vm.games | orderBy:'name' track by game.title">
+            <select class="form-control" id="field_game" name="game" ng-model="vm.marketOffer.game" ng-options="game as (game.title + ' (' + game.platform.platform + ' ' + game.yearOfProduction + ')' ) for game in vm.games | orderBy:'name' track by game.title">
                 <option value=""></option>
             </select>
         </div>

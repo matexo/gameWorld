@@ -54,6 +54,13 @@
             }
         }
 
+        function finalizeOffer(id) {
+            MarketOffer.finalize({id: id},
+                function() {
+                    $state.go('market-offer-my');
+                });
+        }
+
         function onSaveSuccess (result) {
             $scope.$emit('gameWorldApp:marketOfferUpdate', result);
             $uibModalInstance.close(result);

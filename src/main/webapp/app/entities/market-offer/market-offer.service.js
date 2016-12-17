@@ -23,6 +23,8 @@
                 }
             },
             'update': { method:'PUT' },
+            'finalize': { method:'PUT' ,
+            url: "api/market-offers/buy"},
             'getMy': { method:'GET',
                 url: 'api/market-offers/my',
                 isArray: true,

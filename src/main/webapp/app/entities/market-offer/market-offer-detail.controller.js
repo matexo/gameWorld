@@ -17,5 +17,12 @@
             vm.marketOffer = result;
         });
         $scope.$on('$destroy', unsubscribe);
+
+        function finalizeOffer(id) {
+            MarketOffer.finalize({id: id} , function() {
+                $state.go('market-offer-my')
+            }
+            );
+        }
     }
 })();
