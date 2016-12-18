@@ -33,7 +33,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class TradeOfferResource {
 
     private final Logger log = LoggerFactory.getLogger(TradeOfferResource.class);
-        
+
     @Inject
     private TradeOfferService tradeOfferService;
 
@@ -51,7 +51,7 @@ public class TradeOfferResource {
         if (tradeOffer.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("tradeOffer", "idexists", "A new tradeOffer cannot already have an ID")).body(null);
         }
-        TradeOffer result = tradeOfferService.save(tradeOffer);
+        TradeOffer result = tradeOfferService.addNewTradeOffer(tradeOffer);
         return ResponseEntity.created(new URI("/api/trade-offers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("tradeOffer", result.getId().toString()))
             .body(result);
@@ -132,7 +132,7 @@ public class TradeOfferResource {
      * SEARCH  /_search/trade-offers?query=:query : search for the tradeOffer corresponding
      * to the query.
      *
-     * @param query the query of the tradeOffer search 
+     * @param query the query of the tradeOffer search
      * @param pageable the pagination information
      * @return the result of the search
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers

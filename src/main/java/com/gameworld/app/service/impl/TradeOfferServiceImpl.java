@@ -1,9 +1,16 @@
 package com.gameworld.app.service.impl;
 
+import com.gameworld.app.domain.MarketOffer;
+import com.gameworld.app.domain.User;
+import com.gameworld.app.domain.enumeration.TradeOfferStatus;
+import com.gameworld.app.repository.MarketOfferRepository;
+import com.gameworld.app.repository.UserRepository;
+import com.gameworld.app.security.SecurityUtils;
 import com.gameworld.app.service.TradeOfferService;
 import com.gameworld.app.domain.TradeOffer;
 import com.gameworld.app.repository.TradeOfferRepository;
 import com.gameworld.app.repository.search.TradeOfferSearchRepository;
+import com.gameworld.app.util.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -13,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -26,12 +34,18 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class TradeOfferServiceImpl implements TradeOfferService{
 
     private final Logger log = LoggerFactory.getLogger(TradeOfferServiceImpl.class);
-    
+
     @Inject
     private TradeOfferRepository tradeOfferRepository;
 
     @Inject
     private TradeOfferSearchRepository tradeOfferSearchRepository;
+
+    @Inject
+    private UserRepository userRepository;
+
+    @Inject
+    private MarketOfferRepository marketOfferRepository;
 
     /**
      * Save a tradeOffer.
@@ -46,13 +60,29 @@ public class TradeOfferServiceImpl implements TradeOfferService{
         return result;
     }
 
+    public TradeOffer addNewTradeOffer(TradeOffer tradeOffer) {
+        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
+        if(user.isPresent())
+            tradeOffer.setCreateProfile(user.get().getGamerProfile());
+        else return null;
+        tradeOffer.setStatus(TradeOfferStatus.PENDING);
+        tradeOffer.setTimestamp(DateUtil.getNowDateTime());
+        MarketOffer marketOfferFromDB = marketOfferRepository.findOne(tradeOffer.getMarketOffer().getId());
+        if(marketOfferFromDB != null && marketOfferFromDB.isCurrent())
+            tradeOffer.setMarketOffer(marketOfferFromDB);
+        else return null;
+        TradeOffer tradeOfferFromDB = tradeOfferRepository.save(tradeOffer);
+        tradeOfferSearchRepository.save(tradeOfferFromDB);
+        return tradeOfferFromDB;
+    }
+
     /**
      *  Get all the tradeOffers.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Page<TradeOffer> findAll(Pageable pageable) {
         log.debug("Request to get all TradeOffers");
         Page<TradeOffer> result = tradeOfferRepository.findAll(pageable);
@@ -65,7 +95,7 @@ public class TradeOfferServiceImpl implements TradeOfferService{
      *  @param id the id of the entity
      *  @return the entity
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public TradeOffer findOne(Long id) {
         log.debug("Request to get TradeOffer : {}", id);
         TradeOffer tradeOffer = tradeOfferRepository.findOneWithEagerRelationships(id);

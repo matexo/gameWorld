@@ -95,22 +95,22 @@
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 <span class="hidden-xs hidden-sm">Edit</span>
                             </button>
-                            <button type="submit"
+                            <button type="button"
                                     ui-sref="game.delete({id:game.id})"
                                     class="btn btn-danger btn-sm"
                                     has-authority="ROLE_ADMIN">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                 <span class="hidden-xs hidden-sm">Delete</span>
                             </button>
-                            <button type="submit"
+                            <button type="button"
                                     class="btn btn-danger btn-sm"
                                     ng-if="marketOffer.offerType == 'SELL' || marketOffer.offerType == 'BUY'"
                                     ng-click="vm.finalizeOffer(marketOffer.id);">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                 <span class="hidden-xs hidden-sm">Make transaction</span>
                             </button>
-                            <button type="submit"
-                                    ui-sref="game.delete({id:game.id})"
+                            <button type="button"
+                                    ui-sref="trade-offer.new({marketOfferId: marketOffer.id})"
                                     class="btn btn-danger btn-sm"
                                     ng-if="marketOffer.offerType == 'EXCHANGE'">
                                 <span class="glyphicon glyphicon-remove-circle"></span>

@@ -5,9 +5,9 @@
         .module('gameWorldApp')
         .controller('TradeOfferDialogController', TradeOfferDialogController);
 
-    TradeOfferDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'TradeOffer', 'Game', 'GamerProfile', 'MarketOffer'];
+    TradeOfferDialogController.$inject = [ '$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'TradeOffer', 'Game', 'GamerProfile', 'MarketOffer'];
 
-    function TradeOfferDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, TradeOffer, Game, GamerProfile, MarketOffer) {
+    function TradeOfferDialogController ( $timeout, $scope, $stateParams, $uibModalInstance, entity, TradeOffer, Game, GamerProfile, MarketOffer) {
         var vm = this;
 
         vm.tradeOffer = entity;
@@ -17,7 +17,13 @@
         vm.save = save;
         vm.games = Game.query();
         vm.gamerprofiles = GamerProfile.query();
-        vm.marketoffers = MarketOffer.query();
+        vm.marketOfferId = $stateParams.marketOfferId;
+        vm.marketoffers = [];
+        if(vm.marketOfferId != null)
+            vm.marketoffers.push(MarketOffer.get({id : vm.marketOfferId}));
+        else vm.marketoffers = MarketOffer.query();
+        console.log("test dla " + vm.marketOfferId);
+        console.log(vm.marketoffers );
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

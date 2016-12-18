@@ -1,6 +1,7 @@
 package com.gameworld.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gameworld.app.util.DateUtil;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -75,8 +76,8 @@ public class MarketOffer implements Serializable {
     @JoinColumn
     private GamerProfile endOfferProfile;
 
-    @OneToMany(mappedBy = "marketOffer")
-    @JsonIgnore
+    @OneToMany(mappedBy = "marketOffer", fetch = FetchType.EAGER)
+    @JsonManagedReference
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<TradeOffer> offers = new HashSet<>();
 

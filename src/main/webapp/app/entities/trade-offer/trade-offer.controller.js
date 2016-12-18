@@ -9,7 +9,7 @@
 
     function TradeOfferController ($scope, $state, TradeOffer, TradeOfferSearch, ParseLinks, AlertService) {
         var vm = this;
-        
+
         vm.tradeOffers = [];
         vm.loadPage = loadPage;
         vm.page = 0;
@@ -22,7 +22,6 @@
         vm.clear = clear;
         vm.loadAll = loadAll;
         vm.search = search;
-
         loadAll();
 
         function loadAll () {

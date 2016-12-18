@@ -82,6 +82,9 @@
         .state('trade-offer.new', {
             parent: 'trade-offer',
             url: '/new',
+            params: {
+                marketOfferId : null
+            },
             data: {
                 authorities: ['ROLE_USER']
             },

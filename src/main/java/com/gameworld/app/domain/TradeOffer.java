@@ -1,5 +1,7 @@
 package com.gameworld.app.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -32,16 +34,14 @@ public class TradeOffer implements Serializable {
     @Column(name = "payment")
     private Double payment;
 
-    @NotNull
     @Column(name = "timestamp", nullable = false)
     private ZonedDateTime timestamp;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private TradeOfferStatus status;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "trade_offer_offer_games",
                joinColumns = @JoinColumn(name="trade_offers_id", referencedColumnName="ID"),
@@ -52,6 +52,7 @@ public class TradeOffer implements Serializable {
     private GamerProfile createProfile;
 
     @ManyToOne
+    @JsonBackReference
     private MarketOffer marketOffer;
 
     public Long getId() {
@@ -164,6 +165,7 @@ public class TradeOffer implements Serializable {
         }
         return Objects.equals(id, tradeOffer.id);
     }
+
 
     @Override
     public int hashCode() {

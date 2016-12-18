@@ -1,6 +1,7 @@
 package com.gameworld.app.service.impl;
 
 import com.gameworld.app.domain.GamerProfile;
+import com.gameworld.app.domain.TradeOffer;
 import com.gameworld.app.domain.User;
 import com.gameworld.app.repository.UserRepository;
 import com.gameworld.app.security.SecurityUtils;
@@ -64,7 +65,13 @@ public class MarketOfferServiceImpl implements MarketOfferService{
     @Transactional(readOnly = true)
     public MarketOffer findOne(Long id) {
         log.debug("Request to get MarketOffer : {}", id);
+        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
+        Long profileId = null;
+        if(user.isPresent())
+            profileId = user.get().getGamerProfile().getId();
         MarketOffer marketOffer = marketOfferRepository.findOne(id);
+        if(!marketOffer.getCreateProfile().getId().equals(profileId))
+            marketOffer.setOffers(null);
         return marketOffer;
     }
 
@@ -97,7 +104,8 @@ public class MarketOfferServiceImpl implements MarketOfferService{
             MarketOffer marketOffer = marketOfferRepository.findOne(id);
             if(marketOffer != null && marketOffer.isCurrent()) {
                 marketOffer.finalizeOffer(user.get().getGamerProfile());
-                marketOfferRepository.save(marketOffer);
+                MarketOffer marketOfferFromDB = marketOfferRepository.save(marketOffer);
+                marketOfferSearchRepository.save(marketOfferFromDB);
             }
         }
     }
