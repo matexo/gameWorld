@@ -155,7 +155,7 @@ public class TradeOfferResourceIntTest {
     public void checkStatusIsRequired() throws Exception {
         int databaseSizeBeforeTest = tradeOfferRepository.findAll().size();
         // set the field null
-        tradeOffer.setStatus(null);
+        tradeOffer.changeStatus(null);
 
         // Create the TradeOffer, which fails.
 

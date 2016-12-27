@@ -11,6 +11,11 @@
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true},
+            'createdByUser': {method: 'GET' , isArray: true , url:'api/trade-offers/created'},
+            'assignedToUser': {method: 'GET' , isArray: true , url:'api/trade-offers/assigned'},
+            'acceptTradeOffer': {method: 'PUT' , url:'api/trade-offers/accept/:id'},
+            'rejectTradeOffer': {method: 'PUT' , url:'api/trade-offers/reject/:id'},
+            'cancelTradeOffer': {method: 'PUT' , url:'api/trade-offers/cancel/:id'},
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {

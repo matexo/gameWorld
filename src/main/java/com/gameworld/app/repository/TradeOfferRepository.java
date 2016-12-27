@@ -2,6 +2,8 @@ package com.gameworld.app.repository;
 
 import com.gameworld.app.domain.TradeOffer;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 
@@ -18,5 +20,31 @@ public interface TradeOfferRepository extends JpaRepository<TradeOffer,Long> {
 
     @Query("select tradeOffer from TradeOffer tradeOffer left join fetch tradeOffer.offerGames where tradeOffer.id =:id")
     TradeOffer findOneWithEagerRelationships(@Param("id") Long id);
+
+    @Query(value = "SELECT tradeOffer " +
+        "FROM TradeOffer tradeOffer " +
+        "JOIN tradeOffer.createProfile " +
+        "WHERE tradeOffer.createProfile.id = :profileId " +
+        "ORDER BY tradeOffer.timestamp",
+        countQuery = "SELECT count(tradeOffer) " +
+            "FROM TradeOffer tradeOffer " +
+            "JOIN tradeOffer.createProfile " +
+            "WHERE tradeOffer.createProfile.id = :profileId")
+    Page<TradeOffer> findAllTradeOffersCreatedByUser(@Param("profileId") Long profileId , Pageable pageable);
+
+    @Query(value = "SELECT offers " +
+        "FROM MarketOffer marketOffer " +
+        "JOIN marketOffer.offers offers " +
+        "JOIN marketOffer.createProfile " +
+        "WHERE marketOffer.createProfile.id = :profileId " +
+        "AND offers.status = 'PENDING' " +
+        "ORDER BY offers.timestamp",
+    countQuery = "SELECT count(offers) " +
+        "FROM MarketOffer marketOffer " +
+        "JOIN marketOffer.offers offers " +
+        "JOIN marketOffer.createProfile " +
+        "WHERE marketOffer.createProfile.id = :profileId " +
+        "AND offers.status = 'PENDING' ")
+    Page<TradeOffer> findAllTradeOffersAssignedToUser(@Param("profileId") Long profileId , Pageable pageable);
 
 }

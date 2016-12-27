@@ -147,5 +147,47 @@ public class TradeOfferResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
+    @GetMapping("/trade-offers/created")
+    @Timed
+    public ResponseEntity<List<TradeOffer>> getAllTradeOfferCreatedByUser(Pageable pageable) throws URISyntaxException {
+        Page<TradeOffer> page = tradeOfferService.findAllCreatedByUser(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/trade-offers/created");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/trade-offers/assigned")
+    @Timed
+    public ResponseEntity<List<TradeOffer>> getAllTradeOfferAssignedToUser(Pageable pageable) throws URISyntaxException {
+        Page<TradeOffer> page = tradeOfferService.findAllAssignedToUser(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/trade-offers/assigned");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @PutMapping("/trade-offers/accept/{id}")
+    @Timed
+    public ResponseEntity<Void> acceptTradeOffer(@PathVariable Long id) {
+        if(tradeOfferService.acceptTradeOffer(id)) {
+            return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert("tradeOffer", id.toString())).build();
+        } else return ResponseEntity.status(HttpStatus.NO_CONTENT).headers(HeaderUtil.createFailureAlert("tradeOffer" , "Error: no privilage to do this action" , "Error: no privilage to do this action")).build();
+    }
+
+    @PutMapping("/trade-offers/reject/{id}")
+    @Timed
+    public ResponseEntity<Void> rejectTradeOffer(@PathVariable Long id) {
+        if(tradeOfferService.rejectTradeOffer(id)) {
+            return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert("tradeOffer", id.toString())).build();
+        } else return ResponseEntity.status(HttpStatus.NO_CONTENT).headers(HeaderUtil.createFailureAlert("tradeOffer" , "Error: no privilage to do this action" , "Error: no privilage to do this action")).build();
+    }
+
+    @PutMapping("/trade-offers/cancel/{id}")
+    @Timed
+    public ResponseEntity<Void> cancelTradeOffer(@PathVariable Long id) {
+        if(tradeOfferService.cancelTradeOffer(id)) {
+            return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert("tradeOffer", id.toString())).build();
+        } else return ResponseEntity.status(HttpStatus.NO_CONTENT).headers(HeaderUtil.createFailureAlert("tradeOffer" , "Error: no privilage to do this action" , "Error: no privilage to do this action")).build();
+    }
+
+
+
 
 }

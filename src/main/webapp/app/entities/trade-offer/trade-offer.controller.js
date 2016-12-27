@@ -11,6 +11,8 @@
         var vm = this;
 
         vm.tradeOffers = [];
+        vm.tradeOffersCreatedByUser = [];
+        vm.tradeOffersAssignedToUser = [];
         vm.loadPage = loadPage;
         vm.page = 0;
         vm.links = {
@@ -25,20 +27,18 @@
         loadAll();
 
         function loadAll () {
-            if (vm.currentSearch) {
-                TradeOfferSearch.query({
-                    query: vm.currentSearch,
-                    page: vm.page,
-                    size: 20,
-                    sort: sort()
-                }, onSuccess, onError);
-            } else {
-                TradeOffer.query({
-                    page: vm.page,
-                    size: 20,
-                    sort: sort()
-                }, onSuccess, onError);
-            }
+            vm.tradeOffersAssignedToUser = TradeOffer.assignedToUser({
+                page: vm.page,
+                size: 20,
+                sort: sort()
+            }, onSuccess, onError);
+            vm.tradeOffersCreatedByUser = TradeOffer.createdByUser({
+                page: vm.page,
+                size: 20,
+                sort: sort()
+            }, onSuccess, onError);
+            // console.log(vm.tradeOffersAssignedToUser);
+            // console.log(vm.tradeOffersCreatedByUser);
             function sort() {
                 var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
                 if (vm.predicate !== 'id') {
@@ -98,5 +98,17 @@
             vm.currentSearch = searchQuery;
             vm.loadAll();
         }
+
+        vm.acceptTrade = function acceptTradeOffer(tradeOfferId) {
+            TradeOffer.acceptTradeOffer({id:tradeOfferId} , loadAll() , AlertService.error("Error"));
+        };
+
+        vm.rejectTrade = function rejectTrade(tradeOfferId) {
+            TradeOffer.rejectTradeOffer({id:tradeOfferId} , loadAll() , AlertService.error("Error"));
+        };
+
+        vm.cancelTrade = function cancelTradeOffer(tradeOfferId) {
+            TradeOffer.cancelTradeOffer({id:tradeOfferId} , loadAll() , AlertService.error("Error"));
+        };
     }
 })();

@@ -19,4 +19,9 @@ public interface TradeOfferService {
     Page<TradeOffer> search(String query, Pageable pageable);
 
     TradeOffer addNewTradeOffer(TradeOffer tradeOffer);
+    Page<TradeOffer> findAllCreatedByUser(Pageable pageable);
+    Page<TradeOffer> findAllAssignedToUser(Pageable pageable);
+    boolean acceptTradeOffer(Long tradeOfferId);
+    boolean rejectTradeOffer(Long tradeOfferId);
+    boolean cancelTradeOffer(Long tradeOfferId);
 }

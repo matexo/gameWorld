@@ -2,6 +2,7 @@ package com.gameworld.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.gameworld.app.util.DateUtil;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -98,10 +99,6 @@ public class TradeOffer implements Serializable {
         return this;
     }
 
-    public void setStatus(TradeOfferStatus status) {
-        this.status = status;
-    }
-
     public Set<Game> getOfferGames() {
         return offerGames;
     }
@@ -149,6 +146,11 @@ public class TradeOffer implements Serializable {
 
     public void setMarketOffer(MarketOffer marketOffer) {
         this.marketOffer = marketOffer;
+    }
+
+    public void changeStatus(TradeOfferStatus status) {
+        this.status = status;
+        timestamp = DateUtil.getNowDateTime();
     }
 
     @Override
