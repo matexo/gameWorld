@@ -97,6 +97,11 @@ public class MarketOffer implements Serializable {
         this.id = id;
     }
 
+    public MarketOffer putId(Long id) {
+        this.id = id;
+        return this;
+    }
+
     public ZonedDateTime getCreateDate() {
         return createDate;
     }

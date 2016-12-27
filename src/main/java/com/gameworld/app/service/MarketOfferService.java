@@ -20,4 +20,6 @@ public interface MarketOfferService {
 
     Page<MarketOffer> findAllMarketOfferCreatedByUser(Pageable pageable);
     void finalizeOffer(Long id);
+    Page<MarketOffer> findMarketOffersEndByUser(Pageable pageable);
+    Page<MarketOffer> findEndedMarketOffers(Pageable pageable);
 }

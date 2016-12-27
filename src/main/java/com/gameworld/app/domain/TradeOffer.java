@@ -1,7 +1,8 @@
 package com.gameworld.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.gameworld.app.util.DateUtil;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -55,6 +56,19 @@ public class TradeOffer implements Serializable {
     @ManyToOne
     @JsonBackReference
     private MarketOffer marketOffer;
+
+    @Transient
+    @JsonSerialize
+    @JsonDeserialize
+    private Long marketOfferId;
+
+    public Long getMarketOfferId() {
+        return marketOfferId;
+    }
+
+    public void setMarketOfferId(Long marketOfferId) {
+        this.marketOfferId = marketOfferId;
+    }
 
     public Long getId() {
         return id;

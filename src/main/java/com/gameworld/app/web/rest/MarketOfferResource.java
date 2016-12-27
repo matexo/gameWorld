@@ -161,4 +161,18 @@ public class MarketOfferResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert("marketOffer", marketOffer.getId().toString())).build();
     }
 
+    @GetMapping("/market-offers/ended")
+    public ResponseEntity<List<MarketOffer>> getMarketOffersEndByUser(Pageable pageable) throws URISyntaxException {
+        Page<MarketOffer> page = marketOfferService.findMarketOffersEndByUser(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/market-offers/ended");
+        return new ResponseEntity<>(page.getContent() , headers , HttpStatus.OK);
+    }
+
+    @GetMapping("/market-offers/my/ended")
+    public ResponseEntity<List<MarketOffer>> getEndedMarketOffers(Pageable pageable) throws URISyntaxException {
+        Page<MarketOffer> page = marketOfferService.findEndedMarketOffers(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/market-offers/my/ended");
+        return new ResponseEntity<>(page.getContent() , headers , HttpStatus.OK);
+    }
+
 }

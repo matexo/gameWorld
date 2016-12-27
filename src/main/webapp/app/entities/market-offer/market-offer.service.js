@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
     angular
         .module('gameWorldApp')
@@ -6,11 +6,11 @@
 
     MarketOffer.$inject = ['$resource', 'DateUtils'];
 
-    function MarketOffer ($resource, DateUtils) {
-        var resourceUrl =  'api/market-offers/:id';
+    function MarketOffer($resource, DateUtils) {
+        var resourceUrl = 'api/market-offers/:id';
 
         return $resource(resourceUrl, {}, {
-            'query': { method: 'GET', isArray: true},
+            'query': {method: 'GET', isArray: true},
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {
@@ -22,10 +22,15 @@
                     return data;
                 }
             },
-            'update': { method:'PUT' },
-            'finalize': { method:'PUT' ,
-            url: "api/market-offers/buy"},
-            'getMy': { method:'GET',
+            'update': {method: 'PUT'},
+            'getMarketOffersEndByUser': {method: 'GET', isArray: true, url: "api/market-offers/ended"},
+            'getEndedMarketOffers': {method: 'GET', isArray: true, url: "api/market-offers/my/ended"},
+            'finalize': {
+                method: 'PUT',
+                url: "api/market-offers/buy"
+            },
+            'getMy': {
+                method: 'GET',
                 url: 'api/market-offers/my',
                 isArray: true,
                 transformResponse: function (data) {

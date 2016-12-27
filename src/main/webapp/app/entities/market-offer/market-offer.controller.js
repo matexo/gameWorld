@@ -11,6 +11,8 @@
         var vm = this;
 
         vm.marketOffers = [];
+        vm.marketOffersEndByUser = [];
+        vm.endedMarketOffers = [];
         vm.loadPage = loadPage;
         vm.page = 0;
         vm.links = {
@@ -28,7 +30,9 @@
 
         function loadAll () {
             if(($state.$current.toString() == 'market-offer-my'))
-                vm.my = 1;
+                vm.state = 'my';
+            else if(($state.$current.toString() == 'deals'))
+                vm.state = 'deals';
             if (vm.currentSearch) {
                 MarketOfferSearch.query({
                     query: vm.currentSearch,
@@ -36,12 +40,23 @@
                     size: 20,
                     sort: sort()
                 }, onSuccess, onError);
-            } else if(vm.my == 1) {
+            } else if(vm.state == 'my') {
                 MarketOffer.getMy({
                     page: vm.page,
                     size: 20,
                     sort: sort()
                 }, onSuccess, onError);
+            } else if(vm.state == 'deals') {
+                vm.marketOffersEndByUser = MarketOffer.getMarketOffersEndByUser({
+                    page: vm.page,
+                    size: 20
+                });
+                vm.endedMarketOffers = MarketOffer.getEndedMarketOffers({
+                    page: vm.page,
+                    size: 20
+                });
+                console.log(vm.marketOffersEndByUser);
+                console.log(vm.endedMarketOffers);
             } else {
                 MarketOffer.query({
                     page: vm.page,

@@ -16,12 +16,50 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface MarketOfferRepository extends JpaRepository<MarketOffer,Long> {
 
-    @Query(value = "SELECT marketOffer FROM MarketOffer marketOffer JOIN FETCH marketOffer.createProfile gp WHERE gp.id = :id",
-        countQuery = "SELECT count(marketOffer) FROM MarketOffer marketOffer JOIN marketOffer.createProfile gp WHERE gp.id = :id")
-    Page<MarketOffer> findAllMarketOfferCreatedByUser(@Param("id") Long id , Pageable pageable);
+    @Query(value = "SELECT marketOffer FROM MarketOffer marketOffer JOIN FETCH marketOffer.createProfile gp WHERE gp.id = :gamerProfileId",
+        countQuery = "SELECT count(marketOffer) FROM MarketOffer marketOffer JOIN marketOffer.createProfile gp WHERE gp.id = :gamerProfileId")
+    Page<MarketOffer> findAllMarketOfferCreatedByUser(@Param("gamerProfileId") Long gamerProfileId , Pageable pageable);
 
-    @Query(value = "SELECT mo FROM MarketOffer mo WHERE mo.offerStatus = 'NEW' AND mo.endDate is null",
-    countQuery = "SELECT count(mo) FROM MarketOffer mo WHERE mo.offerStatus = 'NEW' AND mo.endDate is null")
+    @Query(value = "SELECT mo FROM MarketOffer mo WHERE mo.offerStatus = 'NEW' AND mo.endDate IS NULL",
+    countQuery = "SELECT count(mo) FROM MarketOffer mo WHERE mo.offerStatus = 'NEW' AND mo.endDate IS NULL")
     Page<MarketOffer> findAllCurrentOffers(Pageable pageable);
+
+    @Query(value = "SELECT mo FROM MarketOffer mo " +
+        "JOIN FETCH mo.endOfferProfile eop " +
+        "JOIN FETCH mo.offers offers " +
+        "WHERE eop.id = :gamerProfileId " +
+        "AND mo.offerStatus = 'ENDED' " +
+        "AND mo.endDate IS NOT NULL " +
+        "AND offers.status = 'ACCEPTED' " +
+        "ORDER BY mo.endDate ",
+    countQuery = "SELECT count(mo) " +
+        "FROM MarketOffer mo " +
+        "JOIN mo.endOfferProfile eop " +
+        "JOIN mo.offers offers " +
+        "WHERE eop.id = :gamerProfileId " +
+        "AND mo.offerStatus = 'ENDED' " +
+        "AND mo.endDate IS NOT NULL " +
+        "AND offers.status = 'ACCEPTED' " +
+        "ORDER BY mo.endDate ")
+    Page<MarketOffer> findMarketOffersEndByUser(@Param("gamerProfileId") Long gamerProfileId , Pageable pageable);
+
+    @Query(value = "SELECT mo FROM MarketOffer mo " +
+        "JOIN FETCH mo.createProfile cp " +
+        "JOIN FETCH mo.offers offers " +
+        "WHERE cp.id = :gamerProfileId " +
+        "AND mo.offerStatus = 'ENDED' " +
+        "AND mo.endDate IS NOT NULL " +
+        "AND offers.status = 'ACCEPTED'" +
+        "ORDER BY mo.endDate ",
+        countQuery = "SELECT count(mo) " +
+         "FROM MarketOffer mo " +
+         "JOIN mo.createProfile cp " +
+         "JOIN mo.offers offers " +
+         "WHERE cp.id = :gamerProfileId " +
+         "AND mo.offerStatus = 'ENDED' " +
+         "AND mo.endDate IS NOT NULL " +
+         "AND offers.status = 'ACCEPTED' " +
+         "ORDER BY mo.endDate ")
+    Page<MarketOffer> findEndedMarketOffers(@Param("gamerProfileId") Long gamerProfileId , Pageable pageable);
 
 }

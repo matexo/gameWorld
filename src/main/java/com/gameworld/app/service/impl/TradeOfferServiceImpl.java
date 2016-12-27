@@ -95,6 +95,7 @@ public class TradeOfferServiceImpl  implements TradeOfferService {
         Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
         if (user.isPresent()) {
             result = tradeOfferRepository.findAllTradeOffersCreatedByUser(user.get().getId(), pageable);
+            result.getContent().forEach(e -> e.setMarketOfferId(e.getMarketOffer().getId()));
         }
         return result;
     }
@@ -105,17 +106,11 @@ public class TradeOfferServiceImpl  implements TradeOfferService {
         Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
         if (user.isPresent()) {
             result = tradeOfferRepository.findAllTradeOffersAssignedToUser(user.get().getId(), pageable);
+            result.getContent().forEach(e -> e.setMarketOfferId(e.getMarketOffer().getId()));
         }
         return result;
     }
 
-
-    /**
-     * Get one tradeOffer by id.
-     *
-     * @param id the id of the entity
-     * @return the entity
-     */
     @Transactional(readOnly = true)
     public TradeOffer findOne(Long id) {
         log.debug("Request to get TradeOffer : {}", id);
@@ -123,23 +118,12 @@ public class TradeOfferServiceImpl  implements TradeOfferService {
         return tradeOffer;
     }
 
-    /**
-     * Delete the  tradeOffer by id.
-     *
-     * @param id the id of the entity
-     */
     public void delete(Long id) {
         log.debug("Request to delete TradeOffer : {}", id);
         tradeOfferRepository.delete(id);
         tradeOfferSearchRepository.delete(id);
     }
 
-    /**
-     * Search for the tradeOffer corresponding to the query.
-     *
-     * @param query the query of the search
-     * @return the list of entities
-     */
     @Transactional(readOnly = true)
     public Page<TradeOffer> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of TradeOffers for query {}", query);
