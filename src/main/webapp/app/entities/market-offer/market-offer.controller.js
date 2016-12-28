@@ -127,7 +127,7 @@
         function finalizeOffer(id) {
             MarketOffer.finalize({id: id},
                 function() {
-                    $state.go('market-offer-my');
+                    $state.go('deals');
                 });
         }
     }
