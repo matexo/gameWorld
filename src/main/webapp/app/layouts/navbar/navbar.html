@@ -87,7 +87,7 @@
                         </li>
                     </ul>
                 </li>
-                <li ui-sref-active="active">
+                <li ui-sref-active="active" ng-switch-when="true">
                     <a ui-sref="conversation" ng-click="vm.collapseNavbar()">
                         <span class="glyphicon glyphicon-envelope"></span>
                         <span>Conversations</span>
@@ -237,7 +237,7 @@
                     </a>
 
                     <ul class="dropdown-menu" uib-dropdown-menu>
-                        <li ui-sref-active="active">
+                        <li ui-sref-active="active" ng-switch-when="true">
                             <a ui-sref="home" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-eye-open"></span>
                                 <span>Profile</span>
