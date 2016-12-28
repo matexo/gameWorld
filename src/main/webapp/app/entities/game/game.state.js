@@ -26,6 +26,23 @@
             resolve: {
             }
         })
+        .state('wishlist', {
+            parent: 'entity',
+            url: '/wishlist',
+            data: {
+                authorities: ['ROLE_USER'],
+                pageTitle: 'Wishlist'
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'app/entities/game/wishlist.html',
+                    controller: 'GameController',
+                    controllerAs: 'vm'
+                }
+            },
+            resolve: {
+            }
+        })
         .state('game-detail', {
             parent: 'entity',
             url: '/game/{id}',

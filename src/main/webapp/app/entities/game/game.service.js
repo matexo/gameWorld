@@ -21,6 +21,9 @@
                     return data;
                 }
             },
+            'addToWishList': {method:'PUT' , url: 'api/games/:id'},
+            'getFromWishlist': {method: 'GET' , isArray: true , url:"api/games/wishlist"},
+            'removeGameFromWishlist': {method: 'DELETE' , url:"api/games/wishlist/:id"},
             'update': { method:'PUT' }
         });
     }

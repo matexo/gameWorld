@@ -33,17 +33,10 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class GameResource {
 
     private final Logger log = LoggerFactory.getLogger(GameResource.class);
-        
+
     @Inject
     private GameService gameService;
 
-    /**
-     * POST  /games : Create a new game.
-     *
-     * @param game the game to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new game, or with status 400 (Bad Request) if the game has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
     @PostMapping("/games")
     @Timed
     public ResponseEntity<Game> createGame(@Valid @RequestBody Game game) throws URISyntaxException {
@@ -57,15 +50,6 @@ public class GameResource {
             .body(result);
     }
 
-    /**
-     * PUT  /games : Updates an existing game.
-     *
-     * @param game the game to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated game,
-     * or with status 400 (Bad Request) if the game is not valid,
-     * or with status 500 (Internal Server Error) if the game couldnt be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
     @PutMapping("/games")
     @Timed
     public ResponseEntity<Game> updateGame(@Valid @RequestBody Game game) throws URISyntaxException {
@@ -79,13 +63,6 @@ public class GameResource {
             .body(result);
     }
 
-    /**
-     * GET  /games : get all the games.
-     *
-     * @param pageable the pagination information
-     * @return the ResponseEntity with status 200 (OK) and the list of games in body
-     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
-     */
     @GetMapping("/games")
     @Timed
     public ResponseEntity<List<Game>> getAllGames(Pageable pageable)
@@ -96,12 +73,6 @@ public class GameResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
-    /**
-     * GET  /games/:id : get the "id" game.
-     *
-     * @param id the id of the game to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the game, or with status 404 (Not Found)
-     */
     @GetMapping("/games/{id}")
     @Timed
     public ResponseEntity<Game> getGame(@PathVariable Long id) {
@@ -114,12 +85,6 @@ public class GameResource {
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    /**
-     * DELETE  /games/:id : delete the "id" game.
-     *
-     * @param id the id of the game to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
     @DeleteMapping("/games/{id}")
     @Timed
     public ResponseEntity<Void> deleteGame(@PathVariable Long id) {
@@ -128,15 +93,6 @@ public class GameResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("game", id.toString())).build();
     }
 
-    /**
-     * SEARCH  /_search/games?query=:query : search for the game corresponding
-     * to the query.
-     *
-     * @param query the query of the game search 
-     * @param pageable the pagination information
-     * @return the result of the search
-     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
-     */
     @GetMapping("/_search/games")
     @Timed
     public ResponseEntity<List<Game>> searchGames(@RequestParam String query, Pageable pageable)
@@ -147,5 +103,27 @@ public class GameResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
+    @PutMapping("/games/{id}")
+    @Timed
+    public ResponseEntity<Void> addGameToWishList(@PathVariable Long id) {
+        gameService.addGameToWishList(id);
+        return new ResponseEntity<>(HeaderUtil.createEntityUpdateAlert("wishList", id.toString()), HttpStatus.OK);
+    }
+
+    @GetMapping("/games/wishlist")
+    @Timed
+    public ResponseEntity<List<Game>> getGamesFromWishlist(Pageable pageable) throws URISyntaxException {
+        log.debug("REST request to get a page of Games");
+        Page<Game> page = gameService.getGamesFromWishlist(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/games/wishlist");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/games/wishlist/{id}")
+    @Timed
+    public ResponseEntity<Void> removeGameFromWishlist(@PathVariable Long id) {
+        gameService.removeGameFromWishlist(id);
+        return new ResponseEntity<>(HeaderUtil.createEntityDeletionAlert("wishList", id.toString()), HttpStatus.OK);
+    }
 
 }

@@ -1,5 +1,8 @@
 package com.gameworld.app.service.impl;
 
+import com.gameworld.app.domain.User;
+import com.gameworld.app.repository.UserRepository;
+import com.gameworld.app.security.SecurityUtils;
 import com.gameworld.app.service.GameService;
 import com.gameworld.app.domain.Game;
 import com.gameworld.app.repository.GameRepository;
@@ -12,7 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -23,22 +29,19 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @Service
 @Transactional
-public class GameServiceImpl implements GameService{
+public class GameServiceImpl implements GameService {
 
     private final Logger log = LoggerFactory.getLogger(GameServiceImpl.class);
-    
+
     @Inject
     private GameRepository gameRepository;
 
     @Inject
     private GameSearchRepository gameSearchRepository;
 
-    /**
-     * Save a game.
-     *
-     * @param game the entity to save
-     * @return the persisted entity
-     */
+    @Inject
+    private UserRepository userRepository;
+
     public Game save(Game game) {
         log.debug("Request to save Game : {}", game);
         Game result = gameRepository.save(game);
@@ -46,53 +49,72 @@ public class GameServiceImpl implements GameService{
         return result;
     }
 
-    /**
-     *  Get all the games.
-     *  
-     *  @param pageable the pagination information
-     *  @return the list of entities
-     */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Page<Game> findAll(Pageable pageable) {
         log.debug("Request to get all Games");
         Page<Game> result = gameRepository.findAll(pageable);
         return result;
     }
 
-    /**
-     *  Get one game by id.
-     *
-     *  @param id the id of the entity
-     *  @return the entity
-     */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Game findOne(Long id) {
         log.debug("Request to get Game : {}", id);
         Game game = gameRepository.findOne(id);
         return game;
     }
 
-    /**
-     *  Delete the  game by id.
-     *
-     *  @param id the id of the entity
-     */
     public void delete(Long id) {
         log.debug("Request to delete Game : {}", id);
         gameRepository.delete(id);
         gameSearchRepository.delete(id);
     }
 
-    /**
-     * Search for the game corresponding to the query.
-     *
-     *  @param query the query of the search
-     *  @return the list of entities
-     */
     @Transactional(readOnly = true)
     public Page<Game> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of Games for query {}", query);
         Page<Game> result = gameSearchRepository.search(queryStringQuery(query), pageable);
         return result;
     }
+
+    @Transactional
+    public void addGameToWishList(Long gameId) {
+        Optional<User> usero = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
+        if (usero.isPresent()) {
+            User user = usero.get();
+            Game game = gameRepository.findOne(gameId);
+            if (game != null) {
+                user.getGamerProfile().addSearchedGames(game);
+                userRepository.save(user);
+            }
+        }
+    }
+
+
+    @Transactional(readOnly = true)
+    public Page<Game> getGamesFromWishlist(Pageable pageable) {
+        Page<Game> wishlist = null;
+        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
+        if (user.isPresent()) {
+            wishlist = gameRepository.getGamesFromWishlist(user.get().getId() , pageable);
+        }
+        return wishlist;
+    }
+
+    @Transactional
+    public void removeGameFromWishlist(Long gameId) {
+        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
+        if (user.isPresent()) {
+            User usero = user.get();
+            Set<Game> wishlist = usero.getGamerProfile().getSearchedGames();
+            Game gameToRemove = null;
+            for(Game game : wishlist){
+                if(game.getId().equals(gameId))
+                    gameToRemove = game;
+            }
+            wishlist.remove(gameToRemove);
+            userRepository.save(usero);
+        }
+    }
+
+
 }

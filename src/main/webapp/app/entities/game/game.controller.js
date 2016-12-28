@@ -9,8 +9,9 @@
 
     function GameController ($scope, $state, DataUtils, Game, GameSearch, ParseLinks, AlertService) {
         var vm = this;
-        
+
         vm.games = [];
+        vm.wishlist = [];
         vm.loadPage = loadPage;
         vm.page = 0;
         vm.links = {
@@ -28,7 +29,13 @@
         loadAll();
 
         function loadAll () {
-            if (vm.currentSearch) {
+            if($state.$current.toString() == 'wishlist') {
+                vm.wishlist = Game.getFromWishlist({
+                    page: vm.page,
+                    size: 20,
+                    sort: sort()
+                });
+            } else if (vm.currentSearch) {
                 GameSearch.query({
                     query: vm.currentSearch,
                     page: vm.page,
@@ -42,6 +49,7 @@
                     sort: sort()
                 }, onSuccess, onError);
             }
+            console.log(vm.wishlist);
             function sort() {
                 var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
                 if (vm.predicate !== 'id') {
@@ -100,6 +108,14 @@
             vm.reverse = false;
             vm.currentSearch = searchQuery;
             vm.loadAll();
+        }
+
+        vm.addToWishList = function addToWishList(gameId) {
+            Game.addToWishList({id:gameId} , $state.go('wishlist'));
+        };
+
+        vm.removeGameFromWishlist = function removeGameFromWishlist(gameId) {
+            Game.removeGameFromWishlist({id:gameId}, loadAll() , loadAll());
         }
     }
 })();

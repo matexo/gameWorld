@@ -83,7 +83,7 @@
                                     <span class="hidden-xs hidden-sm">Delete</span>
                                 </button>
                                 <button type="submit"
-                                        ui-sref="game-detail({id:game.id})"
+                                        ng-click="vm.addToWishList(game.id)"
                                         class="btn btn-warning btn-sm">
                                     <span class="glyphicon glyphicon-plus"></span>
                                     <span>Want it!</span>
