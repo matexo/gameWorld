@@ -13,22 +13,22 @@
             url: '/elasticsearch-reindex',
             data: {
                 authorities: ['ROLE_ADMIN'],
-                pageTitle: 'Test'
+                pageTitle: 'elasticsearch.reindex.title'
             },
             views: {
                 'content@': {
-                    templateUrl: 'app/admin/elasticsearch-reindex/elasticsearch-reindex.html',
+                    templateUrl: 'app/admin/elasticsearch-reindex//elasticsearch-reindex.html',
                     controller: 'ElasticsearchReindexController',
                     controllerAs: 'vm'
                 }
+            },
+            resolve: {
+                translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                    $translatePartialLoader.addPart('elasticsearch-reindex');
+                    $translatePartialLoader.addPart('global');
+                    return $translate.refresh();
+                }]
             }
-            // resolve: {
-            //     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-            //         $translatePartialLoader.addPart('elasticsearch-reindex');
-            //         $translatePartialLoader.addPart('global');
-            //         return $translate.refresh();
-            //     }]
-            // }
         }).state('elasticsearch-reindex.dialog', {
             parent: 'elasticsearch-reindex',
             data: {
@@ -36,7 +36,7 @@
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/admin/elasticsearch-reindex/elasticsearch-reindex-dialog.html',
+                    templateUrl: 'app/admin/elasticsearch-reindex//elasticsearch-reindex-dialog.html',
                     controller: 'ElasticsearchReindexDialogController',
                     controllerAs: 'vm',
                     size: 'sm'

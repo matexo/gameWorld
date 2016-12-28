@@ -25,6 +25,10 @@
                 <constraints nullable="true" />
             </column>
             
+            <column name="first_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
             <column name="surname" type="varchar(255)">
                 <constraints nullable="true" />
             </column>

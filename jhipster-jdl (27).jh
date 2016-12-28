@@ -33,6 +33,7 @@ entity Game {
 
 entity GamerProfile {
 	name String,
+	firstName String,
     surname String,
     phone Integer
 }

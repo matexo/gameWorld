@@ -29,6 +29,9 @@ public class GamerProfile implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "first_name")
+    private String firstName;
+
     @Column(name = "surname")
     private String surname;
 
@@ -74,8 +77,17 @@ public class GamerProfile implements Serializable {
     @JsonIgnore
     private User user;
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public Long getId() {
         return id;
+
     }
 
     public void setId(Long id) {
@@ -291,6 +303,9 @@ public class GamerProfile implements Serializable {
         return "GamerProfile{" +
             "id=" + id +
             ", name='" + name + "'" +
+            ", firstName='" + firstName + "'" +
+            ", surname='" + surname + "'" +
+            ", phone='" + phone + "'" +
             '}';
     }
 }

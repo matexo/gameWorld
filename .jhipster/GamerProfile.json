@@ -50,6 +50,10 @@
             "fieldType": "String"
         },
         {
+            "fieldName": "firstName",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "surname",
             "fieldType": "String"
         },
