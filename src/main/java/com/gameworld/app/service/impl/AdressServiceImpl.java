@@ -1,5 +1,8 @@
 package com.gameworld.app.service.impl;
 
+import com.gameworld.app.domain.User;
+import com.gameworld.app.repository.UserRepository;
+import com.gameworld.app.security.SecurityUtils;
 import com.gameworld.app.service.AdressService;
 import com.gameworld.app.domain.Adress;
 import com.gameworld.app.repository.AdressRepository;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -26,19 +30,16 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class AdressServiceImpl implements AdressService{
 
     private final Logger log = LoggerFactory.getLogger(AdressServiceImpl.class);
-    
+
     @Inject
     private AdressRepository adressRepository;
 
     @Inject
     private AdressSearchRepository adressSearchRepository;
 
-    /**
-     * Save a adress.
-     *
-     * @param adress the entity to save
-     * @return the persisted entity
-     */
+    @Inject
+    private UserRepository userRepository;
+
     public Adress save(Adress adress) {
         log.debug("Request to save Adress : {}", adress);
         Adress result = adressRepository.save(adress);
@@ -46,25 +47,14 @@ public class AdressServiceImpl implements AdressService{
         return result;
     }
 
-    /**
-     *  Get all the adresses.
-     *  
-     *  @param pageable the pagination information
-     *  @return the list of entities
-     */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Page<Adress> findAll(Pageable pageable) {
         log.debug("Request to get all Adresses");
         Page<Adress> result = adressRepository.findAll(pageable);
         return result;
     }
 
-
-    /**
-     *  get all the adresses where GamerProfile is null.
-     *  @return the list of entities
-     */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public List<Adress> findAllWhereGamerProfileIsNull() {
         log.debug("Request to get all adresses where GamerProfile is null");
         return StreamSupport
@@ -73,40 +63,33 @@ public class AdressServiceImpl implements AdressService{
             .collect(Collectors.toList());
     }
 
-    /**
-     *  Get one adress by id.
-     *
-     *  @param id the id of the entity
-     *  @return the entity
-     */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Adress findOne(Long id) {
         log.debug("Request to get Adress : {}", id);
         Adress adress = adressRepository.findOne(id);
         return adress;
     }
 
-    /**
-     *  Delete the  adress by id.
-     *
-     *  @param id the id of the entity
-     */
     public void delete(Long id) {
         log.debug("Request to delete Adress : {}", id);
         adressRepository.delete(id);
         adressSearchRepository.delete(id);
     }
 
-    /**
-     * Search for the adress corresponding to the query.
-     *
-     *  @param query the query of the search
-     *  @return the list of entities
-     */
     @Transactional(readOnly = true)
     public Page<Adress> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of Adresses for query {}", query);
         Page<Adress> result = adressSearchRepository.search(queryStringQuery(query), pageable);
         return result;
+    }
+
+    @Override
+    public Adress getUserAdress() {
+        Adress adress = null;
+        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
+        if (user.isPresent()) {
+            adress = adressRepository.getUserAddress(user.get().getGamerProfile().getId());
+        }
+        return adress;
     }
 }

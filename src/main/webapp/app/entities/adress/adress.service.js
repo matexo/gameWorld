@@ -20,6 +20,7 @@
                     return data;
                 }
             },
+            'getUserAdress': { method: 'GET' , url:"api/adresses/my", isArray:false},
             'update': { method:'PUT' }
         });
     }

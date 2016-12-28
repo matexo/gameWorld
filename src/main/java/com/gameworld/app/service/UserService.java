@@ -1,10 +1,12 @@
 package com.gameworld.app.service;
 
+import com.gameworld.app.domain.Adress;
 import com.gameworld.app.domain.Authority;
+import com.gameworld.app.domain.GamerProfile;
 import com.gameworld.app.domain.User;
-import com.gameworld.app.repository.AuthorityRepository;
-import com.gameworld.app.repository.PersistentTokenRepository;
-import com.gameworld.app.repository.UserRepository;
+import com.gameworld.app.repository.*;
+import com.gameworld.app.repository.search.AdressSearchRepository;
+import com.gameworld.app.repository.search.GamerProfileSearchRepository;
 import com.gameworld.app.repository.search.UserSearchRepository;
 import com.gameworld.app.security.AuthoritiesConstants;
 import com.gameworld.app.security.SecurityUtils;
@@ -45,6 +47,18 @@ public class UserService {
 
     @Inject
     private AuthorityRepository authorityRepository;
+
+    @Inject
+    private GamerProfileRepository gamerProfileRepository;
+
+    @Inject
+    private GamerProfileSearchRepository gamerProfileSearchRepository;
+
+    @Inject
+    private AdressRepository adressRepository;
+
+    @Inject
+    private AdressSearchRepository adressSearchRepository;
 
     public Optional<User> activateRegistration(String key) {
         log.debug("Activating user for activation key {}", key);
@@ -108,6 +122,17 @@ public class UserService {
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         authorities.add(authority);
         newUser.setAuthorities(authorities);
+        Adress adress = new Adress();
+        adress = adressRepository.save(adress);
+        adressSearchRepository.save(adress);
+        GamerProfile gamerProfile = new GamerProfile();
+        gamerProfile.setFirstName(firstName);
+        gamerProfile.setSurname(lastName);
+        gamerProfile.setName(login);
+        gamerProfile.setAdress(adress);
+        gamerProfile = gamerProfileRepository.save(gamerProfile);
+        gamerProfileSearchRepository.save(gamerProfile);
+        newUser.setGamerProfile(gamerProfile);
         userRepository.save(newUser);
         userSearchRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
@@ -137,6 +162,17 @@ public class UserService {
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(ZonedDateTime.now());
         user.setActivated(true);
+        Adress adress = new Adress();
+        adress = adressRepository.save(adress);
+        adressSearchRepository.save(adress);
+        GamerProfile gamerProfile = new GamerProfile();
+        gamerProfile.setFirstName(managedUserVM.getFirstName());
+        gamerProfile.setSurname(managedUserVM.getLastName());
+        gamerProfile.setName(managedUserVM.getLogin());
+        gamerProfile.setAdress(adress);
+        gamerProfile = gamerProfileRepository.save(gamerProfile);
+        gamerProfileSearchRepository.save(gamerProfile);
+        user.setGamerProfile(gamerProfile);
         userRepository.save(user);
         userSearchRepository.save(user);
         log.debug("Created Information for User: {}", user);
@@ -146,7 +182,9 @@ public class UserService {
     public void updateUser(String firstName, String lastName, String email, String langKey) {
         userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent(u -> {
             u.setFirstName(firstName);
+            u.getGamerProfile().setFirstName(firstName);
             u.setLastName(lastName);
+            u.getGamerProfile().setSurname(lastName);
             u.setEmail(email);
             u.setLangKey(langKey);
             userRepository.save(u);
@@ -163,7 +201,9 @@ public class UserService {
             .ifPresent(u -> {
                 u.setLogin(login);
                 u.setFirstName(firstName);
+                u.getGamerProfile().setFirstName(firstName);
                 u.setLastName(lastName);
+                u.getGamerProfile().setSurname(lastName);
                 u.setEmail(email);
                 u.setActivated(activated);
                 u.setLangKey(langKey);

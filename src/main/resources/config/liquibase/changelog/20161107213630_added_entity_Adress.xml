@@ -22,23 +22,23 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="street_name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
-            
+
             <column name="house_no" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
-            
+
             <column name="city" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
-            
+
             <column name="zip_code" type="varchar(6)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
-            
+
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
-        
+
     </changeSet>
 </databaseChangeLog>

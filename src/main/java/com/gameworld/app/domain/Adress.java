@@ -25,19 +25,15 @@ public class Adress implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
     @Column(name = "street_name", nullable = false)
     private String streetName;
 
-    @NotNull
     @Column(name = "house_no", nullable = false)
     private String houseNo;
 
-    @NotNull
     @Column(name = "city", nullable = false)
     private String city;
 
-    @NotNull
     @Size(min = 6, max = 6)
     @Pattern(regexp = "[0-9]{2}\\-[0-9]{3}")
     @Column(name = "zip_code", length = 6, nullable = false)
