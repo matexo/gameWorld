@@ -5,9 +5,9 @@
         .module('gameWorldApp')
         .controller('GameDetailController', GameDetailController);
 
-    GameDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'DataUtils', 'entity', 'Game', 'GameType', 'Platform'];
+    GameDetailController.$inject = ['$scope', '$state' , '$rootScope', '$stateParams', 'previousState', 'DataUtils', 'entity', 'Game', 'GameType', 'Platform'];
 
-    function GameDetailController($scope, $rootScope, $stateParams, previousState, DataUtils, entity, Game, GameType, Platform) {
+    function GameDetailController($scope,$state , $rootScope, $stateParams, previousState, DataUtils, entity, Game, GameType, Platform) {
         var vm = this;
 
         vm.game = entity;
@@ -19,5 +19,9 @@
             vm.game = result;
         });
         $scope.$on('$destroy', unsubscribe);
+
+        vm.addToWishList = function addToWishList(gameId) {
+            Game.addToWishList({id:gameId} , $state.go('wishlist'));
+        };
     }
 })();
