@@ -17,5 +17,6 @@
             vm.tradeOffer = result;
         });
         $scope.$on('$destroy', unsubscribe);
+
     }
 })();

@@ -3,7 +3,7 @@
                  'panel panel-primary' : vm.game.platform.platform.indexOf('Xbox') != -1 ? 'panel panel-success' : 'panel panel-warning'">
 
 <div class="panel-heading">
-        <p class="text-center">{{vm.game.title}} ({{vm.game.yearOfProduction}})</p>
+        <h3 align="center">{{vm.game.title}} ({{vm.game.yearOfProduction}})</h3>
     </div>
     <div class="panel-body">
         <div class="col-lg-4">
@@ -17,12 +17,28 @@
             </a>
         </div>
         <div class="col-lg-8">
-            <p>Title : {{vm.game.title}}</p>
-            <p>Producer: {{vm.game.producer}}</p>
-            <p>Description: {{vm.game.description}}</p>
-            <p>Game type: {{vm.game.gameType.gameType}}</p>
-            <p>Platform : {{vm.game.platform.platform}}</p>
-
+            <dl class="dl-horizontal jh-entity-details">
+                <dt><span>Title:</span></dt>
+                <dd>
+                    <span>{{vm.game.title}}</span>
+                </dd>
+                <dt><span>Producer:</span></dt>
+                <dd>
+                    <span>{{vm.game.producer}}</span>
+                </dd>
+                <dt><span>Description:</span></dt>
+                <dd>
+                    <span>{{vm.game.description}}</span>
+                </dd>
+                <dt><span>Game type:</span></dt>
+                <dd>
+                    <span>{{vm.game.gameType.gameType}}</span>
+                </dd>
+                <dt><span>Platform :</span></dt>
+                <dd>
+                    <span>{{vm.game.platform.platform}}</span>
+                </dd>
+            </dl>
             <button type="submit"
                     ui-sref="{{ vm.previousState }}"
                     class="btn btn-info">

@@ -115,6 +115,7 @@ public class TradeOfferServiceImpl  implements TradeOfferService {
     public TradeOffer findOne(Long id) {
         log.debug("Request to get TradeOffer : {}", id);
         TradeOffer tradeOffer = tradeOfferRepository.findOneWithEagerRelationships(id);
+        tradeOffer.setMarketOfferId(tradeOffer.getMarketOffer().getId());
         return tradeOffer;
     }
 

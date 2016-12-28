@@ -30,7 +30,7 @@ public interface MarketOfferRepository extends JpaRepository<MarketOffer,Long> {
         "WHERE eop.id = :gamerProfileId " +
         "AND mo.offerStatus = 'ENDED' " +
         "AND mo.endDate IS NOT NULL " +
-        "AND offers.status = 'ACCEPTED' " +
+//        "AND offers.status = 'ACCEPTED' " +
         "ORDER BY mo.endDate ",
     countQuery = "SELECT count(mo) " +
         "FROM MarketOffer mo " +
@@ -39,7 +39,7 @@ public interface MarketOfferRepository extends JpaRepository<MarketOffer,Long> {
         "WHERE eop.id = :gamerProfileId " +
         "AND mo.offerStatus = 'ENDED' " +
         "AND mo.endDate IS NOT NULL " +
-        "AND offers.status = 'ACCEPTED' " +
+//        "AND offers.status = 'ACCEPTED' " +
         "ORDER BY mo.endDate ")
     Page<MarketOffer> findMarketOffersEndByUser(@Param("gamerProfileId") Long gamerProfileId , Pageable pageable);
 
@@ -49,7 +49,7 @@ public interface MarketOfferRepository extends JpaRepository<MarketOffer,Long> {
         "WHERE cp.id = :gamerProfileId " +
         "AND mo.offerStatus = 'ENDED' " +
         "AND mo.endDate IS NOT NULL " +
-        "AND offers.status = 'ACCEPTED'" +
+//        "AND offers.status = 'ACCEPTED'" +
         "ORDER BY mo.endDate ",
         countQuery = "SELECT count(mo) " +
          "FROM MarketOffer mo " +
@@ -58,7 +58,7 @@ public interface MarketOfferRepository extends JpaRepository<MarketOffer,Long> {
          "WHERE cp.id = :gamerProfileId " +
          "AND mo.offerStatus = 'ENDED' " +
          "AND mo.endDate IS NOT NULL " +
-         "AND offers.status = 'ACCEPTED' " +
+//         "AND offers.status = 'ACCEPTED' " +
          "ORDER BY mo.endDate ")
     Page<MarketOffer> findEndedMarketOffers(@Param("gamerProfileId") Long gamerProfileId , Pageable pageable);
 
