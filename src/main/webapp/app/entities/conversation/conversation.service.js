@@ -20,7 +20,8 @@
                     return data;
                 }
             },
-            'update': { method:'PUT' }
+            'update': { method:'PUT' },
+            'getConversationToReceiver': { method:'GET' , url:"api/conversations/receiver/:receiverId"}
         });
     }
 })();

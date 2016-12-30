@@ -9,7 +9,7 @@
 
     function ConversationController ($scope, $state, Conversation, ConversationSearch, ParseLinks, AlertService) {
         var vm = this;
-        
+
         vm.conversations = [];
         vm.loadPage = loadPage;
         vm.page = 0;
@@ -26,6 +26,9 @@
         loadAll();
 
         function loadAll () {
+            vm.conversation = Conversation.getConversationToReceiver({receiverId : 2});
+            console.log(vm.conversation);
+
             if (vm.currentSearch) {
                 ConversationSearch.query({
                     query: vm.currentSearch,
@@ -99,5 +102,10 @@
             vm.currentSearch = searchQuery;
             vm.loadAll();
         }
+
+        // vm.getConversationToReceiver = function (receiverId) {
+        //     vm.conversation = Conversation.getConversationToReceiver({receiverId : receiverId});
+        //     console.log(vm.conversation);
+        // }
     }
 })();

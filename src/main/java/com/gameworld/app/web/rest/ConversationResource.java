@@ -32,17 +32,10 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class ConversationResource {
 
     private final Logger log = LoggerFactory.getLogger(ConversationResource.class);
-        
+
     @Inject
     private ConversationService conversationService;
 
-    /**
-     * POST  /conversations : Create a new conversation.
-     *
-     * @param conversation the conversation to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new conversation, or with status 400 (Bad Request) if the conversation has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
     @PostMapping("/conversations")
     @Timed
     public ResponseEntity<Conversation> createConversation(@RequestBody Conversation conversation) throws URISyntaxException {
@@ -56,15 +49,6 @@ public class ConversationResource {
             .body(result);
     }
 
-    /**
-     * PUT  /conversations : Updates an existing conversation.
-     *
-     * @param conversation the conversation to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated conversation,
-     * or with status 400 (Bad Request) if the conversation is not valid,
-     * or with status 500 (Internal Server Error) if the conversation couldnt be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
     @PutMapping("/conversations")
     @Timed
     public ResponseEntity<Conversation> updateConversation(@RequestBody Conversation conversation) throws URISyntaxException {
@@ -78,13 +62,6 @@ public class ConversationResource {
             .body(result);
     }
 
-    /**
-     * GET  /conversations : get all the conversations.
-     *
-     * @param pageable the pagination information
-     * @return the ResponseEntity with status 200 (OK) and the list of conversations in body
-     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
-     */
     @GetMapping("/conversations")
     @Timed
     public ResponseEntity<List<Conversation>> getAllConversations(Pageable pageable)
@@ -95,12 +72,6 @@ public class ConversationResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
-    /**
-     * GET  /conversations/:id : get the "id" conversation.
-     *
-     * @param id the id of the conversation to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the conversation, or with status 404 (Not Found)
-     */
     @GetMapping("/conversations/{id}")
     @Timed
     public ResponseEntity<Conversation> getConversation(@PathVariable Long id) {
@@ -113,12 +84,6 @@ public class ConversationResource {
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    /**
-     * DELETE  /conversations/:id : delete the "id" conversation.
-     *
-     * @param id the id of the conversation to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
     @DeleteMapping("/conversations/{id}")
     @Timed
     public ResponseEntity<Void> deleteConversation(@PathVariable Long id) {
@@ -127,15 +92,6 @@ public class ConversationResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("conversation", id.toString())).build();
     }
 
-    /**
-     * SEARCH  /_search/conversations?query=:query : search for the conversation corresponding
-     * to the query.
-     *
-     * @param query the query of the conversation search 
-     * @param pageable the pagination information
-     * @return the result of the search
-     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
-     */
     @GetMapping("/_search/conversations")
     @Timed
     public ResponseEntity<List<Conversation>> searchConversations(@RequestParam String query, Pageable pageable)
@@ -144,6 +100,13 @@ public class ConversationResource {
         Page<Conversation> page = conversationService.search(query, pageable);
         HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/conversations");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/conversations/receiver/{receiverId}")
+    public ResponseEntity<Conversation> getConversationToReceiver(@PathVariable Long receiverId) {
+        Conversation conversation = conversationService.getConversation(receiverId);
+        HttpHeaders headers = HeaderUtil.createEntityCreationAlert("conversation", "api/conversations/receiver/:receiverId");
+        return new ResponseEntity<>(conversation,headers,HttpStatus.OK);
     }
 
 
