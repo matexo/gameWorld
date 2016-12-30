@@ -67,7 +67,7 @@ class ConversationGatlingTest extends Simulation {
             .exec(http("Create new conversation")
             .post("/api/conversations")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "hasNew":null}""")).asJSON
+            .body(StringBody("""{"id":null, "hasNew":null, "lastUpdate":"2020-01-01T00:00:00.000Z"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_conversation_url"))).exitHereIfFailed
             .pause(10)

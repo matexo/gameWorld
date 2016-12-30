@@ -4,9 +4,9 @@
         .module('gameWorldApp')
         .factory('Conversation', Conversation);
 
-    Conversation.$inject = ['$resource'];
+    Conversation.$inject = ['$resource', 'DateUtils'];
 
-    function Conversation ($resource) {
+    function Conversation ($resource, DateUtils) {
         var resourceUrl =  'api/conversations/:id';
 
         return $resource(resourceUrl, {}, {
@@ -16,6 +16,7 @@
                 transformResponse: function (data) {
                     if (data) {
                         data = angular.fromJson(data);
+                        data.lastUpdate = DateUtils.convertDateTimeFromServer(data.lastUpdate);
                     }
                     return data;
                 }

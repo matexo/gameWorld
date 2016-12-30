@@ -25,6 +25,10 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,6 +46,10 @@ public class ConversationResourceIntTest {
 
     private static final Boolean DEFAULT_HAS_NEW = false;
     private static final Boolean UPDATED_HAS_NEW = true;
+
+    private static final ZonedDateTime DEFAULT_LAST_UPDATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
+    private static final ZonedDateTime UPDATED_LAST_UPDATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+    private static final String DEFAULT_LAST_UPDATE_STR = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(DEFAULT_LAST_UPDATE);
 
     @Inject
     private ConversationRepository conversationRepository;
@@ -83,7 +91,8 @@ public class ConversationResourceIntTest {
      */
     public static Conversation createEntity(EntityManager em) {
         Conversation conversation = new Conversation()
-                .hasNew(DEFAULT_HAS_NEW);
+                .hasNew(DEFAULT_HAS_NEW)
+                .lastUpdate(DEFAULT_LAST_UPDATE);
         return conversation;
     }
 
@@ -110,6 +119,7 @@ public class ConversationResourceIntTest {
         assertThat(conversations).hasSize(databaseSizeBeforeCreate + 1);
         Conversation testConversation = conversations.get(conversations.size() - 1);
         assertThat(testConversation.isHasNew()).isEqualTo(DEFAULT_HAS_NEW);
+        assertThat(testConversation.getLastUpdate()).isEqualTo(DEFAULT_LAST_UPDATE);
 
         // Validate the Conversation in ElasticSearch
         Conversation conversationEs = conversationSearchRepository.findOne(testConversation.getId());
@@ -127,7 +137,8 @@ public class ConversationResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(conversation.getId().intValue())))
-                .andExpect(jsonPath("$.[*].hasNew").value(hasItem(DEFAULT_HAS_NEW.booleanValue())));
+                .andExpect(jsonPath("$.[*].hasNew").value(hasItem(DEFAULT_HAS_NEW.booleanValue())))
+                .andExpect(jsonPath("$.[*].lastUpdate").value(hasItem(DEFAULT_LAST_UPDATE_STR)));
     }
 
     @Test
@@ -141,7 +152,8 @@ public class ConversationResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(conversation.getId().intValue()))
-            .andExpect(jsonPath("$.hasNew").value(DEFAULT_HAS_NEW.booleanValue()));
+            .andExpect(jsonPath("$.hasNew").value(DEFAULT_HAS_NEW.booleanValue()))
+            .andExpect(jsonPath("$.lastUpdate").value(DEFAULT_LAST_UPDATE_STR));
     }
 
     @Test
@@ -163,7 +175,8 @@ public class ConversationResourceIntTest {
         // Update the conversation
         Conversation updatedConversation = conversationRepository.findOne(conversation.getId());
         updatedConversation
-                .hasNew(UPDATED_HAS_NEW);
+                .hasNew(UPDATED_HAS_NEW)
+                .lastUpdate(UPDATED_LAST_UPDATE);
 
         restConversationMockMvc.perform(put("/api/conversations")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -175,6 +188,7 @@ public class ConversationResourceIntTest {
         assertThat(conversations).hasSize(databaseSizeBeforeUpdate);
         Conversation testConversation = conversations.get(conversations.size() - 1);
         assertThat(testConversation.isHasNew()).isEqualTo(UPDATED_HAS_NEW);
+        assertThat(testConversation.getLastUpdate()).isEqualTo(UPDATED_LAST_UPDATE);
 
         // Validate the Conversation in ElasticSearch
         Conversation conversationEs = conversationSearchRepository.findOne(testConversation.getId());
@@ -214,6 +228,7 @@ public class ConversationResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(conversation.getId().intValue())))
-            .andExpect(jsonPath("$.[*].hasNew").value(hasItem(DEFAULT_HAS_NEW.booleanValue())));
+            .andExpect(jsonPath("$.[*].hasNew").value(hasItem(DEFAULT_HAS_NEW.booleanValue())))
+            .andExpect(jsonPath("$.[*].lastUpdate").value(hasItem(DEFAULT_LAST_UPDATE_STR)));
     }
 }

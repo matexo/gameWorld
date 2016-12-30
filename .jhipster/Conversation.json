@@ -27,6 +27,10 @@
         {
             "fieldName": "hasNew",
             "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "lastUpdate",
+            "fieldType": "ZonedDateTime"
         }
     ],
     "changelogDate": "20161107213631",

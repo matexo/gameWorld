@@ -12,6 +12,8 @@
 
         vm.conversation = entity;
         vm.clear = clear;
+        vm.datePickerOpenStatus = {};
+        vm.openCalendar = openCalendar;
         vm.save = save;
         vm.lastmessages = Message.query({filter: 'conversation-is-null'});
         $q.all([vm.conversation.$promise, vm.lastmessages.$promise]).then(function() {
@@ -52,6 +54,10 @@
             vm.isSaving = false;
         }
 
+        vm.datePickerOpenStatus.lastUpdate = false;
 
+        function openCalendar (date) {
+            vm.datePickerOpenStatus[date] = true;
+        }
     }
 })();

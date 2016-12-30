@@ -7,6 +7,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -28,6 +29,9 @@ public class Conversation implements Serializable {
 
     @Column(name = "has_new")
     private Boolean hasNew;
+
+    @Column(name = "last_update")
+    private ZonedDateTime lastUpdate;
 
     @OneToOne
     @JoinColumn(unique = true)
@@ -62,6 +66,19 @@ public class Conversation implements Serializable {
 
     public void setHasNew(Boolean hasNew) {
         this.hasNew = hasNew;
+    }
+
+    public ZonedDateTime getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public Conversation lastUpdate(ZonedDateTime lastUpdate) {
+        this.lastUpdate = lastUpdate;
+        return this;
+    }
+
+    public void setLastUpdate(ZonedDateTime lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
     public Message getLastMessage() {
@@ -152,6 +169,7 @@ public class Conversation implements Serializable {
         return "Conversation{" +
             "id=" + id +
             ", hasNew='" + hasNew + "'" +
+            ", lastUpdate='" + lastUpdate + "'" +
             '}';
     }
 }

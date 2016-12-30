@@ -73,7 +73,8 @@ entity Adress {
 } 
 
 entity Conversation {
-	hasNew Boolean
+	hasNew Boolean,
+	lastUpdate ZonedDateTime
 }
 
 entity Message {

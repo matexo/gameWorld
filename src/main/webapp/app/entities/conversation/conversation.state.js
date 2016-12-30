@@ -96,6 +96,7 @@
                         entity: function () {
                             return {
                                 hasNew: null,
+                                lastUpdate: null,
                                 id: null
                             };
                         }

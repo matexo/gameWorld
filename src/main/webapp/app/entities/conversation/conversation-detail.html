@@ -8,6 +8,10 @@
         <dd>
             <span>{{vm.conversation.hasNew}}</span>
         </dd>
+        <dt><span>Last Update</span></dt>
+        <dd>
+            <span>{{vm.conversation.lastUpdate | date:'medium'}}</span>
+        </dd>
         <dt><span>Last Message</span></dt>
         <dd>
             <a ui-sref="message-detail({id:vm.conversation.lastMessage.id})">{{vm.conversation.lastMessage.id}}</a>
