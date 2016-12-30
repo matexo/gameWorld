@@ -26,6 +26,13 @@ public class Conversation implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "has_new")
+    private Boolean hasNew;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Message lastMessage;
+
     @OneToMany(mappedBy = "conversation")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -42,6 +49,32 @@ public class Conversation implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Boolean isHasNew() {
+        return hasNew;
+    }
+
+    public Conversation hasNew(Boolean hasNew) {
+        this.hasNew = hasNew;
+        return this;
+    }
+
+    public void setHasNew(Boolean hasNew) {
+        this.hasNew = hasNew;
+    }
+
+    public Message getLastMessage() {
+        return lastMessage;
+    }
+
+    public Conversation lastMessage(Message message) {
+        this.lastMessage = message;
+        return this;
+    }
+
+    public void setLastMessage(Message message) {
+        this.lastMessage = message;
     }
 
     public Set<Message> getMessages() {
@@ -118,6 +151,7 @@ public class Conversation implements Serializable {
     public String toString() {
         return "Conversation{" +
             "id=" + id +
+            ", hasNew='" + hasNew + "'" +
             '}';
     }
 }

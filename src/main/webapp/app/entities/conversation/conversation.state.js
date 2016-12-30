@@ -95,6 +95,7 @@
                     resolve: {
                         entity: function () {
                             return {
+                                hasNew: null,
                                 id: null
                             };
                         }

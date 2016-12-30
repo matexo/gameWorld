@@ -36,12 +36,18 @@
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
                     <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="hasNew"><span>Has New</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="lastMessage.id"><span>Last Message</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
                 <tr ng-repeat="conversation in vm.conversations track by conversation.id">
                     <td><a ui-sref="conversation-detail({id:conversation.id})">{{conversation.id}}</a></td>
+                    <td>{{conversation.hasNew}}</td>
+                    <td>
+                        <a ui-sref="message-detail({id:conversation.lastMessage.id})">{{conversation.lastMessage.id}}</a>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

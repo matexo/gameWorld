@@ -5,14 +5,23 @@
         .module('gameWorldApp')
         .controller('ConversationDialogController', ConversationDialogController);
 
-    ConversationDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Conversation', 'Message', 'GamerProfile'];
+    ConversationDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'Conversation', 'Message', 'GamerProfile'];
 
-    function ConversationDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Conversation, Message, GamerProfile) {
+    function ConversationDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, Conversation, Message, GamerProfile) {
         var vm = this;
 
         vm.conversation = entity;
         vm.clear = clear;
         vm.save = save;
+        vm.lastmessages = Message.query({filter: 'conversation-is-null'});
+        $q.all([vm.conversation.$promise, vm.lastmessages.$promise]).then(function() {
+            if (!vm.conversation.lastMessage || !vm.conversation.lastMessage.id) {
+                return $q.reject();
+            }
+            return Message.get({id : vm.conversation.lastMessage.id}).$promise;
+        }).then(function(lastMessage) {
+            vm.lastmessages.push(lastMessage);
+        });
         vm.messages = Message.query();
         vm.gamerprofiles = GamerProfile.query();
 

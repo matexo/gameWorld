@@ -13,7 +13,7 @@
     <include file="classpath:config/liquibase/changelog/20161106173433_added_entity_TradeOffer.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20161106173434_added_entity_Comment.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20161106173435_added_entity_Adress.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161106173436_added_entity_Conversation.xml" relativeToChangelogFile="false"/>
+    <!--<include file="classpath:config/liquibase/changelog/20161106173436_added_entity_Conversation.xml" relativeToChangelogFile="false"/>-->
     <include file="classpath:config/liquibase/changelog/20161106173437_added_entity_Message.xml" relativeToChangelogFile="false"/>
     <!--<include file="classpath:config/liquibase/changelog/20161107213623_added_entity_GameType.xml" relativeToChangelogFile="false"/>-->
     <!--<include file="classpath:config/liquibase/changelog/20161107213624_added_entity_Platform.xml" relativeToChangelogFile="false"/>-->
@@ -23,7 +23,7 @@
     <!--<include file="classpath:config/liquibase/changelog/20161107213628_added_entity_TradeOffer.xml" relativeToChangelogFile="false"/>-->
     <!--<include file="classpath:config/liquibase/changelog/20161107213629_added_entity_Comment.xml" relativeToChangelogFile="false"/>-->
     <!--<include file="classpath:config/liquibase/changelog/20161107213630_added_entity_Adress.xml" relativeToChangelogFile="false"/>-->
-    <!--<include file="classpath:config/liquibase/changelog/20161107213631_added_entity_Conversation.xml" relativeToChangelogFile="false"/>-->
+    <include file="classpath:config/liquibase/changelog/20161107213631_added_entity_Conversation.xml" relativeToChangelogFile="false"/>
     <!--<include file="classpath:config/liquibase/changelog/20161107213632_added_entity_Message.xml" relativeToChangelogFile="false"/>-->
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="classpath:config/liquibase/changelog/20161106173430_added_entity_constraints_Game.xml" relativeToChangelogFile="false"/>
@@ -38,6 +38,7 @@
     <!--<include file="classpath:config/liquibase/changelog/20161107213628_added_entity_constraints_TradeOffer.xml" relativeToChangelogFile="false"/>-->
     <!--<include file="classpath:config/liquibase/changelog/20161107213629_added_entity_constraints_Comment.xml" relativeToChangelogFile="false"/>-->
     <!--<include file="classpath:config/liquibase/changelog/20161107213632_added_entity_constraints_Message.xml" relativeToChangelogFile="false"/>-->
+    <include file="classpath:config/liquibase/changelog/20161107213631_added_entity_constraints_Conversation.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <include file="classpath:config/liquibase/changelog/loadFiles.xml" relativeToChangelogFile="false"/>
 

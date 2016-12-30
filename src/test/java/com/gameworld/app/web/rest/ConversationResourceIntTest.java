@@ -40,6 +40,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = GameWorldApp.class)
 public class ConversationResourceIntTest {
 
+    private static final Boolean DEFAULT_HAS_NEW = false;
+    private static final Boolean UPDATED_HAS_NEW = true;
+
     @Inject
     private ConversationRepository conversationRepository;
 
@@ -79,7 +82,8 @@ public class ConversationResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Conversation createEntity(EntityManager em) {
-        Conversation conversation = new Conversation();
+        Conversation conversation = new Conversation()
+                .hasNew(DEFAULT_HAS_NEW);
         return conversation;
     }
 
@@ -105,6 +109,7 @@ public class ConversationResourceIntTest {
         List<Conversation> conversations = conversationRepository.findAll();
         assertThat(conversations).hasSize(databaseSizeBeforeCreate + 1);
         Conversation testConversation = conversations.get(conversations.size() - 1);
+        assertThat(testConversation.isHasNew()).isEqualTo(DEFAULT_HAS_NEW);
 
         // Validate the Conversation in ElasticSearch
         Conversation conversationEs = conversationSearchRepository.findOne(testConversation.getId());
@@ -121,7 +126,8 @@ public class ConversationResourceIntTest {
         restConversationMockMvc.perform(get("/api/conversations?sort=id,desc"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(conversation.getId().intValue())));
+                .andExpect(jsonPath("$.[*].id").value(hasItem(conversation.getId().intValue())))
+                .andExpect(jsonPath("$.[*].hasNew").value(hasItem(DEFAULT_HAS_NEW.booleanValue())));
     }
 
     @Test
@@ -134,7 +140,8 @@ public class ConversationResourceIntTest {
         restConversationMockMvc.perform(get("/api/conversations/{id}", conversation.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(conversation.getId().intValue()));
+            .andExpect(jsonPath("$.id").value(conversation.getId().intValue()))
+            .andExpect(jsonPath("$.hasNew").value(DEFAULT_HAS_NEW.booleanValue()));
     }
 
     @Test
@@ -155,6 +162,8 @@ public class ConversationResourceIntTest {
 
         // Update the conversation
         Conversation updatedConversation = conversationRepository.findOne(conversation.getId());
+        updatedConversation
+                .hasNew(UPDATED_HAS_NEW);
 
         restConversationMockMvc.perform(put("/api/conversations")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -165,6 +174,7 @@ public class ConversationResourceIntTest {
         List<Conversation> conversations = conversationRepository.findAll();
         assertThat(conversations).hasSize(databaseSizeBeforeUpdate);
         Conversation testConversation = conversations.get(conversations.size() - 1);
+        assertThat(testConversation.isHasNew()).isEqualTo(UPDATED_HAS_NEW);
 
         // Validate the Conversation in ElasticSearch
         Conversation conversationEs = conversationSearchRepository.findOne(testConversation.getId());
@@ -203,6 +213,7 @@ public class ConversationResourceIntTest {
         restConversationMockMvc.perform(get("/api/_search/conversations?query=id:" + conversation.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(conversation.getId().intValue())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(conversation.getId().intValue())))
+            .andExpect(jsonPath("$.[*].hasNew").value(hasItem(DEFAULT_HAS_NEW.booleanValue())));
     }
 }

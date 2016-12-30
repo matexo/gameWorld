@@ -2,6 +2,14 @@
     "fluentMethods": true,
     "relationships": [
         {
+            "relationshipType": "one-to-one",
+            "relationshipName": "lastMessage",
+            "otherEntityName": "message",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "conversation"
+        },
+        {
             "relationshipType": "one-to-many",
             "relationshipName": "messages",
             "otherEntityName": "message",
@@ -15,7 +23,12 @@
             "otherEntityRelationshipName": "conversations"
         }
     ],
-    "fields": [],
+    "fields": [
+        {
+            "fieldName": "hasNew",
+            "fieldType": "Boolean"
+        }
+    ],
     "changelogDate": "20161107213631",
     "entityTableName": "conversation",
     "dto": "no",

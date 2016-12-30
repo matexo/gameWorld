@@ -4,6 +4,14 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Has New</span></dt>
+        <dd>
+            <span>{{vm.conversation.hasNew}}</span>
+        </dd>
+        <dt><span>Last Message</span></dt>
+        <dd>
+            <a ui-sref="message-detail({id:vm.conversation.lastMessage.id})">{{vm.conversation.lastMessage.id}}</a>
+        </dd>
     </dl>
 
     <button type="submit"

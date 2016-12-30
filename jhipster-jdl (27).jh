@@ -73,7 +73,7 @@ entity Adress {
 } 
 
 entity Conversation {
-	
+	hasNew Boolean
 }
 
 entity Message {
@@ -101,7 +101,8 @@ relationship OneToOne {
     Game{platform} to Platform,
 	MarketOffer{game} to Game,
     GamerProfile{adress} to Adress{gamerProfile},
-    MarketOffer{endOfferProfile} to GamerProfile
+    MarketOffer{endOfferProfile} to GamerProfile,
+    Conversation{lastMessage} to Message
 }
 
 relationship ManyToOne {
