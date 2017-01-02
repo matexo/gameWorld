@@ -48,12 +48,7 @@ public class TradeOfferServiceImpl  implements TradeOfferService {
     @Inject
     private MarketOfferRepository marketOfferRepository;
 
-    /**
-     * Save a tradeOffer.
-     *
-     * @param tradeOffer the entity to save
-     * @return the persisted entity
-     */
+    @Transactional
     public TradeOffer save(TradeOffer tradeOffer) {
         log.debug("Request to save TradeOffer : {}", tradeOffer);
         TradeOffer result = tradeOfferRepository.save(tradeOffer);
@@ -61,6 +56,7 @@ public class TradeOfferServiceImpl  implements TradeOfferService {
         return result;
     }
 
+    @Transactional
     public TradeOffer addNewTradeOffer(TradeOffer tradeOffer) {
         Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
         if (user.isPresent())
@@ -76,12 +72,6 @@ public class TradeOfferServiceImpl  implements TradeOfferService {
         return tradeOfferFromDB;
     }
 
-    /**
-     * Get all the tradeOffers.
-     *
-     * @param pageable the pagination information
-     * @return the list of entities
-     */
     @Transactional(readOnly = true)
     public Page<TradeOffer> findAll(Pageable pageable) {
         log.debug("Request to get all TradeOffers");
@@ -91,23 +81,19 @@ public class TradeOfferServiceImpl  implements TradeOfferService {
 
     @Transactional(readOnly = true)
     public Page<TradeOffer> findAllCreatedByUser(Pageable pageable) {
-        Page<TradeOffer> result = null;
-        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
-        if (user.isPresent()) {
-            result = tradeOfferRepository.findAllTradeOffersCreatedByUser(user.get().getId(), pageable);
-            result.getContent().forEach(e -> e.setMarketOfferId(e.getMarketOffer().getId()));
-        }
+        Page<TradeOffer> result;
+        String username = SecurityUtils.getCurrentUserLogin();
+        result = tradeOfferRepository.findAllTradeOffersCreatedByUser(username, pageable);
+        result.getContent().forEach(e -> e.setMarketOfferId(e.getMarketOffer().getId()));
         return result;
     }
 
     @Transactional(readOnly = true)
     public Page<TradeOffer> findAllAssignedToUser(Pageable pageable) {
-        Page<TradeOffer> result = null;
-        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
-        if (user.isPresent()) {
-            result = tradeOfferRepository.findAllTradeOffersAssignedToUser(user.get().getId(), pageable);
-            result.getContent().forEach(e -> e.setMarketOfferId(e.getMarketOffer().getId()));
-        }
+        Page<TradeOffer> result;
+        String username = SecurityUtils.getCurrentUserLogin();
+        result = tradeOfferRepository.findAllTradeOffersAssignedToUser(username, pageable);
+        result.getContent().forEach(e -> e.setMarketOfferId(e.getMarketOffer().getId()));
         return result;
     }
 
@@ -132,7 +118,7 @@ public class TradeOfferServiceImpl  implements TradeOfferService {
         return result;
     }
 
-    @Override
+    @Transactional
     public boolean acceptTradeOffer(Long tradeOfferId) {
         Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
         if (user.isPresent()) {
@@ -155,7 +141,7 @@ public class TradeOfferServiceImpl  implements TradeOfferService {
         return false;
     }
 
-    @Override
+    @Transactional
     public boolean rejectTradeOffer(Long tradeOfferId) {
         Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
         if (user.isPresent()) {
@@ -171,7 +157,7 @@ public class TradeOfferServiceImpl  implements TradeOfferService {
         return false;
     }
 
-    @Override
+    @Transactional
     public boolean cancelTradeOffer(Long tradeOfferId) {
         Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
         if (user.isPresent()) {

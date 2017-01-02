@@ -1,77 +1,50 @@
-
 <div>
-    <h2><span>Conversation</span> {{vm.conversation.id}}</h2>
     <hr>
-    <button type="button" ui-sref="conversation-detail.newmessage({id:vm.conversation.id})" class="btn btn-primary">
-        <span class="glyphicon glyphicon-pencil"></span>
-        <span class="hidden-xs hidden-sm"> Add message</span>
-    </button>
-    <jhi-alert-error></jhi-alert-error>
-    <dl class="dl-horizontal jh-entity-details">
-        <dt><span>Has New</span></dt>
-        <dd>
-            <span>{{vm.conversation.hasNew}}</span>
-        </dd>
-        <dt><span>Last Update</span></dt>
-        <dd>
-            <span>{{vm.conversation.lastUpdate | date:'medium'}}</span>
-        </dd>
-        <dt><span>Last Message</span></dt>
-        <dd>
-            <a ui-sref="message-detail({id:vm.conversation.lastMessage.id})">{{vm.conversation.lastMessage.id}}</a>
-        </dd>
-    </dl>
 
-    <div class="table-responsive">
-        <table class="jh-table table table-striped">
-            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
-            <tr ng-repeat="message in vm.messages track by message.id">
-                <td><a ui-sref="message-detail({id:message.id})">{{message.id}}</a></td>
-                <td>{{message.text}}</td>
-                <td>{{message.sendTime | date:'medium'}}</td>
-                <td>{{message.isNew}}</td>
-                <td>
-                    <a ui-sref="gamer-profile-detail({id:message.authorProfile.id})">{{message.authorProfile.id}}</a>
-                </td>
-                <td>
-                    <a ui-sref="conversation-detail({id:message.conversation.id})">{{message.conversation.id}}</a>
-                </td>
-                <!--<td class="text-right">-->
-                    <!--<div class="btn-group flex-btn-group-container">-->
-                        <!--<button type="submit"-->
-                                <!--ui-sref="message-detail({id:message.id})"-->
-                                <!--class="btn btn-info btn-sm">-->
-                            <!--<span class="glyphicon glyphicon-eye-open"></span>-->
-                            <!--<span class="hidden-xs hidden-sm"></span>-->
-                        <!--</button>-->
-                        <!--<button type="submit"-->
-                                <!--ui-sref="message.edit({id:message.id})"-->
-                                <!--class="btn btn-primary btn-sm">-->
-                            <!--<span class="glyphicon glyphicon-pencil"></span>-->
-                            <!--<span class="hidden-xs hidden-sm"></span>-->
-                        <!--</button>-->
-                        <!--<button type="submit"-->
-                                <!--ui-sref="message.delete({id:message.id})"-->
-                                <!--class="btn btn-danger btn-sm">-->
-                            <!--<span class="glyphicon glyphicon-remove-circle"></span>-->
-                            <!--<span class="hidden-xs hidden-sm"></span>-->
-                        <!--</button>-->
-                    <!--</div>-->
-                <!--</td>-->
-            </tr>
-            </tbody>
-        </table>
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="panel panel-primary">
+        <div class="panel panel-heading">
+            <h3 align="center">
+                <span>Conversation between <a
+                    ui-sref="gamer-profile-detail({id:vm.conversation.profiles[0].id})">{{vm.conversation.profiles[0].name}}</a> and <a
+                    ui-sref="gamer-profile-detail({id:vm.conversation.profiles[1].id})">{{vm.conversation.profiles[1].name}}</a></span>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <button type="button" ui-sref="conversation-detail.newmessage({id:vm.conversation.id})"
+                            class="btn btn-success">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        <span class="hidden-xs hidden-sm"> Add message</span>
+                    </button>
+                </div>
+                <div class="col-sm-6" align="right">
+                    <button type="submit"
+                            ui-sref="conversation"
+                            class="btn btn-success">
+                        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back to all conversation</span>
+                    </button>
+                </div>
+            </div>
+            <br/><br/>
+            <div infinite-scroll="vm.loadPage(vm.page + 1)"
+                 infinite-scroll-disabled="vm.page >= vm.links['last']">
+            <div ng-repeat="message in vm.messages track by message.id"
+                 ng-class="message.authorProfile.name != vm.conversation.profiles[0].name ? 'text-right' : 'text-left'">
+                <label class="label label-primary"><a ui-sref="gamer-profile-detail({id:message.authorProfile.id})">{{message.authorProfile.name}}</a>
+                    on {{message.sendTime | date: 'medium'}}</label>
+                <h4>{{message.text}}</h4>
+            </div>
+            </div>
+        </div>
     </div>
 
-    <button type="submit"
-            ui-sref="conversation"
-            class="btn btn-info">
-        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
-    </button>
 
     <!--<button type="button" ui-sref="conversation-detail.edit({id:vm.conversation.id})" class="btn btn-primary">-->
-        <!--<span class="glyphicon glyphicon-pencil"></span>-->
-        <!--<span class="hidden-xs hidden-sm"> Edit</span>-->
+    <!--<span class="glyphicon glyphicon-pencil"></span>-->
+    <!--<span class="hidden-xs hidden-sm"> Edit</span>-->
     <!--</button>-->
 
 

@@ -5,9 +5,9 @@
         .module('gameWorldApp')
         .controller('MarketOfferController', MarketOfferController);
 
-    MarketOfferController.$inject = ['$scope', '$state', 'MarketOffer', 'MarketOfferSearch', 'ParseLinks', 'AlertService'];
+    MarketOfferController.$inject = ['$scope', '$state', 'MarketOffer', 'MarketOfferSearch', 'ParseLinks', 'AlertService' , 'Conversation'];
 
-    function MarketOfferController ($scope, $state, MarketOffer, MarketOfferSearch, ParseLinks, AlertService) {
+    function MarketOfferController ($scope, $state, MarketOffer, MarketOfferSearch, ParseLinks, AlertService , Conversation) {
         var vm = this;
 
         vm.marketOffers = [];
@@ -129,6 +129,14 @@
                 function() {
                     $state.go('deals');
                 });
+        }
+
+        vm.sendMessage = function (profileId) {
+            console.log(profileId);
+            Conversation.getConversationToReceiver({receiverId: profileId} , function (data) {
+                vm.conversation = data.id;
+                $state.go('conversation-detail.newmessage' ,{id:vm.conversation});
+            });
         }
     }
 })();

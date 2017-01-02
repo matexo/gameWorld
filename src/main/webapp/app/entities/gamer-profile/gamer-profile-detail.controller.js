@@ -24,8 +24,6 @@
                 vm.conversation = data.id;
                 $state.go('conversation-detail.newmessage' ,{id:vm.conversation});
             });
-            // console.log(vm.conversation);
-
         }
     }
 })();

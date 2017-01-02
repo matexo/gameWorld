@@ -24,27 +24,27 @@ public interface TradeOfferRepository extends JpaRepository<TradeOffer,Long> {
     @Query(value = "SELECT tradeOffer " +
         "FROM TradeOffer tradeOffer " +
         "JOIN tradeOffer.createProfile " +
-        "WHERE tradeOffer.createProfile.id = :profileId " +
+        "WHERE tradeOffer.createProfile.name = :username " +
         "ORDER BY tradeOffer.timestamp",
         countQuery = "SELECT count(tradeOffer) " +
             "FROM TradeOffer tradeOffer " +
             "JOIN tradeOffer.createProfile " +
-            "WHERE tradeOffer.createProfile.id = :profileId")
-    Page<TradeOffer> findAllTradeOffersCreatedByUser(@Param("profileId") Long profileId , Pageable pageable);
+            "WHERE tradeOffer.createProfile.name = :username")
+    Page<TradeOffer> findAllTradeOffersCreatedByUser(@Param("username") String username , Pageable pageable);
 
     @Query(value = "SELECT offers " +
         "FROM MarketOffer marketOffer " +
         "JOIN marketOffer.offers offers " +
         "JOIN marketOffer.createProfile " +
-        "WHERE marketOffer.createProfile.id = :profileId " +
+        "WHERE marketOffer.createProfile.name = :username " +
         "AND offers.status = 'PENDING' " +
         "ORDER BY offers.timestamp",
     countQuery = "SELECT count(offers) " +
         "FROM MarketOffer marketOffer " +
         "JOIN marketOffer.offers offers " +
         "JOIN marketOffer.createProfile " +
-        "WHERE marketOffer.createProfile.id = :profileId " +
+        "WHERE marketOffer.createProfile.name = :username " +
         "AND offers.status = 'PENDING' ")
-    Page<TradeOffer> findAllTradeOffersAssignedToUser(@Param("profileId") Long profileId , Pageable pageable);
+    Page<TradeOffer> findAllTradeOffersAssignedToUser(@Param("username") String username , Pageable pageable);
 
 }

@@ -27,6 +27,7 @@
         loadAll();
 
         function loadAll() {
+            console.log(vm.conversation);
             Conversation.getAllMessagesToConversation({
                 page: vm.page,
                 size: 20,
