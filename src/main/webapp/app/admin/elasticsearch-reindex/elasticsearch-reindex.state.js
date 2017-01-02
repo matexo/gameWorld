@@ -21,13 +21,6 @@
                     controller: 'ElasticsearchReindexController',
                     controllerAs: 'vm'
                 }
-            },
-            resolve: {
-                translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                    $translatePartialLoader.addPart('elasticsearch-reindex');
-                    $translatePartialLoader.addPart('global');
-                    return $translate.refresh();
-                }]
             }
         }).state('elasticsearch-reindex.dialog', {
             parent: 'elasticsearch-reindex',

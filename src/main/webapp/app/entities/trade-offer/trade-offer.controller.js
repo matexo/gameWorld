@@ -100,15 +100,17 @@
         }
 
         vm.acceptTrade = function acceptTradeOffer(tradeOfferId) {
-            TradeOffer.acceptTradeOffer({id:tradeOfferId} , loadAll() , AlertService.error("Error"));
+            TradeOffer.acceptTradeOffer({id:tradeOfferId} , loadAll() );
+            loadAll();
         };
 
         vm.rejectTrade = function rejectTrade(tradeOfferId) {
-            TradeOffer.rejectTradeOffer({id:tradeOfferId} , loadAll() , AlertService.error("Error"));
+            TradeOffer.rejectTradeOffer({id:tradeOfferId} , loadAll()  );
+            loadAll();
         };
 
         vm.cancelTrade = function cancelTradeOffer(tradeOfferId) {
-            TradeOffer.cancelTradeOffer({id:tradeOfferId} , loadAll() , AlertService.error("Error"));
+            TradeOffer.cancelTradeOffer({id:tradeOfferId} , clear() );
         };
     }
 })();
