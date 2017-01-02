@@ -1,6 +1,8 @@
 package com.gameworld.app.service.impl;
 
+import com.gameworld.app.domain.GamerProfile;
 import com.gameworld.app.domain.User;
+import com.gameworld.app.repository.GamerProfileRepository;
 import com.gameworld.app.repository.UserRepository;
 import com.gameworld.app.security.SecurityUtils;
 import com.gameworld.app.service.GameService;
@@ -42,6 +44,9 @@ public class GameServiceImpl implements GameService {
     @Inject
     private UserRepository userRepository;
 
+    @Inject
+    private GamerProfileRepository gamerProfileRepository;
+
     public Game save(Game game) {
         log.debug("Request to save Game : {}", game);
         Game result = gameRepository.save(game);
@@ -78,41 +83,30 @@ public class GameServiceImpl implements GameService {
 
     @Transactional
     public void addGameToWishList(Long gameId) {
-        Optional<User> usero = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
-        if (usero.isPresent()) {
-            User user = usero.get();
-            Game game = gameRepository.findOne(gameId);
-            if (game != null) {
-                user.getGamerProfile().addSearchedGames(game);
-                userRepository.save(user);
-            }
+        GamerProfile gamerProfile = gamerProfileRepository.findGamerProfileByName(SecurityUtils.getCurrentUserLogin());
+        Game game = gameRepository.findOne(gameId);
+        if(gamerProfile != null && game != null) {
+            gamerProfile.addSearchedGames(game);
+            gamerProfileRepository.save(gamerProfile);
         }
     }
 
 
     @Transactional(readOnly = true)
     public Page<Game> getGamesFromWishlist(Pageable pageable) {
-        Page<Game> wishlist = null;
-        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
-        if (user.isPresent()) {
-            wishlist = gameRepository.getGamesFromWishlist(user.get().getId() , pageable);
-        }
-        return wishlist;
+        return gameRepository.getGamesFromWishlist(SecurityUtils.getCurrentUserLogin() , pageable);
     }
 
     @Transactional
     public void removeGameFromWishlist(Long gameId) {
-        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
-        if (user.isPresent()) {
-            User usero = user.get();
-            Set<Game> wishlist = usero.getGamerProfile().getSearchedGames();
+        GamerProfile gamerProfile = gamerProfileRepository.findGamerProfileByName(SecurityUtils.getCurrentUserLogin());
+        if(gamerProfile != null) {
             Game gameToRemove = null;
-            for(Game game : wishlist){
-                if(game.getId().equals(gameId))
-                    gameToRemove = game;
-            }
-            wishlist.remove(gameToRemove);
-            userRepository.save(usero);
+            for(Game gameFromProfile : gamerProfile.getSearchedGames())
+                if(gameFromProfile.getId().equals(gameId))
+                    gameToRemove = gameFromProfile;
+            gamerProfile.removeSearchedGames(gameToRemove);
+            gamerProfileRepository.save(gamerProfile);
         }
     }
 

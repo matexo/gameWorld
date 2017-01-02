@@ -39,6 +39,7 @@
                     <span>{{vm.game.platform.platform}}</span>
                 </dd>
             </dl>
+            <div class="text-center">
             <button type="submit"
                     ui-sref="{{ vm.previousState }}"
                     class="btn btn-info">
@@ -60,10 +61,11 @@
             </button>
             <button type="submit"
                     ng-click="vm.addToWishList(vm.game.id)"
-                    class="btn btn-warning">
+                    class="btn btn-success">
                 <span class="glyphicon glyphicon-plus"></span>
                 <span class="hidden-xs hidden-sm">Want it!</span>
             </button>
+            </div>
         </div>
     </div>
 </div>

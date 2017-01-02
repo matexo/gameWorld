@@ -18,11 +18,11 @@ public interface GameRepository extends JpaRepository<Game,Long> {
     @Query(value = "SELECT games " +
         "FROM GamerProfile gp " +
         "JOIN gp.searchedGames games " +
-        "WHERE gp.id = :profileId"
+        "WHERE gp.name = :username"
         ,countQuery = "SELECT count(games) " +
         "FROM GamerProfile gp " +
         "JOIN gp.searchedGames games " +
-        "WHERE gp.id = :profileId")
-    Page<Game> getGamesFromWishlist(@Param("profileId") Long profileId , Pageable pageable);
+        "WHERE gp.name = :username")
+    Page<Game> getGamesFromWishlist(@Param("username") String username , Pageable pageable);
 }
 

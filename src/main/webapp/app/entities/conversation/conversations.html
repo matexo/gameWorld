@@ -28,10 +28,10 @@
                         ui-sref="gamer-profile-detail({id:conversation.profiles[0].id})">{{conversation.profiles[1].name}}</a></label>
                 </div>
                 <div class="panel-body">
-                    <label class="label label-success">Last message :</label>
+                    <label class="label label-primary">Last message :</label>
                     <span>{{conversation.lastMessage.text}}</span><br/>
-                    <label class="label label-success"> sent on : {{conversation.lastMessage.sendTime}}</label><br/>
-                    <label class="label label-success">from : {{conversation.lastMessage.authorProfile.name}}</label>
+                    <label class="label label-primary"> sent on : {{conversation.lastMessage.sendTime}}</label><br/>
+                    <label class="label label-primary">from : {{conversation.lastMessage.authorProfile.name}}</label>
                     <div align="right">
                         <button type="submit"
                                 ui-sref="conversation-detail({id:conversation.id})"

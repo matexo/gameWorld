@@ -11,7 +11,7 @@
         var vm = this;
 
         vm.isNavbarCollapsed = true;
-        vm.isAuthenticated = Principal.isAuthenticated;
+        // vm.isAuthenticated = Principal.isAuthenticated;
 
         ProfileService.getProfileInfo().then(function(response) {
             vm.inProduction = response.inProduction;
@@ -23,6 +23,23 @@
         vm.toggleNavbar = toggleNavbar;
         vm.collapseNavbar = collapseNavbar;
         vm.$state = $state;
+
+        vm.account = null;
+        vm.isAuthenticated = null;
+        // vm.login = LoginService.open;
+        // vm.register = register;
+        // $scope.$on('authenticationSuccess', function() {
+        //     getAccount();
+        // });
+
+        getAccount();
+
+        function getAccount() {
+            Principal.identity().then(function(account) {
+                vm.account = account;
+                vm.isAuthenticated = Principal.isAuthenticated;
+            });
+        }
 
         function login() {
             collapseNavbar();
@@ -42,5 +59,7 @@
         function collapseNavbar() {
             vm.isNavbarCollapsed = true;
         }
+
+
     }
 })();
