@@ -22,4 +22,5 @@ public interface MarketOfferService {
     void finalizeOffer(Long id);
     Page<MarketOffer> findMarketOffersEndByUser(Pageable pageable);
     Page<MarketOffer> findEndedMarketOffers(Pageable pageable);
+    void cancelMarketOffer( Long marketOfferId);
 }

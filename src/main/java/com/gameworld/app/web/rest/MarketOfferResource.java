@@ -37,13 +37,7 @@ public class MarketOfferResource {
     @Inject
     private MarketOfferService marketOfferService;
 
-    /**
-     * POST  /market-offers : Create a new marketOffer.
-     *
-     * @param marketOffer the marketOffer to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new marketOffer, or with status 400 (Bad Request) if the marketOffer has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
+
     @PostMapping("/market-offers")
     @Timed
     public ResponseEntity<MarketOffer> createMarketOffer(@Valid @RequestBody MarketOffer marketOffer) throws URISyntaxException {
@@ -57,15 +51,7 @@ public class MarketOfferResource {
             .body(result);
     }
 
-    /**
-     * PUT  /market-offers : Updates an existing marketOffer.
-     *
-     * @param marketOffer the marketOffer to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated marketOffer,
-     * or with status 400 (Bad Request) if the marketOffer is not valid,
-     * or with status 500 (Internal Server Error) if the marketOffer couldnt be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
+
     @PutMapping("/market-offers")
     @Timed
     public ResponseEntity<MarketOffer> updateMarketOffer(@Valid @RequestBody MarketOffer marketOffer) throws URISyntaxException {
@@ -79,13 +65,6 @@ public class MarketOfferResource {
             .body(result);
     }
 
-    /**
-     * GET  /market-offers : get all the marketOffers.
-     *
-     * @param pageable the pagination information
-     * @return the ResponseEntity with status 200 (OK) and the list of marketOffers in body
-     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
-     */
     @GetMapping("/market-offers")
     @Timed
     public ResponseEntity<List<MarketOffer>> getAllMarketOffers(Pageable pageable)
@@ -96,12 +75,6 @@ public class MarketOfferResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
-    /**
-     * GET  /market-offers/:id : get the "id" marketOffer.
-     *
-     * @param id the id of the marketOffer to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the marketOffer, or with status 404 (Not Found)
-     */
     @GetMapping("/market-offers/{id}")
     @Timed
     public ResponseEntity<MarketOffer> getMarketOffer(@PathVariable Long id) {
@@ -114,12 +87,6 @@ public class MarketOfferResource {
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    /**
-     * DELETE  /market-offers/:id : delete the "id" marketOffer.
-     *
-     * @param id the id of the marketOffer to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
     @DeleteMapping("/market-offers/{id}")
     @Timed
     public ResponseEntity<Void> deleteMarketOffer(@PathVariable Long id) {
@@ -128,15 +95,6 @@ public class MarketOfferResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("marketOffer", id.toString())).build();
     }
 
-    /**
-     * SEARCH  /_search/market-offers?query=:query : search for the marketOffer corresponding
-     * to the query.
-     *
-     * @param query the query of the marketOffer search
-     * @param pageable the pagination information
-     * @return the result of the search
-     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
-     */
     @GetMapping("/_search/market-offers")
     @Timed
     public ResponseEntity<List<MarketOffer>> searchMarketOffers(@RequestParam String query, Pageable pageable)
@@ -173,6 +131,13 @@ public class MarketOfferResource {
         Page<MarketOffer> page = marketOfferService.findEndedMarketOffers(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/market-offers/my/ended");
         return new ResponseEntity<>(page.getContent() , headers , HttpStatus.OK);
+    }
+
+    @PutMapping("/market-offers/cancel")
+    @Timed
+    public ResponseEntity<Void> cancelMarketOffer(@RequestBody MarketOffer marketOffer) {
+        marketOfferService.cancelMarketOffer(marketOffer.getId());
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("marketOffer", marketOffer.getId().toString())).build();
     }
 
 }

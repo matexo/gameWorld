@@ -3,6 +3,7 @@ package com.gameworld.app.service.impl;
 import com.gameworld.app.domain.GamerProfile;
 import com.gameworld.app.domain.TradeOffer;
 import com.gameworld.app.domain.User;
+import com.gameworld.app.domain.enumeration.OfferStatus;
 import com.gameworld.app.repository.UserRepository;
 import com.gameworld.app.security.SecurityUtils;
 import com.gameworld.app.service.MarketOfferService;
@@ -58,7 +59,8 @@ public class MarketOfferServiceImpl implements MarketOfferService{
     @Transactional(readOnly = true)
     public Page<MarketOffer> findAll(Pageable pageable) {
         log.debug("Request to get all MarketOffers");
-        Page<MarketOffer> result = marketOfferRepository.findAllCurrentOffers(pageable);
+        String username = SecurityUtils.getCurrentUserLogin();
+        Page<MarketOffer> result = marketOfferRepository.findAllCurrentOffers(username , pageable);
         return result;
     }
 
@@ -128,6 +130,18 @@ public class MarketOfferServiceImpl implements MarketOfferService{
             marketOffers = marketOfferRepository.findEndedMarketOffers(user.get().getGamerProfile().getId() , pageable);
         }
         return marketOffers;
+    }
+
+    @Transactional
+    public void cancelMarketOffer(Long marketOfferId) {
+        String username = SecurityUtils.getCurrentUserLogin();
+        MarketOffer marketOffer = marketOfferRepository.findOne(marketOfferId);
+        if(marketOffer != null && marketOffer.getCreateProfile().getName().equals(username) && marketOffer.getOfferStatus().equals(OfferStatus.NEW)) {
+            marketOffer.setOfferStatus(OfferStatus.CANCELLED);
+            marketOffer.setEndDate(DateUtil.getNowDateTime());
+            marketOffer = marketOfferRepository.save(marketOffer);
+            marketOfferSearchRepository.save(marketOffer);
+        }
     }
 
 

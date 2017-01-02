@@ -29,6 +29,10 @@
                 method: 'PUT',
                 url: "api/market-offers/buy"
             },
+            'cancelMarketOffer': {
+                method: 'PUT',
+                url:'api/market-offers/cancel'
+            },
             'getMy': {
                 method: 'GET',
                 url: 'api/market-offers/my',

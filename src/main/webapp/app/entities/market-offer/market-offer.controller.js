@@ -137,6 +137,13 @@
                 vm.conversation = data.id;
                 $state.go('conversation-detail.newmessage' ,{id:vm.conversation});
             });
+        };
+
+        vm.cancelMarketOffer = function (marketOfferId) {
+            MarketOffer.cancelMarketOffer({id: marketOfferId},
+                function() {
+                    $state.go('deals');
+                });
         }
     }
 })();
