@@ -102,22 +102,26 @@ public class ConversationServiceImpl implements ConversationService {
             GamerProfile receiverProfile = gamerProfileRepository.findOne(recievierId);
             if (receiverProfile == null) return null;
             GamerProfile senderProfile = user.get().getGamerProfile();
-            Set<Conversation> conversations = senderProfile.getConversations();
-            Boolean isExistConversation = false;
-            for (Conversation conversation : conversations) {
-                Set<GamerProfile> gamerProfiles = conversation.getProfiles();
-                for (GamerProfile gamerProfile : gamerProfiles) {
-                    if (gamerProfile.getId().equals(recievierId)) {
-                        return conversation;
-                    }
-                }
-            }
+            Conversation conversation = conversationRepository.findConversationBetweenProfiles(senderProfile.getId() , receiverProfile.getId());
+//
+//            Set<Conversation> conversations = senderProfile.getConversations();
+//            for (Conversation conversation : conversations) {
+//                conversation = conversationRepository.findOne(conversation.getId());
+//                Set<GamerProfile> gamerProfiles = conversation.getProfiles();
+//                for (GamerProfile gamerProfile : gamerProfiles) {
+//                    if (gamerProfile.getId().equals(recievierId)) {
+//                        return conversation;
+//                    }
+//                }
+//            }
+            if(conversation == null) {
             Conversation newConversation = new Conversation();
             newConversation.addProfiles(senderProfile);
             newConversation.addProfiles(receiverProfile);
             newConversation = conversationRepository.save(newConversation);
             conversationSearchRepository.save(newConversation);
             return newConversation;
+            } else return conversation;
         }
         return null;
     }

@@ -26,7 +26,6 @@
         loadAll();
 
         function loadAll() {
-            // vm.conversation = Conversation.getConversationToReceiver({receiverId: 2});
 
             if (vm.currentSearch) {
                 ConversationSearch.query({
@@ -102,9 +101,5 @@
             vm.loadAll();
         }
 
-        // vm.getConversationToReceiver = function (receiverId) {
-        //     vm.conversation = Conversation.getConversationToReceiver({receiverId : receiverId});
-        //     console.log(vm.conversation);
-        // }
     }
 })();

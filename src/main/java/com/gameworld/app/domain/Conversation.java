@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
@@ -38,12 +40,12 @@ public class Conversation implements Serializable {
     @JoinColumn(unique = true)
     private Message lastMessage;
 
-    @OneToMany(mappedBy = "conversation" , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "conversation")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonManagedReference
     private Set<Message> messages = new HashSet<>();
 
-    @ManyToMany(mappedBy = "conversations")
+    @ManyToMany(mappedBy = "conversations" , fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<GamerProfile> profiles = new HashSet<>();
 

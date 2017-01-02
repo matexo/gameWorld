@@ -12,6 +12,7 @@
 
         vm.gamerProfile = entity;
         vm.previousState = previousState.name;
+        vm.conversation = null;
 
         var unsubscribe = $rootScope.$on('gameWorldApp:gamerProfileUpdate', function(event, result) {
             vm.gamerProfile = result;
@@ -19,9 +20,12 @@
         $scope.$on('$destroy', unsubscribe);
 
         vm.sendMessage = function (profileId) {
-            vm.conversation = Conversation.getConversationToReceiver({receiverId: profileId});
-            console.log(vm.conversation);
-            $state.go('conversation-detail' ,{id:5});
+            Conversation.getConversationToReceiver({receiverId: profileId} , function (data) {
+                vm.conversation = data.id;
+                $state.go('conversation-detail.newmessage' ,{id:vm.conversation});
+            });
+            // console.log(vm.conversation);
+
         }
     }
 })();

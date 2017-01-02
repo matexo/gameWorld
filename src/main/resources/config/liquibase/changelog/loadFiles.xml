@@ -61,24 +61,24 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
         <column name="blockade" type="boolean"/>
     </loadData>
 
-    <loadData encoding="UTF-8"
-              file="config/liquibase/conversation.csv"
-              separator=";"
-              tableName="conversation">
-    </loadData>
+    <!--<loadData encoding="UTF-8"-->
+              <!--file="config/liquibase/conversation.csv"-->
+              <!--separator=";"-->
+              <!--tableName="conversation">-->
+    <!--</loadData>-->
 
-    <loadData encoding="UTF-8"
-              file="config/liquibase/message.csv"
-              separator=";"
-              tableName="message">
-        <column name="is_new" type="boolean"/>
-    </loadData>
+    <!--<loadData encoding="UTF-8"-->
+              <!--file="config/liquibase/message.csv"-->
+              <!--separator=";"-->
+              <!--tableName="message">-->
+        <!--<column name="is_new" type="boolean"/>-->
+    <!--</loadData>-->
 
-    <loadData encoding="UTF-8"
-              file="config/liquibase/gamer_profile_conversations.csv"
-              separator=";"
-              tableName="gamer_profile_conversations">
-    </loadData>
+    <!--<loadData encoding="UTF-8"-->
+              <!--file="config/liquibase/gamer_profile_conversations.csv"-->
+              <!--separator=";"-->
+              <!--tableName="gamer_profile_conversations">-->
+    <!--</loadData>-->
 
     <loadData encoding="UTF-8"
               file="config/liquibase/market_offer.csv"
