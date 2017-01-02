@@ -66,7 +66,7 @@ public class ConversationServiceImpl implements ConversationService {
         Page<Conversation> result = null;
         if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN))
             result = conversationRepository.findAll(pageable);
-        else result = conversationRepository.findByUserName(SecurityUtils.getCurrentUserLogin(), pageable);
+        else result = conversationRepository.findAllByGamerName(SecurityUtils.getCurrentUserLogin(), pageable);
         result.getContent().forEach(conversation -> conversation.setMessages(messageRepository.getLastMessage(conversation.getId())));
         return result;
     }
@@ -74,7 +74,11 @@ public class ConversationServiceImpl implements ConversationService {
     @Transactional(readOnly = true)
     public Conversation findOne(Long id) {
         log.debug("Request to get Conversation : {}", id);
-        Conversation conversation = conversationRepository.findOne(id);
+        Conversation conversation = null;
+        if(SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN))
+            conversation = conversationRepository.findOne(id);
+        else
+            conversation = conversationRepository.findOneByGamerName(id , SecurityUtils.getCurrentUserLogin());
         return conversation;
     }
 

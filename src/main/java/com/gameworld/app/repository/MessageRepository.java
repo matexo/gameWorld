@@ -2,6 +2,7 @@ package com.gameworld.app.repository;
 
 import com.gameworld.app.domain.Message;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
@@ -23,4 +24,16 @@ public interface MessageRepository extends JpaRepository<Message,Long> {
     default Set<Message> getLastMessage(Long conversationId) {
         return new HashSet<>(getLastMessage(conversationId , new PageRequest(0,1)));
     }
+
+    @Query(value = "SELECT msg " +
+        "FROM Message msg " +
+        "JOIN FETCH msg.conversation con " +
+        "WHERE con.id = :conId " +
+        "ORDER BY msg.sendTime DESC" ,
+    countQuery = "SELECT COUNT(msg) " +
+        "FROM Message msg " +
+        "JOIN msg.conversation con " +
+        "WHERE con.id = :conId " +
+        "ORDER BY msg.sendTime DESC")
+    Page<Message> findAllMessageToConversation(@Param("conId") Long conversationId , Pageable pageable);
 }

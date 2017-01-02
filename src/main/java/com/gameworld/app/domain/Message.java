@@ -38,7 +38,6 @@ public class Message implements Serializable {
     private Boolean isNew;
 
     @ManyToOne
-    @JsonBackReference
     private GamerProfile authorProfile;
 
     @ManyToOne

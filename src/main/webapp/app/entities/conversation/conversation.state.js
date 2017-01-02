@@ -108,6 +108,7 @@
                 });
             }]
         })
+
         .state('conversation.edit', {
             parent: 'conversation',
             url: '/{id}/edit',
@@ -156,7 +157,38 @@
                     $state.go('^');
                 });
             }]
-        });
+        })
+            .state('conversation-detail.newmessage', {
+                parent: 'conversation-detail',
+                url: '/new',
+                data: {
+                    authorities: ['ROLE_USER']
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'app/entities/message/message-dialog.html',
+                        controller: 'MessageDialogController',
+                        controllerAs: 'vm',
+                        backdrop: 'static',
+                        size: 'lg',
+                        resolve: {
+                            entity: function () {
+                                return {
+                                    text: null,
+                                    sendTime: null,
+                                    isNew: null,
+                                    id: null
+                                };
+                            }
+                        }
+                    }).result.then(function() {
+                        $state.go('conversation-detail', null, { reload: 'conversation-detail' });
+                    }, function() {
+                        $state.go('conversation-detail');
+                    });
+                }]
+            })
+        ;
     }
 
 })();

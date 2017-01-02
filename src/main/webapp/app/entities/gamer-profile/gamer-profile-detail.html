@@ -44,7 +44,17 @@
         <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
     </button>
 
-    <button type="button" ui-sref="gamer-profile-detail.edit({id:vm.gamerProfile.id})" class="btn btn-primary">
+    <button type="button" ui-sref="gamer-profile-detail.edit({id:vm.gamerProfile.id})" class="btn btn-primary" has-authority="ROLE_ADMIN">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Edit</span>
+    </button>
+
+    <button type="button" ui-sref="gamer-profile-detail.edit({id:vm.gamerProfile.id})" class="btn btn-primary" has-authority="ROLE_ADMIN">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Edit</span>
+    </button>
+
+    <button type="button" ng-click="vm.sendMessage(vm.gamerProfile.id)" class="btn btn-primary">
         <span class="glyphicon glyphicon-pencil"></span>
         <span class="hidden-xs hidden-sm"> Edit</span>
     </button>

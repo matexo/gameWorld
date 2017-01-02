@@ -15,8 +15,9 @@
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
         vm.save = save;
-        vm.gamerprofiles = GamerProfile.query();
-        vm.conversations = Conversation.query();
+        vm.message.conversation = Conversation.get({id:$stateParams.id});
+
+
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

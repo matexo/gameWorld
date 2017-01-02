@@ -2,6 +2,10 @@
 <div>
     <h2><span>Conversation</span> {{vm.conversation.id}}</h2>
     <hr>
+    <button type="button" ui-sref="conversation-detail.newmessage({id:vm.conversation.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Add message</span>
+    </button>
     <jhi-alert-error></jhi-alert-error>
     <dl class="dl-horizontal jh-entity-details">
         <dt><span>Has New</span></dt>
@@ -18,14 +22,57 @@
         </dd>
     </dl>
 
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+            <tr ng-repeat="message in vm.messages track by message.id">
+                <td><a ui-sref="message-detail({id:message.id})">{{message.id}}</a></td>
+                <td>{{message.text}}</td>
+                <td>{{message.sendTime | date:'medium'}}</td>
+                <td>{{message.isNew}}</td>
+                <td>
+                    <a ui-sref="gamer-profile-detail({id:message.authorProfile.id})">{{message.authorProfile.id}}</a>
+                </td>
+                <td>
+                    <a ui-sref="conversation-detail({id:message.conversation.id})">{{message.conversation.id}}</a>
+                </td>
+                <!--<td class="text-right">-->
+                    <!--<div class="btn-group flex-btn-group-container">-->
+                        <!--<button type="submit"-->
+                                <!--ui-sref="message-detail({id:message.id})"-->
+                                <!--class="btn btn-info btn-sm">-->
+                            <!--<span class="glyphicon glyphicon-eye-open"></span>-->
+                            <!--<span class="hidden-xs hidden-sm"></span>-->
+                        <!--</button>-->
+                        <!--<button type="submit"-->
+                                <!--ui-sref="message.edit({id:message.id})"-->
+                                <!--class="btn btn-primary btn-sm">-->
+                            <!--<span class="glyphicon glyphicon-pencil"></span>-->
+                            <!--<span class="hidden-xs hidden-sm"></span>-->
+                        <!--</button>-->
+                        <!--<button type="submit"-->
+                                <!--ui-sref="message.delete({id:message.id})"-->
+                                <!--class="btn btn-danger btn-sm">-->
+                            <!--<span class="glyphicon glyphicon-remove-circle"></span>-->
+                            <!--<span class="hidden-xs hidden-sm"></span>-->
+                        <!--</button>-->
+                    <!--</div>-->
+                <!--</td>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
     <button type="submit"
             ui-sref="{{ vm.previousState }}"
             class="btn btn-info">
         <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
     </button>
 
-    <button type="button" ui-sref="conversation-detail.edit({id:vm.conversation.id})" class="btn btn-primary">
-        <span class="glyphicon glyphicon-pencil"></span>
-        <span class="hidden-xs hidden-sm"> Edit</span>
-    </button>
+    <!--<button type="button" ui-sref="conversation-detail.edit({id:vm.conversation.id})" class="btn btn-primary">-->
+        <!--<span class="glyphicon glyphicon-pencil"></span>-->
+        <!--<span class="hidden-xs hidden-sm"> Edit</span>-->
+    <!--</button>-->
+
+
 </div>

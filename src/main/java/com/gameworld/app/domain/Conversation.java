@@ -1,6 +1,7 @@
 package com.gameworld.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -37,13 +38,12 @@ public class Conversation implements Serializable {
     @JoinColumn(unique = true)
     private Message lastMessage;
 
-    @OneToMany(mappedBy = "conversation")
-    @JsonIgnore
+    @OneToMany(mappedBy = "conversation" , fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonManagedReference
     private Set<Message> messages = new HashSet<>();
 
     @ManyToMany(mappedBy = "conversations")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<GamerProfile> profiles = new HashSet<>();
 

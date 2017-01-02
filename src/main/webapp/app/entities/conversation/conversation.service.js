@@ -13,6 +13,7 @@
             'query': { method: 'GET', isArray: true},
             'get': {
                 method: 'GET',
+                // isArray:false,
                 transformResponse: function (data) {
                     if (data) {
                         data = angular.fromJson(data);
@@ -22,7 +23,8 @@
                 }
             },
             'update': { method:'PUT' },
-            'getConversationToReceiver': { method:'GET' , url:"api/conversations/receiver/:receiverId"}
+            'getConversationToReceiver': { method:'GET' , url:"api/conversations/receiver/:receiverId"},
+            'getAllMessagesToConversation': { method: 'GET' , isArray:true , url:"api/messages/conversation/:conversationId" }
         });
     }
 })();

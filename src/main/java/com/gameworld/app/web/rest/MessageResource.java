@@ -33,17 +33,10 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class MessageResource {
 
     private final Logger log = LoggerFactory.getLogger(MessageResource.class);
-        
+
     @Inject
     private MessageService messageService;
 
-    /**
-     * POST  /messages : Create a new message.
-     *
-     * @param message the message to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new message, or with status 400 (Bad Request) if the message has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
     @PostMapping("/messages")
     @Timed
     public ResponseEntity<Message> createMessage(@Valid @RequestBody Message message) throws URISyntaxException {
@@ -57,15 +50,6 @@ public class MessageResource {
             .body(result);
     }
 
-    /**
-     * PUT  /messages : Updates an existing message.
-     *
-     * @param message the message to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated message,
-     * or with status 400 (Bad Request) if the message is not valid,
-     * or with status 500 (Internal Server Error) if the message couldnt be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
     @PutMapping("/messages")
     @Timed
     public ResponseEntity<Message> updateMessage(@Valid @RequestBody Message message) throws URISyntaxException {
@@ -79,13 +63,6 @@ public class MessageResource {
             .body(result);
     }
 
-    /**
-     * GET  /messages : get all the messages.
-     *
-     * @param pageable the pagination information
-     * @return the ResponseEntity with status 200 (OK) and the list of messages in body
-     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
-     */
     @GetMapping("/messages")
     @Timed
     public ResponseEntity<List<Message>> getAllMessages(Pageable pageable)
@@ -96,12 +73,6 @@ public class MessageResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
-    /**
-     * GET  /messages/:id : get the "id" message.
-     *
-     * @param id the id of the message to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the message, or with status 404 (Not Found)
-     */
     @GetMapping("/messages/{id}")
     @Timed
     public ResponseEntity<Message> getMessage(@PathVariable Long id) {
@@ -114,12 +85,6 @@ public class MessageResource {
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    /**
-     * DELETE  /messages/:id : delete the "id" message.
-     *
-     * @param id the id of the message to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
     @DeleteMapping("/messages/{id}")
     @Timed
     public ResponseEntity<Void> deleteMessage(@PathVariable Long id) {
@@ -128,15 +93,6 @@ public class MessageResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("message", id.toString())).build();
     }
 
-    /**
-     * SEARCH  /_search/messages?query=:query : search for the message corresponding
-     * to the query.
-     *
-     * @param query the query of the message search 
-     * @param pageable the pagination information
-     * @return the result of the search
-     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
-     */
     @GetMapping("/_search/messages")
     @Timed
     public ResponseEntity<List<Message>> searchMessages(@RequestParam String query, Pageable pageable)
@@ -144,6 +100,14 @@ public class MessageResource {
         log.debug("REST request to search for a page of Messages for query {}", query);
         Page<Message> page = messageService.search(query, pageable);
         HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/messages");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/messages/conversation/{conversationId}")
+    @Timed
+    public ResponseEntity<List<Message>> getAllMessageToConversation(@PathVariable Long conversationId, Pageable pageable) throws URISyntaxException {
+        Page<Message> page = messageService.findAllMessageToConversation(conversationId , pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/_search/messages");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 

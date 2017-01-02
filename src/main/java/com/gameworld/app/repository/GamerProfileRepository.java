@@ -19,4 +19,7 @@ public interface GamerProfileRepository extends JpaRepository<GamerProfile,Long>
     @Query("select gamerProfile from GamerProfile gamerProfile left join fetch gamerProfile.searchedGames left join fetch gamerProfile.conversations where gamerProfile.id =:id")
     GamerProfile findOneWithEagerRelationships(@Param("id") Long id);
 
+    @Query("SELECT gamerProfile FROM GamerProfile gamerProfile WHERE gamerProfile.name = :name")
+    GamerProfile findGamerProfileByName(@Param("name") String name);
+
 }

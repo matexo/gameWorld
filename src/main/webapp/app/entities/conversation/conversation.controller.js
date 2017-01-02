@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -7,7 +7,7 @@
 
     ConversationController.$inject = ['$scope', '$state', 'Conversation', 'ConversationSearch', 'ParseLinks', 'AlertService'];
 
-    function ConversationController ($scope, $state, Conversation, ConversationSearch, ParseLinks, AlertService) {
+    function ConversationController($scope, $state, Conversation, ConversationSearch, ParseLinks, AlertService) {
         var vm = this;
 
         vm.conversations = [];
@@ -25,9 +25,8 @@
 
         loadAll();
 
-        function loadAll () {
-            vm.conversation = Conversation.getConversationToReceiver({receiverId : 2});
-            console.log(vm.conversation);
+        function loadAll() {
+            // vm.conversation = Conversation.getConversationToReceiver({receiverId: 2});
 
             if (vm.currentSearch) {
                 ConversationSearch.query({
@@ -64,7 +63,7 @@
             }
         }
 
-        function reset () {
+        function reset() {
             vm.page = 0;
             vm.conversations = [];
             loadAll();
@@ -75,7 +74,7 @@
             loadAll();
         }
 
-        function clear () {
+        function clear() {
             vm.conversations = [];
             vm.links = {
                 last: 0
@@ -88,8 +87,8 @@
             vm.loadAll();
         }
 
-        function search (searchQuery) {
-            if (!searchQuery){
+        function search(searchQuery) {
+            if (!searchQuery) {
                 return vm.clear();
             }
             vm.conversations = [];
