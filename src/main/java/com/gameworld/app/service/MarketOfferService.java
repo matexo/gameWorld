@@ -1,5 +1,6 @@
 package com.gameworld.app.service;
 
+import com.gameworld.app.domain.Comment;
 import com.gameworld.app.domain.MarketOffer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,13 +1,13 @@
 package com.gameworld.app.service.impl;
 
-import com.gameworld.app.domain.GamerProfile;
-import com.gameworld.app.domain.TradeOffer;
-import com.gameworld.app.domain.User;
+import com.gameworld.app.domain.*;
 import com.gameworld.app.domain.enumeration.OfferStatus;
+import com.gameworld.app.repository.CommentRepository;
+import com.gameworld.app.repository.GamerProfileRepository;
 import com.gameworld.app.repository.UserRepository;
+import com.gameworld.app.repository.search.CommentSearchRepository;
 import com.gameworld.app.security.SecurityUtils;
 import com.gameworld.app.service.MarketOfferService;
-import com.gameworld.app.domain.MarketOffer;
 import com.gameworld.app.repository.MarketOfferRepository;
 import com.gameworld.app.repository.search.MarketOfferSearchRepository;
 import com.gameworld.app.util.DateUtil;
@@ -30,7 +30,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @Service
 @Transactional
-public class MarketOfferServiceImpl implements MarketOfferService{
+public class MarketOfferServiceImpl implements MarketOfferService {
 
     private final Logger log = LoggerFactory.getLogger(MarketOfferServiceImpl.class);
 
@@ -43,14 +43,14 @@ public class MarketOfferServiceImpl implements MarketOfferService{
     @Inject
     private UserRepository userRepository;
 
+
     public MarketOffer save(MarketOffer marketOffer) {
         log.debug("Request to save MarketOffer : {}", marketOffer);
         Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
         GamerProfile authorProfile = null;
-        if(user.isPresent())
+        if (user.isPresent())
             authorProfile = user.get().getGamerProfile();
-        marketOffer.initNewMarketOffer(authorProfile , DateUtil.getNowDateTime());
-        //walidacja?
+        marketOffer.initNewMarketOffer(authorProfile, DateUtil.getNowDateTime());
         MarketOffer result = marketOfferRepository.save(marketOffer);
         marketOfferSearchRepository.save(result);
         return result;
@@ -60,7 +60,7 @@ public class MarketOfferServiceImpl implements MarketOfferService{
     public Page<MarketOffer> findAll(Pageable pageable) {
         log.debug("Request to get all MarketOffers");
         String username = SecurityUtils.getCurrentUserLogin();
-        Page<MarketOffer> result = marketOfferRepository.findAllCurrentOffers(username , pageable);
+        Page<MarketOffer> result = marketOfferRepository.findAllCurrentOffers(username, pageable);
         return result;
     }
 
@@ -69,10 +69,10 @@ public class MarketOfferServiceImpl implements MarketOfferService{
         log.debug("Request to get MarketOffer : {}", id);
         Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
         Long profileId = null;
-        if(user.isPresent())
+        if (user.isPresent())
             profileId = user.get().getGamerProfile().getId();
         MarketOffer marketOffer = marketOfferRepository.findOne(id);
-        if(!marketOffer.getCreateProfile().getId().equals(profileId))
+        if (!marketOffer.getCreateProfile().getId().equals(profileId))
             marketOffer.setOffers(null);
         return marketOffer;
     }
@@ -94,17 +94,17 @@ public class MarketOfferServiceImpl implements MarketOfferService{
     public Page<MarketOffer> findAllMarketOfferCreatedByUser(Pageable pageable) {
         Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
         Page<MarketOffer> marketOffers = null;
-        if(user.isPresent())
-            marketOffers = marketOfferRepository.findAllMarketOfferCreatedByUser(user.get().getGamerProfile().getId() , pageable);
+        if (user.isPresent())
+            marketOffers = marketOfferRepository.findAllMarketOfferCreatedByUser(user.get().getGamerProfile().getId(), pageable);
         return marketOffers;
     }
 
     @Transactional
     public void finalizeOffer(Long id) {
         Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
-        if(user.isPresent()) {
+        if (user.isPresent()) {
             MarketOffer marketOffer = marketOfferRepository.findOne(id);
-            if(marketOffer != null && marketOffer.isCurrent()) {
+            if (marketOffer != null && marketOffer.isCurrent()) {
                 marketOffer.finalizeOffer(user.get().getGamerProfile());
                 MarketOffer marketOfferFromDB = marketOfferRepository.save(marketOffer);
                 marketOfferSearchRepository.save(marketOfferFromDB);
@@ -116,8 +116,8 @@ public class MarketOfferServiceImpl implements MarketOfferService{
     public Page<MarketOffer> findMarketOffersEndByUser(Pageable pageable) {
         Page<MarketOffer> marketOffers = null;
         Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
-        if(user.isPresent()) {
-            marketOffers = marketOfferRepository.findMarketOffersEndByUser(user.get().getGamerProfile().getId() , pageable);
+        if (user.isPresent()) {
+            marketOffers = marketOfferRepository.findMarketOffersEndByUser(user.get().getGamerProfile().getId(), pageable);
         }
         return marketOffers;
     }
@@ -126,8 +126,8 @@ public class MarketOfferServiceImpl implements MarketOfferService{
     public Page<MarketOffer> findEndedMarketOffers(Pageable pageable) {
         Page<MarketOffer> marketOffers = null;
         Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
-        if(user.isPresent()) {
-            marketOffers = marketOfferRepository.findEndedMarketOffers(user.get().getGamerProfile().getId() , pageable);
+        if (user.isPresent()) {
+            marketOffers = marketOfferRepository.findEndedMarketOffers(user.get().getGamerProfile().getId(), pageable);
         }
         return marketOffers;
     }
@@ -136,7 +136,7 @@ public class MarketOfferServiceImpl implements MarketOfferService{
     public void cancelMarketOffer(Long marketOfferId) {
         String username = SecurityUtils.getCurrentUserLogin();
         MarketOffer marketOffer = marketOfferRepository.findOne(marketOfferId);
-        if(marketOffer != null && marketOffer.getCreateProfile().getName().equals(username) && marketOffer.getOfferStatus().equals(OfferStatus.NEW)) {
+        if (marketOffer != null && marketOffer.getCreateProfile().getName().equals(username) && marketOffer.getOfferStatus().equals(OfferStatus.NEW)) {
             marketOffer.setOfferStatus(OfferStatus.CANCELLED);
             marketOffer.setEndDate(DateUtil.getNowDateTime());
             marketOffer = marketOfferRepository.save(marketOffer);

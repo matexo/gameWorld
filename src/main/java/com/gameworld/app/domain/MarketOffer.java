@@ -81,8 +81,8 @@ public class MarketOffer implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<TradeOffer> offers = new HashSet<>();
 
-    @OneToMany(mappedBy = "marketOffer")
-    @JsonIgnore
+    @OneToMany(mappedBy = "marketOffer" , fetch = FetchType.EAGER)
+    @JsonManagedReference
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Comment> comments = new HashSet<>();
 

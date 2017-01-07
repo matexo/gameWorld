@@ -15,8 +15,8 @@
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
         vm.save = save;
-        vm.gamerprofiles = GamerProfile.query();
-        vm.marketoffers = MarketOffer.query();
+        console.log($stateParams);
+        vm.comment.marketOffer = MarketOffer.get({id:$stateParams.id});
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

@@ -80,11 +80,12 @@
             }]
         })
         .state('comment.new', {
-            parent: 'comment',
+            parent: 'deals',
             url: '/new',
             data: {
                 authorities: ['ROLE_USER']
             },
+            params: { id: null},
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
                     templateUrl: 'app/entities/comment/comment-dialog.html',
@@ -103,9 +104,9 @@
                         }
                     }
                 }).result.then(function() {
-                    $state.go('comment', null, { reload: 'comment' });
+                    $state.go('deals', null, { reload: 'deals' });
                 }, function() {
-                    $state.go('comment');
+                    $state.go('deals');
                 });
             }]
         })

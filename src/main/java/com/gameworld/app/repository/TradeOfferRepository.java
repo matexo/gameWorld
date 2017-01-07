@@ -25,11 +25,12 @@ public interface TradeOfferRepository extends JpaRepository<TradeOffer,Long> {
         "FROM TradeOffer tradeOffer " +
         "JOIN tradeOffer.createProfile " +
         "WHERE tradeOffer.createProfile.name = :username " +
-        "ORDER BY tradeOffer.timestamp",
+        "ORDER BY tradeOffer.timestamp DESC",
         countQuery = "SELECT count(tradeOffer) " +
             "FROM TradeOffer tradeOffer " +
             "JOIN tradeOffer.createProfile " +
-            "WHERE tradeOffer.createProfile.name = :username")
+            "WHERE tradeOffer.createProfile.name = :username " +
+            "ORDER BY tradeOffer.timestamp DESC")
     Page<TradeOffer> findAllTradeOffersCreatedByUser(@Param("username") String username , Pageable pageable);
 
     @Query(value = "SELECT offers " +

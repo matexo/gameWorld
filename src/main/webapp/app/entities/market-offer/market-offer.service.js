@@ -13,6 +13,7 @@
             'query': {method: 'GET', isArray: true},
             'get': {
                 method: 'GET',
+                isArray:false,
                 transformResponse: function (data) {
                     if (data) {
                         data = angular.fromJson(data);
@@ -33,6 +34,7 @@
                 method: 'PUT',
                 url:'api/market-offers/cancel'
             },
+            'addComment': { method:'POST' , url:"api/market-offer/:id/comment"},
             'getMy': {
                 method: 'GET',
                 url: 'api/market-offers/my',

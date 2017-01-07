@@ -33,7 +33,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class CommentResource {
 
     private final Logger log = LoggerFactory.getLogger(CommentResource.class);
-        
+
     @Inject
     private CommentService commentService;
 
@@ -52,7 +52,7 @@ public class CommentResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("comment", "idexists", "A new comment cannot already have an ID")).body(null);
         }
         Comment result = commentService.save(comment);
-        return ResponseEntity.created(new URI("/api/comments/" + result.getId()))
+            return ResponseEntity.created(new URI("/api/comments/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("comment", result.getId().toString()))
             .body(result);
     }
@@ -132,7 +132,7 @@ public class CommentResource {
      * SEARCH  /_search/comments?query=:query : search for the comment corresponding
      * to the query.
      *
-     * @param query the query of the comment search 
+     * @param query the query of the comment search
      * @param pageable the pagination information
      * @return the result of the search
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers

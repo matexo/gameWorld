@@ -1,6 +1,7 @@
 package com.gameworld.app.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.gameworld.app.domain.Comment;
 import com.gameworld.app.domain.MarketOffer;
 import com.gameworld.app.service.MarketOfferService;
 import com.gameworld.app.web.rest.util.HeaderUtil;

@@ -5,9 +5,9 @@
         .module('gameWorldApp')
         .controller('MarketOfferController', MarketOfferController);
 
-    MarketOfferController.$inject = ['$scope', '$state', 'MarketOffer', 'MarketOfferSearch', 'ParseLinks', 'AlertService' , 'Conversation'];
+    MarketOfferController.$inject = ['$scope', '$state', 'MarketOffer', 'MarketOfferSearch', 'ParseLinks', 'AlertService' , 'Conversation','Principal'];
 
-    function MarketOfferController ($scope, $state, MarketOffer, MarketOfferSearch, ParseLinks, AlertService , Conversation) {
+    function MarketOfferController ($scope, $state, MarketOffer, MarketOfferSearch, ParseLinks, AlertService , Conversation, Principal) {
         var vm = this;
 
         vm.marketOffers = [];
@@ -27,6 +27,23 @@
         vm.finalizeOffer = finalizeOffer;
 
         loadAll();
+
+        vm.account = null;
+        vm.isAuthenticated = null;
+        // vm.login = LoginService.open;
+        // vm.register = register;
+        // $scope.$on('authenticationSuccess', function() {
+        //     getAccount();
+        // });
+
+        getAccount();
+
+        function getAccount() {
+            Principal.identity().then(function(account) {
+                vm.account = account;
+                vm.isAuthenticated = Principal.isAuthenticated;
+            });
+        }
 
         function loadAll () {
             if(($state.$current.toString() == 'market-offer-my'))
