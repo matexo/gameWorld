@@ -120,10 +120,9 @@ public class TradeOfferServiceImpl  implements TradeOfferService {
 
     @Transactional
     public boolean acceptTradeOffer(Long tradeOfferId) {
-        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
-        if (user.isPresent()) {
+        String username = SecurityUtils.getCurrentUserLogin();
             TradeOffer tradeOffer = tradeOfferRepository.findOne(tradeOfferId);                                             // pobiera tradeOffer na podstawie ID
-            if (tradeOffer.getMarketOffer().getCreateProfile().getId().equals(user.get().getGamerProfile().getId())         // sprawdza czy marketOffer jest osoby ktora chce zaakceptowac tradeOffer
+            if (tradeOffer.getMarketOffer().getCreateProfile().getName().equals(username)         // sprawdza czy marketOffer jest osoby ktora chce zaakceptowac tradeOffer
                 && tradeOffer.getStatus() == TradeOfferStatus.PENDING) {                                                    // i status tradeOffer jest nadal wazny (pending)
                 tradeOffer.changeStatus(TradeOfferStatus.ACCEPTED);                                                         // jezeli ok to zmieniamy stan tradeoffer na zaakceptowany
                 tradeOffer.getMarketOffer().finalizeOffer(tradeOffer.getCreateProfile());                                   // i finalizujemy marketOffer osoba ktora zlozyla tradeOffer
@@ -135,40 +134,34 @@ public class TradeOfferServiceImpl  implements TradeOfferService {
                 tradeOffer = tradeOfferRepository.save(tradeOffer);                                                         // zapisujemy zmiany (baza + search) (TODO czy nie trzeba dodac save'a na search w MarketOffer)
                 tradeOfferSearchRepository.save(tradeOffer);
                 return true;                                                                                                // jak poszlo ok to zwracamy true
-            }
-            else return false;
         }
         return false;
     }
 
     @Transactional
     public boolean rejectTradeOffer(Long tradeOfferId) {
-        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
-        if (user.isPresent()) {
+        String username = SecurityUtils.getCurrentUserLogin();
             TradeOffer tradeOffer = tradeOfferRepository.findOne(tradeOfferId);
-            if(tradeOffer.getMarketOffer().getCreateProfile().getId().equals(user.get().getGamerProfile().getId())
+            if(tradeOffer.getMarketOffer().getCreateProfile().getName().equals(username)
                 && tradeOffer.getStatus() == TradeOfferStatus.PENDING) {
                 tradeOffer.changeStatus(TradeOfferStatus.REJECTED);
                 tradeOffer = tradeOfferRepository.save(tradeOffer);
                 tradeOfferSearchRepository.save(tradeOffer);
                 return true;
             }
-        }
         return false;
     }
 
     @Transactional
     public boolean cancelTradeOffer(Long tradeOfferId) {
-        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
-        if (user.isPresent()) {
+            String username = SecurityUtils.getCurrentUserLogin();
             TradeOffer tradeOffer = tradeOfferRepository.findOne(tradeOfferId);
-            if(tradeOffer.getCreateProfile().getId().equals(user.get().getGamerProfile().getId())                       // sprawdzenie czy user jest autorem tradeOffer
+            if(tradeOffer.getCreateProfile().getName().equals(username)                       // sprawdzenie czy user jest autorem tradeOffer
                 && tradeOffer.getStatus() == TradeOfferStatus.PENDING) {                                                // i jest wazna
                 tradeOffer.changeStatus(TradeOfferStatus.CANCELLED);                                                     // zmiana statusu na anulowany
                 tradeOffer = tradeOfferRepository.save(tradeOffer);
                 tradeOfferSearchRepository.save(tradeOffer);
                 return true;
-            }
         }
         return false;
     }

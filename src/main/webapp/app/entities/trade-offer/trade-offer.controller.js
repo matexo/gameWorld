@@ -27,6 +27,8 @@
         loadAll();
 
         function loadAll () {
+            vm.tradeOffersCreatedByUser = [];
+            vm.tradeOffersAssignedToUser = [];
             vm.tradeOffersAssignedToUser = TradeOffer.assignedToUser({
                 page: vm.page,
                 size: 20,
@@ -100,12 +102,12 @@
         }
 
         vm.acceptTrade = function acceptTradeOffer(tradeOfferId) {
-            TradeOffer.acceptTradeOffer({id:tradeOfferId} , loadAll() );
+            TradeOffer.acceptTradeOffer({id:tradeOfferId} , clear());
             loadAll();
         };
 
         vm.rejectTrade = function rejectTrade(tradeOfferId) {
-            TradeOffer.rejectTradeOffer({id:tradeOfferId} , loadAll()  );
+            TradeOffer.rejectTradeOffer({id:tradeOfferId} , clear()  );
             loadAll();
         };
 

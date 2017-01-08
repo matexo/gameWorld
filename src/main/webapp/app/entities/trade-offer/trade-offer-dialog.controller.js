@@ -19,11 +19,7 @@
         vm.gamerprofiles = GamerProfile.query();
         vm.marketOfferId = $stateParams.marketOfferId;
         vm.marketoffers = [];
-        if(vm.marketOfferId != null)
-            vm.marketoffers.push(MarketOffer.get({id : vm.marketOfferId}));
-        else vm.marketoffers = MarketOffer.query();
-        console.log("test dla " + vm.marketOfferId);
-        console.log(vm.marketoffers );
+        vm.tradeOffer.marketOffer = MarketOffer.get({id : vm.marketOfferId});
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

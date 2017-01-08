@@ -119,10 +119,18 @@
                         </label>
                     </dd>
                 </dl>
+                Wypisywanie komentarzy
+                Button dodawania komentarzy z obu stron
+                Button do gamerprofile
+                Button do konwersacji
+                Odzielenie ofert
+                Uwspolnienie wygladu na obu stronach
+                Poprawne wyszukiwanie
                 <div class="panel panel-heading">
                     <button ng-hide="
                     marketOffer.comments[0].authorProfile.name == vm.account.login || marketOffer.comments[1].authorProfile.name == vm.account.login"
-                            ui-sref="comment.new({id:marketOffer.id})">Add comment {{marketOffer.id}}</button>
+                            ui-sref="comment.new({id:marketOffer.id})"
+                    class="btn btn-success">Add comment </button>
                 </div>
             </div>
         </div>

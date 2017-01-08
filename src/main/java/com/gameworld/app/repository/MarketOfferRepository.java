@@ -40,7 +40,7 @@ public interface MarketOfferRepository extends JpaRepository<MarketOffer,Long> {
     @Query(value = "SELECT mo FROM MarketOffer mo " +
         "JOIN FETCH mo.endOfferProfile eop " +
         "JOIN FETCH mo.offers offers " +
-        "WHERE eop.id = :gamerProfileId " +
+        "WHERE eop.name = :username " +
         "AND mo.offerStatus = 'ENDED' " +
         "AND mo.endDate IS NOT NULL " +
 //        "AND offers.status = 'ACCEPTED' " +
@@ -49,17 +49,17 @@ public interface MarketOfferRepository extends JpaRepository<MarketOffer,Long> {
         "FROM MarketOffer mo " +
         "JOIN mo.endOfferProfile eop " +
         "JOIN mo.offers offers " +
-        "WHERE eop.id = :gamerProfileId " +
+        "WHERE eop.name = :username " +
         "AND mo.offerStatus = 'ENDED' " +
         "AND mo.endDate IS NOT NULL " +
 //        "AND offers.status = 'ACCEPTED' " +
         "ORDER BY mo.endDate ")
-    Page<MarketOffer> findMarketOffersEndByUser(@Param("gamerProfileId") Long gamerProfileId , Pageable pageable);
+    Page<MarketOffer> findMarketOffersEndByUser(@Param("username") String username , Pageable pageable);
 
     @Query(value = "SELECT mo FROM MarketOffer mo " +
         "JOIN FETCH mo.createProfile cp " +
         "JOIN FETCH mo.offers offers " +
-        "WHERE cp.id = :gamerProfileId " +
+        "WHERE cp.name = :username " +
         "AND mo.offerStatus = 'ENDED' " +
         "AND mo.endDate IS NOT NULL " +
 //        "AND offers.status = 'ACCEPTED'" +
@@ -68,12 +68,12 @@ public interface MarketOfferRepository extends JpaRepository<MarketOffer,Long> {
          "FROM MarketOffer mo " +
          "JOIN mo.createProfile cp " +
          "JOIN mo.offers offers " +
-         "WHERE cp.id = :gamerProfileId " +
+         "WHERE cp.name = :username " +
          "AND mo.offerStatus = 'ENDED' " +
          "AND mo.endDate IS NOT NULL " +
 //         "AND offers.status = 'ACCEPTED' " +
          "ORDER BY mo.endDate ")
-    Page<MarketOffer> findEndedMarketOffers(@Param("gamerProfileId") Long gamerProfileId , Pageable pageable);
+    Page<MarketOffer> findEndedMarketOffers(@Param("username") String username , Pageable pageable);
 
 
     @Query(value = "SELECT marketOffer " +

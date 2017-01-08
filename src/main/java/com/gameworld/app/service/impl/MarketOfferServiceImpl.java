@@ -115,20 +115,16 @@ public class MarketOfferServiceImpl implements MarketOfferService {
     @Transactional(readOnly = true)
     public Page<MarketOffer> findMarketOffersEndByUser(Pageable pageable) {
         Page<MarketOffer> marketOffers = null;
-        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
-        if (user.isPresent()) {
-            marketOffers = marketOfferRepository.findMarketOffersEndByUser(user.get().getGamerProfile().getId(), pageable);
-        }
+        String username = SecurityUtils.getCurrentUserLogin();
+        marketOffers = marketOfferRepository.findMarketOffersEndByUser(username, pageable);
         return marketOffers;
     }
 
     @Transactional(readOnly = true)
     public Page<MarketOffer> findEndedMarketOffers(Pageable pageable) {
         Page<MarketOffer> marketOffers = null;
-        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
-        if (user.isPresent()) {
-            marketOffers = marketOfferRepository.findEndedMarketOffers(user.get().getGamerProfile().getId(), pageable);
-        }
+        String username = SecurityUtils.getCurrentUserLogin();
+        marketOffers = marketOfferRepository.findEndedMarketOffers(username, pageable);
         return marketOffers;
     }
 

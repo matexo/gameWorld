@@ -48,15 +48,6 @@
                 <option value=""></option>
             </select>
         </div>
-        <div class="form-group" >
-        <!--<div class="form-group" ng-hide="vm.marketOfferId != null">-->
-            <label for="field_marketOffer">Market Offer</label>
-            <select class="form-control" id="field_marketOffer" name="marketOffer" ng-model="vm.tradeOffer.marketOffer"
-                    ng-options="marketOffer as (marketOffer.game.title +' (' +  marketOffer.game.yearOfProduction +  ')  (' + marketOffer.game.platform.platform + ') '
-                     +marketOffer.createProfile.name) for marketOffer in vm.marketoffers track by marketOffer.id" required>
-                <option value=""></option>
-            </select>
-        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
