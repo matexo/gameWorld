@@ -75,4 +75,23 @@ public interface MarketOfferRepository extends JpaRepository<MarketOffer,Long> {
          "ORDER BY mo.endDate ")
     Page<MarketOffer> findEndedMarketOffers(@Param("gamerProfileId") Long gamerProfileId , Pageable pageable);
 
+
+    @Query(value = "SELECT marketOffer " +
+        "FROM MarketOffer marketOffer " +
+        "JOIN marketOffer.game game " +
+        "JOIN marketOffer.createProfile gp " +
+        "WHERE game.id IN :ids " +
+        "AND marketOffer.offerStatus = 'NEW' " +
+        "AND gp.name <> :username " +
+        "ORDER BY marketOffer.createDate DESC" ,
+        countQuery = "SELECT count(marketOffer) " +
+            "FROM MarketOffer marketOffer " +
+            "JOIN marketOffer.game game " +
+            "JOIN marketOffer.createProfile gp " +
+            "WHERE game.id IN :ids " +
+            "AND marketOffer.offerStatus = 'NEW' " +
+            "AND gp.name <> :username " +
+            "ORDER BY marketOffer.createDate DESC")
+    Page<MarketOffer> findMarketOfferByGameId(@Param("ids") List<Long> ids,@Param("username") String username, Pageable pageable);
+
 }

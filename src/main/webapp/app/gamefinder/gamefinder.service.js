@@ -10,7 +10,7 @@
         var resourceUrl =  'api/gamefinder';
 
         return $resource(resourceUrl, {}, {
-            'query': { method: 'GET', isArray: true}
+            'find': { method: 'GET', isArray: true}
         });
     }
 })();

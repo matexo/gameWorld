@@ -80,11 +80,11 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
               <!--tableName="gamer_profile_conversations">-->
     <!--</loadData>-->
 
-    <loadData encoding="UTF-8"
-              file="config/liquibase/market_offer.csv"
-              separator=";"
-              tableName="market_offer">
-    </loadData>
+    <!--<loadData encoding="UTF-8"-->
+              <!--file="config/liquibase/market_offer.csv"-->
+              <!--separator=";"-->
+              <!--tableName="market_offer">-->
+    <!--</loadData>-->
 
     <loadData encoding="UTF-8"
               file="config/liquibase/gamer_profile_searched_games.csv"
@@ -92,23 +92,23 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
               tableName="gamer_profile_searched_games">
     </loadData>
 
-    <loadData encoding="UTF-8"
-              file="config/liquibase/trade_offer.csv"
-              separator=";"
-              tableName="trade_offer">
-    </loadData>
+    <!--<loadData encoding="UTF-8"-->
+              <!--file="config/liquibase/trade_offer.csv"-->
+              <!--separator=";"-->
+              <!--tableName="trade_offer">-->
+    <!--</loadData>-->
 
-    <loadData encoding="UTF-8"
-              file="config/liquibase/trade_offer_offer_games.csv"
-              separator=";"
-              tableName="trade_offer_offer_games">
-    </loadData>
+    <!--<loadData encoding="UTF-8"-->
+              <!--file="config/liquibase/trade_offer_offer_games.csv"-->
+              <!--separator=";"-->
+              <!--tableName="trade_offer_offer_games">-->
+    <!--</loadData>-->
 
-    <loadData encoding="UTF-8"
-              file="config/liquibase/comment.csv"
-              separator=";"
-              tableName="comment">
-    </loadData>
+    <!--<loadData encoding="UTF-8"-->
+              <!--file="config/liquibase/comment.csv"-->
+              <!--separator=";"-->
+              <!--tableName="comment">-->
+    <!--</loadData>-->
 
 
 </changeSet>

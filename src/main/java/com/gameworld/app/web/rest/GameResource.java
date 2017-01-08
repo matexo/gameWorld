@@ -2,7 +2,10 @@ package com.gameworld.app.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.gameworld.app.domain.Game;
+import com.gameworld.app.domain.GamerProfile;
+import com.gameworld.app.domain.MarketOffer;
 import com.gameworld.app.service.GameService;
+import com.gameworld.app.service.GamefinderService;
 import com.gameworld.app.web.rest.util.HeaderUtil;
 import com.gameworld.app.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -15,9 +18,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,6 +42,10 @@ public class GameResource {
 
     @Inject
     private GameService gameService;
+
+    @Inject
+    private GamefinderService gamefinderService;
+
 
     @PostMapping("/games")
     @Timed
