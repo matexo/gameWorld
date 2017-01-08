@@ -11,7 +11,8 @@
         $stateProvider
             .state('gamefinder', {
                 parent: 'entity',
-                url: '/gamefinder',
+                url: '/gamefinder/:id',
+                params: { id: null},
                 data: {
                     authorities: ['ROLE_USER']
                 },

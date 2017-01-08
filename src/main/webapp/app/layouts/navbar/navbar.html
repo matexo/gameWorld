@@ -44,12 +44,6 @@
                             </a>
                         </li>
                         <li ui-sref-active="active">
-                            <a ui-sref="gamefinder" ng-click="vm.collapseNavbar()">
-                                <span class="glyphicon glyphicon-fire"></span>&nbsp;
-                                <span>GameFinder</span>
-                            </a>
-                        </li>
-                        <li ui-sref-active="active">
                             <a ui-sref="trade-offer" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-retweet"></span>&nbsp;
                                 <span>Trade offers</span>
@@ -146,23 +140,18 @@
                         <span>
                             <span class="glyphicon glyphicon-user"></span>
                             <span class="hidden-sm">
-                                Profile '{{vm.account.login}}'
+                                Profile
                             </span>
                             <b class="caret"></b>
                         </span>
                     </a>
 
                     <ul class="dropdown-menu" uib-dropdown-menu>
-                        <li ui-sref-active="active" ng-switch-when="true">
-                            <a ui-sref="" ng-click="vm.collapseNavbar()">
-                                <span class="glyphicon glyphicon-eye-open"></span>
-                                <span>Profile</span>
-                            </a>
-                        </li>
+
                         <li ui-sref-active="active" ng-switch-when="true">
                             <a ui-sref="settings" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-wrench"></span>&nbsp;
-                                <span>Settings</span>
+                                <span>Profile settings</span>
                             </a>
                         </li>
 

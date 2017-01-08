@@ -22,11 +22,13 @@ public class GamefinderResource {
 
     @GetMapping("/gamefinder")
     public ResponseEntity<List<MarketOffer>> findGames(@RequestParam("marketOfferId") Long id ,
-                                                       @RequestParam("sameCity") Boolean sameCity) {
-        GamefinderDTO x = new GamefinderDTO();
-        x.setMarketOfferId(id);
-        x.setSameCity(sameCity);
-        List<MarketOffer> matchedOffers = gamefinderService.findPairForMarketOffer(x);
+                                                       @RequestParam("sameCity") Boolean sameCity,
+                                                       @RequestParam("perfectMatch") Boolean perfectMatch) {
+        GamefinderDTO data = new GamefinderDTO();
+        data.setMarketOfferId(id);
+        data.setSameCity(sameCity);
+        data.setPerfectMatch(perfectMatch);
+        List<MarketOffer> matchedOffers = gamefinderService.findPairForMarketOffer(data);
         return new ResponseEntity<List<MarketOffer>>(matchedOffers,HttpStatus.OK);
     }
 

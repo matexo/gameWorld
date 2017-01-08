@@ -89,53 +89,55 @@
                                 <p class="label label-primary">Offer type: {{marketOffer.offerType}}</p><br/>
                                 <p class="label label-primary" ng-hide="marketOffer.price == 0">Price:
                                     {{marketOffer.price}}</p><br/>
-                                <p class="label label-primary"><a ui-sref="gamer-profile-detail({id:marketOffer.createProfile.id})">{{marketOffer.createProfile.name}}</a></p><br/>
+                                <p class="label label-primary"><a
+                                    ui-sref="gamer-profile-detail({id:marketOffer.createProfile.id})">{{marketOffer.createProfile.name}}</a>
+                                </p><br/>
                                 <p class="label label-primary">{{marketOffer.createProfile.adress.city}}</p><br/>
                             </div>
                         </div>
                         <div class="row"><br/></div>
                         <div class="row">
                             <div class="text-center">
-                            <button type="submit"
-                                    ui-sref="market-offer-detail({id:marketOffer.id})"
-                                    class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-eye-open"></span>
-                                <span class="">Show this offer</span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="game.edit({id:game.id})"
-                                    class="btn btn-primary btn-sm"
-                                    has-authority="ROLE_ADMIN">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="hidden-xs hidden-sm">Edit</span>
-                            </button>
-                            <button type="button"
-                                    ui-sref="game.delete({id:game.id})"
-                                    class="btn btn-danger btn-sm"
-                                    has-authority="ROLE_ADMIN">
-                                <span class="glyphicon glyphicon-remove-circle"></span>
-                                <span class="hidden-xs hidden-sm">Delete</span>
-                            </button>
-                            <button type="button"
-                                    class="btn btn-success btn-sm"
-                                    ng-if="marketOffer.offerType == 'SELL' || marketOffer.offerType == 'BUY'"
-                                    ng-click="vm.finalizeOffer(marketOffer.id);">
-                                <span class="glyphicon glyphicon-ok"></span>
-                                <span class="">Make transaction</span>
-                            </button>
-                            <button type="button"
-                                    ui-sref="trade-offer.new({marketOfferId: marketOffer.id})"
-                                    class="btn btn-success btn-sm"
-                                    ng-if="marketOffer.offerType == 'EXCHANGE'">
-                                <span class="glyphicon glyphicon-gift"></span>
-                                <span class="">Make a trade offer</span>
-                            </button>
-                            <button type="button"
-                                    class="btn btn-info btn-sm"
-                                    ng-click="vm.sendMessage(marketOffer.createProfile.id)">
-                                <span class="glyphicon glyphicon-envelope"></span>
-                                <span class="">Send message</span>
-                            </button>
+                                <button type="submit"
+                                        ui-sref="market-offer-detail({id:marketOffer.id})"
+                                        class="btn btn-primary btn-sm">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                    <span class="">Show this offer</span>
+                                </button>
+                                <button type="submit"
+                                        ui-sref="game.edit({id:game.id})"
+                                        class="btn btn-primary btn-sm"
+                                        has-authority="ROLE_ADMIN">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                    <span class="hidden-xs hidden-sm">Edit</span>
+                                </button>
+                                <button type="button"
+                                        ui-sref="game.delete({id:game.id})"
+                                        class="btn btn-danger btn-sm"
+                                        has-authority="ROLE_ADMIN">
+                                    <span class="glyphicon glyphicon-remove-circle"></span>
+                                    <span class="hidden-xs hidden-sm">Delete</span>
+                                </button>
+                                <button type="button"
+                                        class="btn btn-success btn-sm"
+                                        ng-if="marketOffer.offerType == 'SELL' || marketOffer.offerType == 'BUY'"
+                                        ng-click="vm.finalizeOffer(marketOffer.id);">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                    <span class="">Make transaction</span>
+                                </button>
+                                <button type="button"
+                                        ui-sref="trade-offer.new({marketOfferId: marketOffer.id})"
+                                        class="btn btn-success btn-sm"
+                                        ng-if="marketOffer.offerType == 'EXCHANGE'">
+                                    <span class="glyphicon glyphicon-gift"></span>
+                                    <span class="">Make a trade offer</span>
+                                </button>
+                                <button type="button"
+                                        class="btn btn-info btn-sm"
+                                        ng-click="vm.sendMessage(marketOffer.createProfile.id)">
+                                    <span class="glyphicon glyphicon-envelope"></span>
+                                    <span class="">Send message</span>
+                                </button>
                             </div>
                         </div>
                     </div>
