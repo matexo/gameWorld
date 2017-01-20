@@ -15,7 +15,10 @@
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
         vm.save = save;
-        vm.games = Game.query({filter: 'marketoffer-is-null'});
+        vm.games = Game.query({
+            page: 0,
+            size: 100,
+            filter: 'marketoffer-is-null'});
         $q.all([vm.marketOffer.$promise, vm.games.$promise]).then(function() {
             if (!vm.marketOffer.game || !vm.marketOffer.game.id) {
                 return $q.reject();

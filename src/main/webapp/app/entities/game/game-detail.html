@@ -18,23 +18,27 @@
         </div>
         <div class="col-lg-8">
             <dl class="dl-horizontal jh-entity-details">
-                <dt><span>Title:</span></dt>
+                <dt><span>Tytuł:</span></dt>
                 <dd>
                     <span>{{vm.game.title}}</span>
                 </dd>
-                <dt><span>Producer:</span></dt>
+                <dt><span>Wydawca:</span></dt>
                 <dd>
                     <span>{{vm.game.producer}}</span>
                 </dd>
-                <dt><span>Description:</span></dt>
+                <dt><span>Rok produkcji:</span></dt>
+                <dd>
+                    <span>{{vm.game.yearOfProduction}}</span>
+                </dd>
+                <dt><span>Opis:</span></dt>
                 <dd>
                     <span>{{vm.game.description}}</span>
                 </dd>
-                <dt><span>Game type:</span></dt>
+                <dt><span>Rodzaj gry:</span></dt>
                 <dd>
                     <span>{{vm.game.gameType.gameType}}</span>
                 </dd>
-                <dt><span>Platform :</span></dt>
+                <dt><span>Platforma :</span></dt>
                 <dd>
                     <span>{{vm.game.platform.platform}}</span>
                 </dd>
@@ -43,27 +47,19 @@
             <button type="submit"
                     ui-sref="{{ vm.previousState }}"
                     class="btn btn-info">
-                <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+                <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Powrót</span>
             </button>
 
             <button type="button" ui-sref="game-detail.edit({id:vm.game.id})" class="btn btn-primary"
                     has-authority="ROLE_ADMIN">
                 <span class="glyphicon glyphicon-pencil"></span>
-                <span class="hidden-xs hidden-sm"> Edit</span>
-            </button>
-
-            <button type="submit"
-                    ui-sref="game.delete({id:vm.game.id})"
-                    class="btn btn-danger"
-                    has-authority="ROLE_ADMIN">
-                <span class="glyphicon glyphicon-remove-circle"></span>
-                <span class="hidden-xs hidden-sm">Delete it</span>
+                <span class="hidden-xs hidden-sm"> Edytuj</span>
             </button>
             <button type="submit"
                     ng-click="vm.addToWishList(vm.game.id)"
                     class="btn btn-success">
                 <span class="glyphicon glyphicon-plus"></span>
-                <span class="hidden-xs hidden-sm">Want it!</span>
+                <span class="hidden-xs hidden-sm">Dodaj do poszukiwanych</span>
             </button>
             </div>
         </div>

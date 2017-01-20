@@ -57,6 +57,7 @@ public class GamerProfile implements Serializable {
     @JoinTable(name = "gamer_profile_searched_games",
                joinColumns = @JoinColumn(name="gamer_profiles_id", referencedColumnName="ID"),
                inverseJoinColumns = @JoinColumn(name="searched_games_id", referencedColumnName="ID"))
+    @JsonIgnore
     private Set<Game> searchedGames = new HashSet<>();
 
     @ManyToMany
@@ -68,7 +69,6 @@ public class GamerProfile implements Serializable {
     private Set<Conversation> conversations = new HashSet<>();
 
     @OneToMany(mappedBy = "authorProfile")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Comment> comments = new HashSet<>();
 

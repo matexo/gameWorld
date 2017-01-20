@@ -4,7 +4,7 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myMessageLabel">Create or edit a Message</h4>
+        <h4 class="modal-title" id="myMessageLabel">Nowa wiadomość</h4>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
@@ -14,14 +14,14 @@
                     ng-model="vm.message.id" readonly />
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_text">Text</label>
+            <label class="control-label" for="field_text">Treść wiadomości</label>
             <input type="text" class="form-control" name="text" id="field_text"
                     ng-model="vm.message.text"
                     required />
             <div ng-show="editForm.text.$invalid">
                 <p class="help-block"
                     ng-show="editForm.text.$error.required">
-                    This field is required.
+                    Pole wymagane
                 </p>
             </div>
         </div>
@@ -48,20 +48,13 @@
                 <option value=""></option>
             </select>
         </div>
-        <!--<div class="form-group" >-->
-            <!--<label for="field_conversation">Conversation</label>-->
-            <!--&lt;!&ndash;<select class="form-control" id="field_conversation" name="conversation" ng-model="vm.message.conversation" ng-options="conversation as conversation.id for conversation in vm.conversations track by conversation.id">&ndash;&gt;-->
-                <!--&lt;!&ndash;<option value=""></option>&ndash;&gt;-->
-            <!--&lt;!&ndash;</select>&ndash;&gt;-->
-            <!--&lt;!&ndash;<input class="form-control" id="field_conversation" name="conversation" ng-model="vm.message.conversation">&ndash;&gt;-->
-        <!--</div>-->
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
-            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Powrót</span>
         </button>
         <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Napisz</span>
         </button>
     </div>
 </form>

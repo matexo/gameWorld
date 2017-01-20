@@ -6,8 +6,8 @@
     <div class="panel panel-primary">
         <div class="panel panel-heading">
             <h3 align="center">
-                <span>Conversation between <a
-                    ui-sref="gamer-profile-detail({id:vm.conversation.profiles[0].id})">{{vm.conversation.profiles[0].name}}</a> and <a
+                <span>Rozmowa pomiędzy <a
+                    ui-sref="gamer-profile-detail({id:vm.conversation.profiles[0].id})">{{vm.conversation.profiles[0].name}}</a> i <a
                     ui-sref="gamer-profile-detail({id:vm.conversation.profiles[1].id})">{{vm.conversation.profiles[1].name}}</a></span>
             </h3>
         </div>
@@ -17,14 +17,14 @@
                     <button type="button" ui-sref="conversation-detail.newmessage({id:vm.conversation.id})"
                             class="btn btn-success">
                         <span class="glyphicon glyphicon-pencil"></span>
-                        <span class="hidden-xs hidden-sm"> Add message</span>
+                        <span class="hidden-xs hidden-sm"> Napisz wiadomość</span>
                     </button>
                 </div>
                 <div class="col-sm-6" align="right">
                     <button type="submit"
                             ui-sref="conversation"
                             class="btn btn-success">
-                        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back to all conversation</span>
+                        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Wróc do wszystkich rozmów</span>
                     </button>
                 </div>
             </div>
@@ -34,7 +34,7 @@
             <div ng-repeat="message in vm.messages track by message.id"
                  ng-class="message.authorProfile.name != vm.conversation.profiles[0].name ? 'text-right' : 'text-left'">
                 <label class="label label-primary"><a ui-sref="gamer-profile-detail({id:message.authorProfile.id})">{{message.authorProfile.name}}</a>
-                    on {{message.sendTime | date: 'medium'}}</label>
+                    dnia {{message.sendTime | date:'MM/dd/yyyy HH:mm'}}</label>
                 <h4>{{message.text}}</h4>
             </div>
             </div>

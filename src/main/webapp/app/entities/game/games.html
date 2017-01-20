@@ -6,7 +6,7 @@
                 <button class="btn btn-primary" ui-sref="game.new" has-authority="ROLE_ADMIN">
                     <span class="glyphicon glyphicon-plus"></span>
                     <span class="hidden-xs">
-                        Create new Game
+                        Dodaj nową grę
                     </span>
                 </button>
             </div>
@@ -14,7 +14,7 @@
                 <form name="searchForm" class="form-inline">
                     <div class="input-group">
                         <input type="text" class="form-control" ng-model="vm.searchQuery" id="searchQuery"
-                               placeholder="Try to find games">
+                               placeholder="Znajdź grę">
                         <span class="input-group-btn width-min">
                             <button class="btn btn-info" ng-click="vm.search(vm.searchQuery)">
                                 <span class="glyphicon glyphicon-search"></span>
@@ -49,14 +49,14 @@
                         </div>
                         <div class="col-lg-8">
                             <p ng-class="game.platform.platform.indexOf('Playstation') != -1 ?
-                 'label label-primary' : game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">Title : {{game.title}}</p></br>
+                 'label label-primary' : game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">Tytuł : {{game.title}}</p></br>
                             <p ng-class="game.platform.platform.indexOf('Playstation') != -1 ?
-                 'label label-primary' : game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">Producer: {{game.producer}}</p></br>
+                 'label label-primary' : game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">Producent: {{game.producer}}</p></br>
                             <p ng-class="game.platform.platform.indexOf('Playstation') != -1 ?
-                 'label label-primary' : game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">Game type: {{game.gameType.gameType}}</p></br>
+                 'label label-primary' : game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">Rodzaj gry: {{game.gameType.gameType}}</p></br>
                             <p ng-class="game.platform.platform.indexOf('Playstation') != -1 ?
                  'label label-primary' : game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">
-                            Platform : {{game.platform.platform}}
+                            Platforma : {{game.platform.platform}}
                             </p></br></br>
 
 
@@ -65,27 +65,20 @@
                                         ui-sref="game-detail({id:game.id})"
                                         class="btn btn-info btn-sm">
                                     <span class="glyphicon glyphicon-eye-open"></span>
-                                    <span class="hidden-xs hidden-sm">Show more</span>
+                                    <span class="hidden-xs hidden-sm">Pokaż więcej</span>
                                 </button>
                                 <button type="submit"
                                         ui-sref="game.edit({id:game.id})"
                                         class="btn btn-primary btn-sm"
                                         has-authority="ROLE_ADMIN">
                                     <span class="glyphicon glyphicon-pencil"></span>
-                                    <span class="hidden-xs hidden-sm">Edit</span>
-                                </button>
-                                <button type="submit"
-                                        ui-sref="game.delete({id:game.id})"
-                                        class="btn btn-danger btn-sm"
-                                        has-authority="ROLE_ADMIN">
-                                    <span class="glyphicon glyphicon-remove-circle"></span>
-                                    <span class="hidden-xs hidden-sm">Delete</span>
+                                    <span class="hidden-xs hidden-sm">Edytuj</span>
                                 </button>
                                 <button type="submit"
                                         ng-click="vm.addToWishList(game.id)"
                                         class="btn btn-success btn-sm">
                                     <span class="glyphicon glyphicon-plus"></span>
-                                    <span>Want it!</span>
+                                    <span>Dodaj do poszukiwanych</span>
                                     <span class="hidden-xs hidden-sm"></span>
                                 </button>
                             </div>

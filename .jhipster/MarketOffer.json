@@ -8,6 +8,9 @@
             "otherEntityField": "id",
             "ownerSide": true,
             "otherEntityRelationshipName": "marketOffer"
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
             "relationshipType": "one-to-one",
@@ -82,7 +85,10 @@
         {
             "fieldName": "gameState",
             "fieldType": "GameState",
-            "fieldValues": "NEW,USED"
+            "fieldValues": "NEW,USED",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
             "fieldName": "shippingCost",

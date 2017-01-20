@@ -1,5 +1,5 @@
 <div>
-    <h2>Market Offers</h2>
+    <h2>Market ofert</h2>
     <jhi-alert></jhi-alert>
     <div class="container-fluid">
         <div class="row">
@@ -7,7 +7,7 @@
                 <button class="btn btn-primary" ui-sref="market-offer.new">
                     <span class="glyphicon glyphicon-plus"></span>
                     <span class="hidden-xs">
-                        Create a new Market Offer
+                        Stwórz nową ofertę
                     </span>
                 </button>
             </div>
@@ -15,7 +15,7 @@
                 <form name="searchForm" class="form-inline">
                     <div class="input-group pull-right">
                         <input type="text" class="form-control" ng-model="vm.searchQuery" id="searchQuery"
-                               placeholder="Find by anything">
+                               placeholder="Wyszukaj">
                         <span class="input-group-btn width-min">
                             <button class="btn btn-success" ng-click="vm.search(vm.searchQuery)">
                                 <span class="glyphicon glyphicon-search"></span>
@@ -36,11 +36,8 @@
         <table class="jh-table table table-striped">
             <thead>
             <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
-                <th jh-sort-by="createDate"><span>Create Date</span> <span class="glyphicon glyphicon-sort"></span></th>
-                <th jh-sort-by="offerType"><span>Offer Type</span> <span class="glyphicon glyphicon-sort"></span></th>
-                <th jh-sort-by="price"><span>Price</span> <span class="glyphicon glyphicon-sort"></span></th>
-                <th jh-sort-by="game.title"><span>Game</span> <span class="glyphicon glyphicon-sort"></span></th>
-                <th></th>
+                <th jh-sort-by="createDate"><span>Data stworzenia</span> <span class="glyphicon glyphicon-sort"></span></th>
+                <th jh-sort-by="price"><span>Cena</span> <span class="glyphicon glyphicon-sort"></span></th>
             </tr>
             </thead>
         </table>
@@ -66,33 +63,36 @@
                                 </a>
                             </div>
                             <div class="col-lg-4" align="center">
-                                <h2> Game info</h2>
+                                <h2> Gra</h2>
                                 <p ng-class="marketOffer.game.platform.platform.indexOf('Playstation') != -1 ?
                  'label label-primary' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">
-                                    Title : {{marketOffer.game.title}}</p><br/>
+                                    Tytuł : {{marketOffer.game.title}}</p><br/>
                                 <p ng-class="marketOffer.game.platform.platform.indexOf('Playstation') != -1 ?
                  'label label-primary' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">
-                                    Producer: {{marketOffer.game.producer}}</p><br/>
+                                    Producent: {{marketOffer.game.producer}}</p><br/>
                                 <p ng-class="marketOffer.game.platform.platform.indexOf('Playstation') != -1 ?
                  'label label-primary' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">
-                                    Game type: {{marketOffer.game.gameType.gameType}}</p><br/>
+                                    Typ gry: {{marketOffer.game.gameType.gameType}}</p><br/>
                                 <p ng-class="marketOffer.game.platform.platform.indexOf('Playstation') != -1 ?
                  'label label-primary' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">
-                                    Platform : {{marketOffer.game.platform.platform}}
+                                    Platforma : {{marketOffer.game.platform.platform}}
                                 </p>
                             </div>
                             <div class="col-lg-4" align="center">
-                                <h2>Offer info</h2>
+                                <h2>Oferta</h2>
                                 <p class="label label-primary"
                                    ng-bind="marketOffer.createDate | date:'MM/dd/yyyy hh:mm'">
                                     {{marketOffer.createDate}}</p><br/>
-                                <p class="label label-primary">Offer type: {{marketOffer.offerType}}</p><br/>
-                                <p class="label label-primary" ng-hide="marketOffer.price == 0">Price:
+                                <p ng-show="marketOffer.offerType == 'SELL'" class="label label-primary">Typ oferty: Sprzedaż</p>
+                                <p ng-show="marketOffer.offerType == 'BUY'" class="label label-primary">Typ oferty: Kupno</p>
+                                <p ng-show="marketOffer.offerType == 'EXCHANGE'" class="label label-primary">Typ oferty: Wymiana</p>
+                                <br/>
+                                <p class="label label-primary" ng-hide="marketOffer.price == 0">Cena:
                                     {{marketOffer.price}}</p><br/>
                                 <p class="label label-primary"><a
-                                    ui-sref="gamer-profile-detail({id:marketOffer.createProfile.id})">{{marketOffer.createProfile.name}}</a>
+                                    ui-sref="gamer-profile-detail({id:marketOffer.createProfile.id})">Profil: {{marketOffer.createProfile.name}}</a>
                                 </p><br/>
-                                <p class="label label-primary">{{marketOffer.createProfile.adress.city}}</p><br/>
+                                <p class="label label-primary">Miasto: {{marketOffer.createProfile.adress.city}}</p><br/>
                             </div>
                         </div>
                         <div class="row"><br/></div>
@@ -102,41 +102,27 @@
                                         ui-sref="market-offer-detail({id:marketOffer.id})"
                                         class="btn btn-primary btn-sm">
                                     <span class="glyphicon glyphicon-eye-open"></span>
-                                    <span class="">Show this offer</span>
-                                </button>
-                                <button type="submit"
-                                        ui-sref="game.edit({id:game.id})"
-                                        class="btn btn-primary btn-sm"
-                                        has-authority="ROLE_ADMIN">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                    <span class="hidden-xs hidden-sm">Edit</span>
-                                </button>
-                                <button type="button"
-                                        ui-sref="game.delete({id:game.id})"
-                                        class="btn btn-danger btn-sm"
-                                        has-authority="ROLE_ADMIN">
-                                    <span class="glyphicon glyphicon-remove-circle"></span>
-                                    <span class="hidden-xs hidden-sm">Delete</span>
+                                    <span class="">Pokaż więcej</span>
                                 </button>
                                 <button type="button"
                                         class="btn btn-success btn-sm"
                                         ng-if="marketOffer.offerType == 'SELL' || marketOffer.offerType == 'BUY'"
                                         ng-click="vm.finalizeOffer(marketOffer.id);">
                                     <span class="glyphicon glyphicon-ok"></span>
-                                    <span class="">Make transaction</span>
+                                    <span class="">Sfinalizuj ofertę</span>
                                 </button>
                                 <button type="button"
                                         ui-sref="trade-offer.new({marketOfferId: marketOffer.id})"
                                         class="btn btn-success btn-sm"
                                         ng-if="marketOffer.offerType == 'EXCHANGE'">
                                     <span class="glyphicon glyphicon-gift"></span>
-                                    <span class="">Make a trade offer</span>
+                                    <span class="">Złóż ofertę wymiany</span>
                                 </button>
                                 <button type="button"
                                         class="btn btn-info btn-sm"
                                         ng-click="vm.sendMessage(marketOffer.createProfile.id)">
                                     <span class="glyphicon glyphicon-envelope"></span>
-                                    <span class="">Send message</span>
+                                    <span class="">Wyślij wiadomość</span>
                                 </button>
                             </div>
                         </div>
