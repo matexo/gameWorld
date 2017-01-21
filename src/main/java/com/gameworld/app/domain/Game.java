@@ -47,11 +47,9 @@ public class Game implements Serializable {
     @Column(name = "cover_image_content_type")
     private String coverImageContentType;
 
-    @NotNull
     @Column(name = "timestamp", nullable = false)
     private ZonedDateTime timestamp;
 
-    @NotNull
     @Column(name = "blockade", nullable = false)
     private Boolean blockade;
 

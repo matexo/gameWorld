@@ -16,8 +16,8 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface MarketOfferRepository extends JpaRepository<MarketOffer,Long> {
 
-    @Query(value = "SELECT marketOffer FROM MarketOffer marketOffer JOIN FETCH marketOffer.createProfile gp WHERE gp.id = :gamerProfileId",
-        countQuery = "SELECT count(marketOffer) FROM MarketOffer marketOffer JOIN marketOffer.createProfile gp WHERE gp.id = :gamerProfileId")
+    @Query(value = "SELECT marketOffer FROM MarketOffer marketOffer JOIN FETCH marketOffer.createProfile gp WHERE gp.id = :gamerProfileId ORDER BY marketOffer.createDate DESC",
+        countQuery = "SELECT count(marketOffer) FROM MarketOffer marketOffer JOIN marketOffer.createProfile gp WHERE gp.id = :gamerProfileId  ORDER BY marketOffer.createDate DESC")
     Page<MarketOffer> findAllMarketOfferCreatedByUser(@Param("gamerProfileId") Long gamerProfileId , Pageable pageable);
 
     @Query(value = "SELECT mo " +

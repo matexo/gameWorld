@@ -27,7 +27,9 @@
                     </dd>
                     <dt><span>Status oferty</span></dt>
                     <dd>
-                        <span>{{vm.marketOffer.offerStatus}}</span>
+                        <span ng-show="vm.marketOffer.offerStatus == 'NEW'">Aktualna</span>
+                        <span ng-show="vm.marketOffer.offerStatus == 'CANCELLED'">Anulowany</span>
+                        <span ng-show="vm.marketOffer.offerStatus == 'ENDED'">Zakończona</span>
                     </dd>
                     <dt><p>Opis</p></dt>
                     <dd>
@@ -35,7 +37,8 @@
                     </dd>
                     <dt><span>Stan gry</span></dt>
                     <dd>
-                        <span>{{vm.marketOffer.gameState}}</span>
+                        <span ng-show="vm.marketOffer.gameState == 'NEW'">Nowa</span>
+                        <span ng-show="vm.marketOffer.gameState == 'USED'">Używana</span>
                     </dd>
                     <dt ng-hide="vm.marketOffer.price == 0"><span>Koszt wysyłki</span></dt>
                     <dd ng-hide="vm.marketOffer.price == 0">

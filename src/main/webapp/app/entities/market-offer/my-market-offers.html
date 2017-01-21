@@ -26,16 +26,16 @@
                         <div class="col-lg-4" align="center">
                             <h2> Gra</h2>
                             <p ng-class="marketOffer.game.platform.platform.indexOf('Playstation') != -1 ?
-                 'label label-primary' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">
+                 'label label-info' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-primary'">
                                 Tytuł : {{marketOffer.game.title}}</p><br/>
                             <p ng-class="marketOffer.game.platform.platform.indexOf('Playstation') != -1 ?
-                 'label label-primary' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">
+                 'label label-info' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-primary'">
                                 Producent: {{marketOffer.game.producer}}</p><br/>
                             <p ng-class="marketOffer.game.platform.platform.indexOf('Playstation') != -1 ?
-                 'label label-primary' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">
+                 'label label-info' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-primary'">
                                 Typ gry: {{marketOffer.game.gameType.gameType}}</p><br/>
                             <p ng-class="marketOffer.game.platform.platform.indexOf('Playstation') != -1 ?
-                 'label label-primary' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">
+                 'label label-info' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-primary'">
                                 Platforma : {{marketOffer.game.platform.platform}}
                             </p>
                         </div>
@@ -50,7 +50,13 @@
                             <br/>
                             <p class="label label-primary" ng-hide="marketOffer.price == 0">Cena:
                                 {{marketOffer.price}}</p><br/>
-                            <p class="label label-primary"> Status oferty: {{marketOffer.offerStatus}}</p>
+                            <p class="label label-primary" ng-show="marketOffer.gameState == 'NEW'">Stan gry: Nowa</p>
+                            <p class="label label-primary" ng-show="marketOffer.gameState == 'USED'">Stan gry: Używana</p>
+                            <br/>
+                            <p class="label label-primary" ng-show="marketOffer.offerStatus == 'NEW'">Stan oferty: Aktualna</p>
+                            <p class="label label-primary" ng-show="marketOffer.offerStatus == 'CANCELLED'">Stan oferty: Anulowany</p>
+                            <p class="label label-primary" ng-show="marketOffer.offerStatus == 'ENDED'">Stan oferty: Zakończona</p>
+                            <br/>
                         </div>
                     </div>
                     <div class="row"><br/></div>

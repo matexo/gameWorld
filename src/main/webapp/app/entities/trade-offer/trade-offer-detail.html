@@ -3,36 +3,41 @@
         <div class="row">
             <div class="panel panel-primary">
                 <div class="panel panel-heading">
-                    <h2><span>Trade Offer</span> {{vm.tradeOffer.id}}</h2>
+                    <h2><span>Oferta wymiany</span> {{vm.tradeOffer.id}}</h2>
                 </div>
                 <div class="panel panel-body">
                     <dl class="dl-horizontal jh-entity-details">
-                        <dt><span>Payment</span></dt>
+                        <dt><span>Kwota dodatkowa</span></dt>
                         <dd ng-if="vm.tradeOffer.payment != null">
                             <span>{{vm.tradeOffer.payment}} zł</span>
                         </dd>
                         <dd ng-if="vm.tradeOffer.payment == null">
                             <span>0 zł</span>
                         </dd>
-                        <dt><span>Timestamp</span></dt>
+                        <dt><span>Data złożenia</span></dt>
                         <dd>
-                            <span>{{vm.tradeOffer.timestamp | date:'medium'}}</span>
+                            <span>{{vm.tradeOffer.timestamp | date:'MM/dd/yyyy HH:mm'}}</span>
                         </dd>
                         <dt><span>Status</span></dt>
                         <dd>
-                            <span>{{vm.tradeOffer.status}}</span>
+                                <span class="label label-info" ng-show="vm.tradeOffer.status == 'PENDING'">Oczekująca</span>
+
+                                <span class="label label-warning" ng-show="vm.tradeOffer.status == 'REJECTED'">Odrzucona</span>
+
+                                <span class="label label-danger" ng-show="vm.tradeOffer.status == 'CANCELLED'">Anulowana</span>
+
                         </dd>
-                        <dt><span>Offer Games</span></dt>
+                        <dt><span>Offerowane gry</span></dt>
                         <dd>
             <span ng-repeat="offerGames in vm.tradeOffer.offerGames">
                 <a ui-sref="game-detail({id: offerGames.id})">{{offerGames.title + '(' +  offerGames.platform.platform + ')(' + offerGames.yearOfProduction + ')'}}</a>{{$last ? '' : ', '}}
             </span>
                         </dd>
-                        <dt><span>Create Profile</span></dt>
+                        <dt><span>Autor</span></dt>
                         <dd>
                             <a ui-sref="gamer-profile-detail({id:vm.tradeOffer.createProfile.id})">{{vm.tradeOffer.createProfile.name}}</a>
                         </dd>
-                        <dt><span>Market Offer</span></dt>
+                        <dt><span>Oferta z marketu</span></dt>
                         <dd>
                             <a ui-sref="market-offer-detail({id:vm.tradeOffer.marketOfferId})">{{vm.tradeOffer.marketOfferId}}</a>
                         </dd>
@@ -40,7 +45,7 @@
                     <button type="submit"
                             ui-sref="{{ vm.previousState }}"
                             class="btn btn-info">
-                        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+                        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Powrót</span>
                     </button>
                 </div>
             </div>

@@ -4,29 +4,29 @@
         <div class="col-lg-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h4 align="center">Trade offer assigned to me</h4>
+                    <h4 align="center">Oferty wymiany przypisane do mnie</h4>
                 </div>
                 <div class="panel-body">
                     <table class="jh-table table table-striped">
                         <thead>
                         <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
-                            <th jh-sort-by="payment"><span>Payment</span> <span class="glyphicon glyphicon-sort"></span>
+                            <th jh-sort-by="payment"><span>Zapłata</span> <span class="glyphicon glyphicon-sort"></span>
                             </th>
-                            <th jh-sort-by="timestamp"><span>Timestamp</span> <span
+                            <th jh-sort-by="timestamp"><span>Data</span> <span
                                 class="glyphicon glyphicon-sort"></span>
                             </th>
-                            <th jh-sort-by="createProfile.id"><span>Create Profile</span> <span
+                            <th jh-sort-by="createProfile.id"><span>Profil autora</span> <span
                                 class="glyphicon glyphicon-sort"></span></th>
-                            <th jh-sort-by="marketOffer.id"><span>Market Offer</span> <span
+                            <th jh-sort-by="marketOffer.id"><span>Oferta</span> <span
                                 class="glyphicon glyphicon-sort"></span></th>
-                            <th></th>
+                            <th>Wymiana</th>
                         </tr>
                         </thead>
                         <tbody infinite-scroll="vm.loadPage(vm.page + 1)"
                                infinite-scroll-disabled="vm.page >= vm.links['last']">
                         <tr ng-repeat="tradeOffer in vm.tradeOffersAssignedToUser track by tradeOffer.id">
-                            <td>{{tradeOffer.payment}}</td>
-                            <td>{{tradeOffer.timestamp | date:'MM/dd/yyyy hh:mm'}}</td>
+                            <td>{{tradeOffer.payment}} zł</td>
+                            <td>{{tradeOffer.timestamp | date:'MM/dd HH:mm'}}</td>
                             <td>
                                 <a ui-sref="gamer-profile-detail({id:tradeOffer.createProfile.id})">{{tradeOffer.createProfile.name}}</a>
                             </td>
@@ -64,34 +64,48 @@
         <div class="col-lg-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h4 align="center">Trade offer created by me</h4>
+                    <h4 align="center">Moje oferty wymiany</h4>
                 </div>
                 <div class="panel-body">
                     <table class="jh-table table table-striped">
                         <thead>
                         <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
-                            <th jh-sort-by="payment"><span>Payment</span> <span class="glyphicon glyphicon-sort"></span>
+                            <th jh-sort-by="payment"><span>Zapłata</span> <span class="glyphicon glyphicon-sort"></span>
                             </th>
-                            <th jh-sort-by="timestamp"><span>Timestamp</span> <span
+                            <th jh-sort-by="timestamp"><span>Data</span> <span
                                 class="glyphicon glyphicon-sort"></span>
                             </th>
                             <th jh-sort-by="status"><span>Status</span> <span
                                 class="glyphicon glyphicon-sort"></span></th>
-                            <th jh-sort-by="marketOffer.id"><span>Market Offer</span> <span
+                            <th jh-sort-by="marketOffer.id"><span>Oferta</span> <span
                                 class="glyphicon glyphicon-sort"></span></th>
-                            <th></th>
+                            <th>Wymiana</th>
                         </tr>
                         </thead>
                         <tbody infinite-scroll="vm.loadPage(vm.page + 1)"
                                infinite-scroll-disabled="vm.page >= vm.links['last']">
                         <tr ng-repeat="tradeOffer in vm.tradeOffersCreatedByUser track by tradeOffer.id">
                             <td>{{tradeOffer.payment}}</td>
-                            <td>{{tradeOffer.timestamp | date:'MM/dd/yyyy hh:mm'}}</td>
-                            <td>
-                                {{tradeOffer.status}}
+                            <td>{{tradeOffer.timestamp | date:'MM/dd HH:mm'}}</td>
+                            <td ng-show="tradeOffer.status == 'PENDING'">
+                                <label class="label label-info">Oczekująca</label>
+                            </td>
+                            <td ng-show="tradeOffer.status == 'REJECTED'">
+                                <label class="label label-warning">Odrzucona</label>
+                            </td>
+                            <td ng-show="tradeOffer.status == 'CANCELLED'">
+                                <label class="label label-danger">Anulowana</label>
+                            </td>
+                            <td ng-show="tradeOffer.status == 'ACCEPTED'">
+                                <label class="label label-success">Zaakceptowana</label>
                             </td>
                             <td>
-                                <a ui-sref="market-offer-detail({id:tradeOffer.marketOfferId})">{{tradeOffer.marketOfferId}}</a>
+                                <button type="submit"
+                                        ui-sref="market-offer-detail({id:tradeOffer.marketOfferId})"
+                                        class="btn btn-info btn-sm">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                    <span class="hidden-xs hidden-sm"></span>
+                                </button>
                             </td>
                             <td class="text-right">
                                 <div class="btn-group flex-btn-group-container">
