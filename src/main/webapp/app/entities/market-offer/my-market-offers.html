@@ -1,10 +1,11 @@
 <div>
-    <div class="text-center"><h2>My offers</h2></div>
+    <div class="text-center"><h2>Moje oferty</h2></div>
     <jhi-alert></jhi-alert>
     <br/>
     <div infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
         <div ng-repeat="marketOffer in vm.marketOffers track by marketOffer.id">
-            <div class="panel panel-primary">
+            <div ng-class="marketOffer.game.platform.platform.indexOf('Playstation') != -1 ?
+                 'panel panel-info' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'panel panel-success' : 'panel panel-primary'">
                 <div class="panel-heading">
                     <h3 class="text-center">{{marketOffer.game.title}} ({{marketOffer.game.yearOfProduction}})
                         ({{marketOffer.game.platform.platform}})</h3>
@@ -12,45 +13,44 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-4" align="center">
-                            <a ng-if="game.coverImage"
-                               ng-click="vm.openFile(game.coverImageContentType, game.coverImage)" class="thumbnail"
-                               style="height: 160px;width: 120px;>
+                            <a ng-if="marketOffer.game.coverImage"
+                               ng-click="vm.openFile(marketOffer.game.coverImageContentType, marketOffer.game.coverImage)">
                                 <img
-                                    data-ng-src=" {{'data:' + game.coverImageContentType + ';base64,' +
-                            game.coverImage}}"/>
+                                    data-ng-src=" {{'data:' + marketOffer.game.coverImageContentType + ';base64,' +
+                                marketOffer.game.coverImage}}" style="height: 300px; width: 200px;"/>
                             </a>
-                            <a ng-if="!game.coverImage" class="thumbnail" style="height: 160px;width: 120px;">
+                            <a ng-if="!marketOffer.game.coverImage" class="thumbnail" style="height: 160px;width: 120px;">
                                 <img src="/content/images/hipster.png">
                             </a>
                         </div>
                         <div class="col-lg-4" align="center">
-                            <h2> Game info</h2>
+                            <h2> Gra</h2>
                             <p ng-class="marketOffer.game.platform.platform.indexOf('Playstation') != -1 ?
                  'label label-primary' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">
-                                Title : {{marketOffer.game.title}}</p><br/>
+                                Tytuł : {{marketOffer.game.title}}</p><br/>
                             <p ng-class="marketOffer.game.platform.platform.indexOf('Playstation') != -1 ?
                  'label label-primary' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">
-                                Producer: {{marketOffer.game.producer}}</p><br/>
+                                Producent: {{marketOffer.game.producer}}</p><br/>
                             <p ng-class="marketOffer.game.platform.platform.indexOf('Playstation') != -1 ?
                  'label label-primary' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">
-                                Game type: {{marketOffer.game.gameType.gameType}}</p><br/>
+                                Typ gry: {{marketOffer.game.gameType.gameType}}</p><br/>
                             <p ng-class="marketOffer.game.platform.platform.indexOf('Playstation') != -1 ?
                  'label label-primary' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">
-                                Platform : {{marketOffer.game.platform.platform}}
+                                Platforma : {{marketOffer.game.platform.platform}}
                             </p>
                         </div>
                         <div class="col-lg-4" align="center">
-                            <h2>Offer info</h2>
+                            <h2>Oferta</h2>
                             <p class="label label-primary"
                                ng-bind="marketOffer.createDate | date:'MM/dd/yyyy hh:mm'">
                                 {{marketOffer.createDate}}</p><br/>
-                            <p class="label label-primary">Offer type: {{marketOffer.offerType}}</p><br/>
-                            <p class="label label-primary" ng-hide="marketOffer.price == 0">Price:
+                            <p ng-show="marketOffer.offerType == 'SELL'" class="label label-primary">Typ oferty: Sprzedaż</p>
+                            <p ng-show="marketOffer.offerType == 'BUY'" class="label label-primary">Typ oferty: Kupno</p>
+                            <p ng-show="marketOffer.offerType == 'EXCHANGE'" class="label label-primary">Typ oferty: Wymiana</p>
+                            <br/>
+                            <p class="label label-primary" ng-hide="marketOffer.price == 0">Cena:
                                 {{marketOffer.price}}</p><br/>
-                            <p class="label label-primary"><a
-                                ui-sref="gamer-profile-detail({id:marketOffer.createProfile.id})">{{marketOffer.createProfile.name}}</a>
-                            </p><br/>
-                            <p class="label label-primary">{{marketOffer.createProfile.adress.city}}</p><br/>
+                            <p class="label label-primary"> Status oferty: {{marketOffer.offerStatus}}</p>
                         </div>
                     </div>
                     <div class="row"><br/></div>
@@ -60,28 +60,14 @@
                                     ui-sref="market-offer-detail({id:marketOffer.id})"
                                     class="btn btn-primary btn-sm">
                                 <span class="glyphicon glyphicon-eye-open"></span>
-                                <span class="">Show this offer</span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="game.edit({id:game.id})"
-                                    class="btn btn-primary btn-sm"
-                                    has-authority="ROLE_ADMIN">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="hidden-xs hidden-sm">Edit</span>
-                            </button>
-                            <button type="button"
-                                    ui-sref="game.delete({id:game.id})"
-                                    class="btn btn-danger btn-sm"
-                                    has-authority="ROLE_ADMIN">
-                                <span class="glyphicon glyphicon-remove-circle"></span>
-                                <span class="hidden-xs hidden-sm">Delete</span>
+                                <span class="">Pokaż więcej</span>
                             </button>
                             <button type="submit"
                                     ng-click="vm.cancelMarketOffer(marketOffer.id)"
                                     ng-show="marketOffer.offerStatus == 'NEW'"
                                     class="btn btn-danger btn-sm">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
-                                <span class="hidden-xs hidden-sm">Cancel market offer</span>
+                                <span class="hidden-xs hidden-sm">Anuluj ofertę</span>
                             </button>
                             <button ui-sref="gamefinder({id:marketOffer.id})" class="btn btn-success btn-sm"
                                     ng-hide="marketOffer.offerStatus == 'CANCELLED'">

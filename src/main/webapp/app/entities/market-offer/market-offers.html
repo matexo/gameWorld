@@ -43,7 +43,8 @@
         </table>
         <div infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
             <div ng-repeat="marketOffer in vm.marketOffers track by marketOffer.id">
-                <div class="panel panel-primary">
+                <div ng-class="marketOffer.game.platform.platform.indexOf('Playstation') != -1 ?
+                 'panel panel-info' : marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'panel panel-success' : 'panel panel-primary'">
                     <div class="panel-heading">
                         <h3 class="text-center">{{marketOffer.game.title}} ({{marketOffer.game.yearOfProduction}})
                             ({{marketOffer.game.platform.platform}})</h3>
@@ -51,14 +52,13 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-4" align="center">
-                                <a ng-if="game.coverImage"
-                                   ng-click="vm.openFile(game.coverImageContentType, game.coverImage)" class="thumbnail"
-                                   style="height: 160px;width: 120px;>
+                                <a ng-if="marketOffer.game.coverImage"
+                                   ng-click="vm.openFile(marketOffer.game.coverImageContentType, marketOffer.game.coverImage)">
                                 <img
-                                    data-ng-src=" {{'data:' + game.coverImageContentType + ';base64,' +
-                                game.coverImage}}"/>
+                                    data-ng-src=" {{'data:' + marketOffer.game.coverImageContentType + ';base64,' +
+                                marketOffer.game.coverImage}}" style="height: 300px; width: 200px;"/>
                                 </a>
-                                <a ng-if="!game.coverImage" class="thumbnail" style="height: 160px;width: 120px;">
+                                <a ng-if="!marketOffer.game.coverImage" class="thumbnail" style="height: 160px;width: 120px;">
                                     <img src="/content/images/hipster.png">
                                 </a>
                             </div>

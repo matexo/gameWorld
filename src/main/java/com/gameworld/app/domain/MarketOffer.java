@@ -68,7 +68,7 @@ public class MarketOffer implements Serializable {
     @Column(name = "shipping_cost")
     private Double shippingCost;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn
     private Game game;
 

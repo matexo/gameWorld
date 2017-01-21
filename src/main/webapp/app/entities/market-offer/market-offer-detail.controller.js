@@ -5,9 +5,9 @@
         .module('gameWorldApp')
         .controller('MarketOfferDetailController', MarketOfferDetailController);
 
-    MarketOfferDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'MarketOffer', 'Game', 'GamerProfile', 'TradeOffer', 'Comment'];
+    MarketOfferDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'MarketOffer', 'Game', 'GamerProfile', 'TradeOffer', 'Comment' , 'Conversation' , '$state'];
 
-    function MarketOfferDetailController($scope, $rootScope, $stateParams, previousState, entity, MarketOffer, Game, GamerProfile, TradeOffer, Comment) {
+    function MarketOfferDetailController($scope, $rootScope, $stateParams, previousState, entity, MarketOffer, Game, GamerProfile, TradeOffer, Comment , Conversation , $state) {
         var vm = this;
 
         vm.marketOffer = entity;
@@ -17,6 +17,14 @@
             vm.marketOffer = result;
         });
         $scope.$on('$destroy', unsubscribe);
+
+        vm.sendMessage = function (profileId) {
+            console.log(profileId);
+            Conversation.getConversationToReceiver({receiverId: profileId} , function (data) {
+                vm.conversation = data.id;
+                $state.go('conversation-detail.newmessage' ,{id:vm.conversation});
+            });
+        };
 
         function finalizeOffer(id) {
             MarketOffer.finalize({id: id} , function() {

@@ -54,12 +54,12 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
               separator=";"
               tableName="platform"/>
 
-    <loadData encoding="UTF-8"
-              file="config/liquibase/game.csv"
-              separator=";"
-              tableName="game">
-        <column name="blockade" type="boolean"/>
-    </loadData>
+    <!--<loadData encoding="UTF-8"-->
+              <!--file="config/liquibase/game.csv"-->
+              <!--separator=";"-->
+              <!--tableName="game">-->
+        <!--<column name="blockade" type="boolean"/>-->
+    <!--</loadData>-->
 
     <!--<loadData encoding="UTF-8"-->
               <!--file="config/liquibase/conversation.csv"-->
@@ -86,11 +86,11 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
               <!--tableName="market_offer">-->
     <!--</loadData>-->
 
-    <loadData encoding="UTF-8"
-              file="config/liquibase/gamer_profile_searched_games.csv"
-              separator=";"
-              tableName="gamer_profile_searched_games">
-    </loadData>
+    <!--<loadData encoding="UTF-8"-->
+              <!--file="config/liquibase/gamer_profile_searched_games.csv"-->
+              <!--separator=";"-->
+              <!--tableName="gamer_profile_searched_games">-->
+    <!--</loadData>-->
 
     <!--<loadData encoding="UTF-8"-->
               <!--file="config/liquibase/trade_offer.csv"-->

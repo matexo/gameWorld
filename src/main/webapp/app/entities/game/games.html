@@ -1,4 +1,5 @@
 <div>
+    <h2>Gry</h2>
     <jhi-alert></jhi-alert>
     <div class="container-fluid">
         <div class="row">
@@ -31,8 +32,10 @@
             <br/>
         </div>
         <div infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+            <div class="row">
             <div class="col-lg-6" ng-repeat="game in vm.games track by game.id">
-                <div class="panel panel-primary">
+                <div ng-class="game.platform.platform.indexOf('Playstation') != -1 ?
+                 'panel panel-info' : game.platform.platform.indexOf('Xbox') != -1 ? 'panel panel-success' : 'panel panel-primary'">
                     <div class="panel-heading">
                         <p class="text-center">{{game.title}} ({{game.yearOfProduction}})</p>
                     </div>
@@ -49,43 +52,56 @@
                         </div>
                         <div class="col-lg-8">
                             <p ng-class="game.platform.platform.indexOf('Playstation') != -1 ?
-                 'label label-primary' : game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">Tytuł : {{game.title}}</p></br>
+                 'label label-info' : game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-primary'">
+                                Tytuł : {{game.title}}</p></br>
                             <p ng-class="game.platform.platform.indexOf('Playstation') != -1 ?
-                 'label label-primary' : game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">Producent: {{game.producer}}</p></br>
+                 'label label-info' : game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-primary'">
+                                Producent: {{game.producer}}</p></br>
                             <p ng-class="game.platform.platform.indexOf('Playstation') != -1 ?
-                 'label label-primary' : game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">Rodzaj gry: {{game.gameType.gameType}}</p></br>
+                 'label label-info' : game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-primary'">
+                                Rodzaj gry: {{game.gameType.gameType}}</p></br>
                             <p ng-class="game.platform.platform.indexOf('Playstation') != -1 ?
-                 'label label-primary' : game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-warning'">
-                            Platforma : {{game.platform.platform}}
+                 'label label-info' : game.platform.platform.indexOf('Xbox') != -1 ? 'label label-success' : 'label label-primary'">
+                                Platforma : {{game.platform.platform}}
                             </p></br></br>
 
-
-                            <div class="btn-group flex-btn-group-container">
-                                <button type="submit"
-                                        ui-sref="game-detail({id:game.id})"
-                                        class="btn btn-info btn-sm">
-                                    <span class="glyphicon glyphicon-eye-open"></span>
-                                    <span class="hidden-xs hidden-sm">Pokaż więcej</span>
-                                </button>
-                                <button type="submit"
-                                        ui-sref="game.edit({id:game.id})"
-                                        class="btn btn-primary btn-sm"
-                                        has-authority="ROLE_ADMIN">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                    <span class="hidden-xs hidden-sm">Edytuj</span>
-                                </button>
-                                <button type="submit"
-                                        ng-click="vm.addToWishList(game.id)"
-                                        class="btn btn-success btn-sm">
-                                    <span class="glyphicon glyphicon-plus"></span>
-                                    <span>Dodaj do poszukiwanych</span>
-                                    <span class="hidden-xs hidden-sm"></span>
-                                </button>
+                            <div class="row">
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <div class="col-md-12">
+                                <div class="btn-group flex-btn-group-container">
+                                    <button type="submit"
+                                            ui-sref="game-detail({id:game.id})"
+                                            class="btn btn-info btn-sm">
+                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                        <span class="hidden-xs hidden-sm">Pokaż więcej</span>
+                                    </button>
+                                    <button type="submit"
+                                            ui-sref="game.edit({id:game.id})"
+                                            class="btn btn-primary btn-sm"
+                                            has-authority="ROLE_ADMIN">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                        <span class="hidden-xs hidden-sm">Edytuj</span>
+                                    </button>
+                                    <button type="submit"
+                                            ng-click="vm.addToWishList(game.id)"
+                                            class="btn btn-success btn-sm">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                        <span></span>
+                                        <span class="hidden-xs hidden-sm">Dodaj do poszukiwanych</span>
+                                    </button>
+                                </div>
+                                </div>
                             </div>
-                        </p>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
 </div>

@@ -1,143 +1,108 @@
 <div>
     <jhi-alert-error></jhi-alert-error>
     <div class="row">
-        <div class="panel panel-primary">
+        <div ng-class="vm.marketOffer.game.platform.platform.indexOf('Playstation') != -1 ?
+                 'panel panel-info' : vm.marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'panel panel-success' : 'panel panel-primary'">
             <div class="panel panel-heading" align="center">
                 <h2><span>Market Offer</span> {{vm.marketOffer.id}}</h2>
             </div>
             <div class="panel panel-body">
+                <div class="col-md-6">
                 <dl class="dl-horizontal jh-entity-details">
-                    <dt><span>Create Date</span></dt>
+                    <dt><span>Data stworzenia oferty</span></dt>
                     <dd>
-                        <span>{{vm.marketOffer.createDate | date:'medium'}}</span>
+                        <span>{{vm.marketOffer.createDate | date:'MM/dd/yyyy HH:mm'}}</span>
                     </dd>
-                    <dt ng-hide="vm.marketOffer.endDate == null"><span>End Date</span></dt>
+                    <dt ng-hide="vm.marketOffer.endDate == null"><span>Data zakończenia oferty</span></dt>
                     <dd ng-hide="vm.marketOffer.endDate == null">
-                        <span>{{vm.marketOffer.endDate | date:'medium'}}</span>
+                        <span>{{vm.marketOffer.endDate | date:'MM/dd/yyyy HH:mm'}}</span>
                     </dd>
                     <dt><span>Offer Type</span></dt>
                     <dd>
                         <span>{{vm.marketOffer.offerType}}</span>
                     </dd>
-                    <dt ng-hide="vm.marketOffer.price == 0"><span>Price</span></dt>
+                    <dt ng-hide="vm.marketOffer.price == 0"><span>Cena</span></dt>
                     <dd ng-hide="vm.marketOffer.price == 0">
                         <span>{{vm.marketOffer.price}}</span>
                     </dd>
-                    <dt><span>Offer Status</span></dt>
+                    <dt><span>Status oferty</span></dt>
                     <dd>
                         <span>{{vm.marketOffer.offerStatus}}</span>
                     </dd>
-                    <dt><p>Description</p></dt>
+                    <dt><p>Opis</p></dt>
                     <dd>
                         <span>{{vm.marketOffer.description}}</span>
                     </dd>
-                    <dt><span>Game State</span></dt>
+                    <dt><span>Stan gry</span></dt>
                     <dd>
                         <span>{{vm.marketOffer.gameState}}</span>
                     </dd>
-                    <dt ng-hide="vm.marketOffer.price == 0"><span>Shipping Cost</span></dt>
+                    <dt ng-hide="vm.marketOffer.price == 0"><span>Koszt wysyłki</span></dt>
                     <dd ng-hide="vm.marketOffer.price == 0">
                         <span>{{vm.marketOffer.shippingCost}}</span>
                     </dd>
-                    <dt><span>Game</span></dt>
+                    <dt><span>Gra</span></dt>
                     <dd>
                         <a ui-sref="game-detail({id:vm.marketOffer.game.id})">
                             {{vm.marketOffer.game.title + " (" + vm.marketOffer.game.platform.platform + ") (" +
                             vm.marketOffer.game.yearOfProduction + ")"}}
                         </a>
                     </dd>
-                    <dt ng-hide="vm.marketOffer.endOfferProfile == null"><span>End Offer Profile</span></dt>
+                    <dt ng-hide="vm.marketOffer.endOfferProfile == null"><span>Kupujący</span></dt>
                     <dd ng-hide="vm.marketOffer.endOfferProfile == null">
                         <a ui-sref="gamer-profile-detail({id:vm.marketOffer.endOfferProfile.id})">{{vm.marketOffer.endOfferProfile.id}}</a>
                     </dd>
-                    <dt><span>Create Profile</span></dt>
+                    <dt><span>Autor</span></dt>
                     <dd>
                         <a ui-sref="gamer-profile-detail({id:vm.marketOffer.createProfile.id})">{{vm.marketOffer.createProfile.name}}</a>
                     </dd>
                 </dl>
+                </div>
+                <div class="col-mg-6">
+                    <div align="center">
+                    <a ng-if="vm.marketOffer.game.coverImage"
+                       ng-click="vm.openFile(vm.marketOffer.game.coverImageContentType, marketOffer.game.coverImage)">
+                        <img
+                            data-ng-src=" {{'data:' + vm.marketOffer.game.coverImageContentType + ';base64,' +
+                                vm.marketOffer.game.coverImage}}" style="height: 300px; width: 200px;"/>
+                    </a>
+                    <a ng-if="!vm.marketOffer.game.coverImage" class="thumbnail" style="height: 160px;width: 120px;">
+                        <img src="/content/images/hipster.png">
+                    </a>
+                    </div>
+                </div>
+                <p></p>
                 <div class="text-center">
                     <button type="submit"
                             ui-sref="{{ vm.previousState }}"
                             class="btn btn-info">
-                        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+                        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;
+                        <span class="hidden-xs hidden-sm">Powrót</span>
                     </button>
 
-                    <!--<button type="button" ui-sref="market-offer-detail.edit({id:vm.marketOffer.id})" class="btn btn-danger">-->
-                    <!--<span class="glyphicon glyphicon-pencil"></span>-->
-                    <!--<span class="hidden-xs hidden-sm"> End offer</span>-->
-                    <!--</button>-->
                     <button type="button"
                             class="btn btn-success"
                             ng-if="(vm.marketOffer.offerType == 'SELL' || vm.marketOffer.offerType == 'BUY') && (vm.marketOffer.offerStatus == 'NEW')"
                             ng-click="vm.finalizeOffer(marketOffer.id);">
                         <span class="glyphicon glyphicon-ok"></span>
-                        <span class="hidden-xs hidden-sm">Make transaction</span>
+                        <span class="hidden-xs hidden-sm">Sfinalizuj ofertę</span>
                     </button>
                     <button type="button"
                             class="btn btn-success"
                             ng-if="(vm.marketOffer.offerType == 'EXCHANGE') && (vm.marketOffer.offerStatus == 'NEW')"
                             ui-sref="trade-offer.new({marketOfferId: vm.marketOffer.id})">
                         <span class="glyphicon glyphicon-gift"></span>
-                        <span class="hidden-xs hidden-sm">Make a trade offer</span>
+                        <span class="hidden-xs hidden-sm">Złóż ofertę wymiany</span>
+                    </button>
+                    <button type="button"
+                            class="btn btn-info"
+                            ng-click="vm.sendMessage(vm.marketOffer.createProfile.id)">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                        <span class="hidden-xs hidden-sm">Wyślij wiadomość</span>
                     </button>
                 </div>
             </div>
         </div>
-
-
-        <!--<div class="row" ng-repeat="offer in vm.marketOffer.offers">-->
-        <!--<table class="jh-table table table-striped">-->
-        <!--<thead>-->
-        <!--<tr>-->
-        <!--<th><span>Trade</span></th>-->
-        <!--<th><span>Additional Payment</span> </th>-->
-        <!--<th ><span>Timestamp</span> </th>-->
-        <!--<th ><span>Status</span> </th>-->
-        <!--<th ><span>Profile</span></th>-->
-        <!--</tr>-->
-        <!--</thead>-->
-        <!--<tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">-->
-        <!--<tr ng-repeat="tradeOffer in vm.marketOffer.offers track by tradeOffer.id">-->
-        <!--<td><a ui-sref="trade-offer-detail({id:tradeOffer.id})">{{tradeOffer.id}}</a></td>-->
-        <!--<td>{{tradeOffer.payment}}</td>-->
-        <!--<td>{{tradeOffer.timestamp | date:'medium'}}</td>-->
-        <!--<td>{{tradeOffer.status}}</td>-->
-        <!--<td>-->
-        <!--<a ui-sref="gamer-profile-detail({id:tradeOffer.createProfile.id})">{{tradeOffer.createProfile.name}}</a>-->
-        <!--</td>-->
-        <!--<td>-->
-        <!--<a ui-sref="market-offer-detail({id:tradeOffer.marketOffer.id})">{{tradeOffer.marketOffer.id}}</a>-->
-        <!--</td>-->
-
-        <!--<td ng-repeat="game in tradeOffer.offerGames">-->
-        <!--{{game.title + " (" + game.platform.platform + ") (" + game.yearOfProduction + ")"}}-->
-        <!--</td>-->
-        <!--<td class="text-right">-->
-        <!--<div class="btn-group flex-btn-group-container">-->
-        <!--<button type="submit"-->
-        <!--ui-sref="trade-offer-detail({id:tradeOffer.id})"-->
-        <!--class="btn btn-info btn-sm">-->
-        <!--<span class="glyphicon glyphicon-eye-open">Show more</span>-->
-        <!--<span class="hidden-xs hidden-sm"></span>-->
-        <!--</button>-->
-        <!--<button type="submit"-->
-        <!--ui-sref="trade-offer.edit({id:tradeOffer.id})"-->
-        <!--class="btn btn-primary btn-sm">-->
-        <!--<span class="glyphicon glyphicon-pencil">Accept</span>-->
-        <!--<span class="hidden-xs hidden-sm"></span>-->
-        <!--</button>-->
-        <!--<button type="submit"-->
-        <!--ui-sref="trade-offer.delete({id:tradeOffer.id})"-->
-        <!--class="btn btn-danger btn-sm">-->
-        <!--<span class="glyphicon glyphicon-remove-circle">Reject</span>-->
-        <!--<span class="hidden-xs hidden-sm"></span>-->
-        <!--</button>-->
-        <!--</div>-->
-        <!--</td>-->
-        <!--</tr>-->
-        <!--</tbody>-->
-        <!--</table>-->
-        <!--<div>-->
     </div>
 
 </div>
