@@ -57,9 +57,8 @@ public class MarketOfferServiceImpl implements MarketOfferService {
     }
 
     @Transactional(readOnly = true)
-    public Page<MarketOffer> findAll(Pageable pageable) {
+    public Page<MarketOffer> findAll(Pageable pageable, String username) {
         log.debug("Request to get all MarketOffers");
-        String username = SecurityUtils.getCurrentUserLogin();
         Page<MarketOffer> result = marketOfferRepository.findAllCurrentOffers(username, pageable);
         return result;
     }

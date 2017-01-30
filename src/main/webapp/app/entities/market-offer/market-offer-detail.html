@@ -4,7 +4,7 @@
         <div ng-class="vm.marketOffer.game.platform.platform.indexOf('Playstation') != -1 ?
                  'panel panel-info' : vm.marketOffer.game.platform.platform.indexOf('Xbox') != -1 ? 'panel panel-success' : 'panel panel-primary'">
             <div class="panel panel-heading" align="center">
-                <h2><span>Market Offer</span> {{vm.marketOffer.id}}</h2>
+                <h2><span>Oferta </span> {{vm.marketOffer.id}}</h2>
             </div>
             <div class="panel panel-body">
                 <div class="col-md-6">
@@ -17,9 +17,11 @@
                     <dd ng-hide="vm.marketOffer.endDate == null">
                         <span>{{vm.marketOffer.endDate | date:'MM/dd/yyyy HH:mm'}}</span>
                     </dd>
-                    <dt><span>Offer Type</span></dt>
+                    <dt><span>Typ oferty</span></dt>
                     <dd>
-                        <span>{{vm.marketOffer.offerType}}</span>
+                        <span ng-show="vm.marketOffer.offerType == 'SELL'"> Sprzedaż</span>
+                        <span ng-show="vm.marketOffer.offerType == 'BUY'" > Kupno</span>
+                        <span ng-show="vm.marketOffer.offerType == 'EXCHANGE'"> Wymiana</span>
                     </dd>
                     <dt ng-hide="vm.marketOffer.price == 0"><span>Cena</span></dt>
                     <dd ng-hide="vm.marketOffer.price == 0">

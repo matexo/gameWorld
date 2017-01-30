@@ -9,22 +9,7 @@
 
     function stateConfig($stateProvider) {
         $stateProvider
-            .state('market-offer', {
-                parent: 'entity',
-                url: '/market-offer',
-                data: {
-                    authorities: ['ROLE_USER'],
-                    pageTitle: 'MarketOffers'
-                },
-                views: {
-                    'content@': {
-                        templateUrl: 'app/entities/market-offer/market-offers.html',
-                        controller: 'MarketOfferController',
-                        controllerAs: 'vm'
-                    }
-                },
-                resolve: {}
-            })
+
             .state('market-offer-my', {
                 parent: 'entity',
                 url: '/market-offer/my',

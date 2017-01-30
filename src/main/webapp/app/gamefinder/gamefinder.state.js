@@ -10,7 +10,7 @@
     function stateConfig($stateProvider) {
         $stateProvider
             .state('gamefinder', {
-                parent: 'entity',
+                parent: 'app',
                 url: '/gamefinder/:id',
                 params: { id: null},
                 data: {
@@ -22,11 +22,7 @@
                         controller: 'GamefinderController',
                         controllerAs: 'vm'
                     }
-                },
-                resolve: {
                 }
             })
-
     }
-
 })();

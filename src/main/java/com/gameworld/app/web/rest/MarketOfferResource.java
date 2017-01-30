@@ -3,6 +3,7 @@ package com.gameworld.app.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.gameworld.app.domain.Comment;
 import com.gameworld.app.domain.MarketOffer;
+import com.gameworld.app.security.SecurityUtils;
 import com.gameworld.app.service.MarketOfferService;
 import com.gameworld.app.web.rest.util.HeaderUtil;
 import com.gameworld.app.web.rest.util.PaginationUtil;
@@ -66,15 +67,14 @@ public class MarketOfferResource {
             .body(result);
     }
 
-    @GetMapping("/market-offers")
-    @Timed
-    public ResponseEntity<List<MarketOffer>> getAllMarketOffers(Pageable pageable)
-        throws URISyntaxException {
-        log.debug("REST request to get a page of MarketOffers");
-        Page<MarketOffer> page = marketOfferService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/market-offers");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-    }
+@GetMapping("/market-offers")
+public ResponseEntity<List<MarketOffer>> getAllMarketOffers(Pageable pageable)
+    throws URISyntaxException {
+    String username = SecurityUtils.getCurrentUserLogin();
+    Page<MarketOffer> page = marketOfferService.findAll(pageable,username);
+    HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/market-offers");
+    return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+}
 
     @GetMapping("/market-offers/{id}")
     @Timed

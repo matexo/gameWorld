@@ -13,7 +13,7 @@ import java.util.List;
 public interface MarketOfferService {
 
     MarketOffer save(MarketOffer marketOffer);
-    Page<MarketOffer> findAll(Pageable pageable);
+    Page<MarketOffer> findAll(Pageable pageable , String username);
     MarketOffer findOne(Long id);
     void delete(Long id);
 

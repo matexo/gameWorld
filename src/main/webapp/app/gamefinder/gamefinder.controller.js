@@ -22,9 +22,7 @@
 
         vm.changeSameCity = function () {
             vm.matchedOffers = [];
-            if (vm.gamefinderDTO.sameCity == true)
-                vm.gamefinderDTO.sameCity = false;
-            else vm.gamefinderDTO.sameCity = true;
+            vm.gamefinderDTO.sameCity = !vm.gamefinderDTO.sameCity;
             Gamefinder.find(vm.gamefinderDTO , onSuccess , onError);
 
             function onSuccess(data) {
@@ -39,9 +37,7 @@
 
         vm.changePerfectMatching = function () {
             vm.matchedOffers = [];
-            if (vm.gamefinderDTO.perfectMatch == true)
-                vm.gamefinderDTO.perfectMatch = false;
-            else vm.gamefinderDTO.perfectMatch = true;
+            vm.gamefinderDTO.perfectMatch = !vm.gamefinderDTO.perfectMatch;
             Gamefinder.find(vm.gamefinderDTO , onSuccess , onError);
 
             function onSuccess(data) {

@@ -49,9 +49,9 @@
                     <p class="label label-primary" ng-show="vm.baseMarketOffer.gameState == 'USED'">Stan gry: Używana</p>
                     <br/>
                     <p class="label label-primary"><a
-                        ui-sref="gamer-profile-detail({id:marketOffer.createProfile.id})">Profil: {{marketOffer.createProfile.name}}</a>
+                        ui-sref="gamer-profile-detail({id:vm.baseMarketOffer.createProfile.id})">Profil: {{vm.baseMarketOffer.createProfile.name}}</a>
                     </p><br/>
-                    <p class="label label-primary">Miasto: {{marketOffer.createProfile.adress.city}}</p><br/>
+                    <p class="label label-primary">Miasto: {{vm.baseMarketOffer.createProfile.adress.city}}</p><br/>
                 </div>
             </div>
             <div class="row"><br/></div>

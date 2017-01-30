@@ -20,22 +20,22 @@ public interface MarketOfferRepository extends JpaRepository<MarketOffer,Long> {
         countQuery = "SELECT count(marketOffer) FROM MarketOffer marketOffer JOIN marketOffer.createProfile gp WHERE gp.id = :gamerProfileId  ORDER BY marketOffer.createDate DESC")
     Page<MarketOffer> findAllMarketOfferCreatedByUser(@Param("gamerProfileId") Long gamerProfileId , Pageable pageable);
 
-    @Query(value = "SELECT mo " +
-        "FROM MarketOffer mo " +
-        "JOIN mo.createProfile profile " +
-        "WHERE mo.offerStatus = 'NEW' " +
-        "AND mo.endDate IS NULL " +
-        "AND profile.name <> :username " +
-        "ORDER BY mo.createDate DESC",
-    countQuery =
-        "SELECT count(mo) " +
-        "FROM MarketOffer mo " +
-        "JOIN mo.createProfile profile " +
-        "WHERE mo.offerStatus = 'NEW' " +
-        "AND mo.endDate IS NULL " +
-        "AND profile.name <> :username " +
-        "ORDER BY mo.createDate DESC")
-    Page<MarketOffer> findAllCurrentOffers(@Param("username") String username ,  Pageable pageable);
+@Query(value = "SELECT mo " +
+    "FROM MarketOffer mo " +
+    "JOIN mo.createProfile profile " +
+    "WHERE mo.offerStatus = 'NEW' " +
+    "AND mo.endDate IS NULL " +
+    "AND profile.name <> :username " +
+    "ORDER BY mo.createDate DESC",
+countQuery =
+    "SELECT count(mo) " +
+    "FROM MarketOffer mo " +
+    "JOIN mo.createProfile profile " +
+    "WHERE mo.offerStatus = 'NEW' " +
+    "AND mo.endDate IS NULL " +
+    "AND profile.name <> :username " +
+    "ORDER BY mo.createDate DESC")
+Page<MarketOffer> findAllCurrentOffers(@Param("username") String username ,  Pageable pageable);
 
     @Query(value = "SELECT mo FROM MarketOffer mo " +
         "JOIN FETCH mo.endOfferProfile eop " +

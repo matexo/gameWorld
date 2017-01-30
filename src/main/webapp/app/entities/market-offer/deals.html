@@ -2,57 +2,46 @@
     <div class="col-lg-6">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h4 align="center">Market offer end by me</h4>
+                <h4 align="center">Oferty zakończone przez użytkownika</h4>
             </div>
             <div class="panel-body">
                 <dl class="dl-horizontal jh-entity-details"
                     ng-repeat="marketOffer in vm.marketOffersEndByUser track by marketOffer.id">
-                    <dt><span>Create Date</span></dt>
-                    <dd>
-                        <span>{{marketOffer.createDate | date:'medium'}}</span>
-                    </dd>
-                    <dt ng-hide="marketOffer.endDate == null"><span>End Date</span></dt>
+                    <dt ng-hide="marketOffer.endDate == null"><span>Data zakończenia</span></dt>
                     <dd ng-hide="marketOffer.endDate == null">
-                        <span>{{marketOffer.endDate | date:'medium'}}</span>
+                        <span>{{marketOffer.endDate | date:'MM/dd/yyyy hh:mm'}}</span>
                     </dd>
-                    <dt><span>Offer Type</span></dt>
+                    <dt><span>Typ oferty</span></dt>
                     <dd>
-                        <span>{{marketOffer.offerType}}</span>
+                        <span ng-show="marketOffer.offerType == 'SELL'"> Sprzedaż</span>
+                        <span ng-show="marketOffer.offerType == 'BUY'" > Kupno</span>
+                        <span ng-show="marketOffer.offerType == 'EXCHANGE'"> Wymiana</span>
                     </dd>
-                    <dt ng-hide="marketOffer.price == 0"><span>Price</span></dt>
+                    <dt ng-hide="marketOffer.price == 0"><span>Cena</span></dt>
                     <dd ng-hide="marketOffer.price == 0">
-                        <span>{{marketOffer.price}}</span>
+                        <span>{{marketOffer.price}} zł</span>
                     </dd>
-                    <dt><span>Offer Status</span></dt>
-                    <dd>
-                        <span>{{marketOffer.offerStatus}}</span>
-                    </dd>
-                    <dt><span>Description</span></dt>
-                    <dd>
-                        <span>{{marketOffer.description}}</span>
-                    </dd>
-                    <dt><span>Game State</span></dt>
-                    <dd>
-                        <span>{{marketOffer.gameState}}</span>
-                    </dd>
-                    <dt ng-hide="marketOffer.price == 0"><span>Shipping Cost</span></dt>
+                    <dt ng-hide="marketOffer.price == 0"><span>Koszt wysyłki</span></dt>
                     <dd ng-hide="marketOffer.price == 0">
-                        <span>{{marketOffer.shippingCost}}</span>
+                        <span>{{marketOffer.shippingCost}} zł</span>
                     </dd>
-                    <dt><span>Game</span></dt>
+                    <dt><span>Gra</span></dt>
                     <dd>
                         <a ui-sref="game-detail({id:vm.marketOffer.game.id})">
                             {{marketOffer.game.title + " (" + marketOffer.game.platform.platform + ") (" +
                             marketOffer.game.yearOfProduction + ")"}}
                         </a>
                     </dd>
-                    <dt ng-hide="marketOffer.endOfferProfile == null"><span>End Offer Profile</span></dt>
-                    <dd ng-hide="marketOffer.endOfferProfile == null">
-                        <a ui-sref="gamer-profile-detail({id:vm.marketOffer.endOfferProfile.id})">{{marketOffer.endOfferProfile.name}}</a>
-                    </dd>
-                    <dt><span>Create Profile</span></dt>
+                    <dt><span>Nabywca</span></dt>
                     <dd>
-                        <a ui-sref="gamer-profile-detail({id:vm.marketOffer.createProfile.id})">{{marketOffer.createProfile.name}}</a>
+                        <a ui-sref="gamer-profile-detail({id:vm.marketOffer.endOfferProfile.id})">{{marketOffer.endOfferProfile.name}}({{marketOffer.endOfferProfile.firstName + " " + marketOffer.endOfferProfile.surname}})</a>
+                    </dd>
+                    <dt><span>Nabywca</span></dt>
+                    <dd>
+                        <span>{{marketOffer.endOfferProfile.adress.city}}</span>
+                        <span>{{marketOffer.endOfferProfile.adress.streetName}}</span>
+                        <span>{{marketOffer.endOfferProfile.adress.houseNo}}</span>
+                        <span>{{marketOffer.endOfferProfile.adress.zipCode}}</span>
                     </dd>
                 </dl>
 
@@ -65,72 +54,68 @@
     <div class="col-lg-6">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h4 align="center">My ended market offer</h4>
+                <h4 align="center">Moje zakończone oferty</h4>
             </div>
             <div class="panel-body" ng-repeat="marketOffer in vm.endedMarketOffers track by marketOffer.id">
-                <dl class="dl-horizontal jh-entity-details">
-                    <dt><label class="label label-primary"> Market offer</label></dt>
-                    <dd>
-                        <label class="label label-primary"> <a ui-sref="market-offer-detail({id:marketOffer.id})">Market
-                            offer {{marketOffer.id}}</a></label>
-                    </dd>
-                    <dt><label class="label label-primary">Create Date</label></dt>
-                    <dd>
-                        <label class="label label-primary">{{marketOffer.createDate | date:'medium'}}</label>
-                    </dd>
-                    <dt ng-hide="marketOffer.endDate == null"><label class="label label-primary">End Date</label></dt>
+                <dl class="dl-horizontal jh-entity-details"
+                    >
+                    <dt ng-hide="marketOffer.endDate == null"><span>Data zakończenia</span></dt>
                     <dd ng-hide="marketOffer.endDate == null">
-                        <label class="label label-primary">{{marketOffer.endDate | date:'medium'}}</label>
+                        <span>{{marketOffer.endDate | date:'MM/dd/yyyy hh:mm'}}</span>
                     </dd>
-                    <dt><label class="label label-primary">Offer Type</label></dt>
+                    <dt><span>Typ oferty</span></dt>
                     <dd>
-                        <label class="label label-primary">{{marketOffer.offerType}}</label>
+                        <span ng-show="marketOffer.offerType == 'SELL'"> Sprzedaż</span>
+                        <span ng-show="marketOffer.offerType == 'BUY'" > Kupno</span>
+                        <span ng-show="marketOffer.offerType == 'EXCHANGE'"> Wymiana</span>
                     </dd>
-                    <dt ng-hide="marketOffer.price == 0 || marketOffer.offerStatus == 'EXCHANGE'"><label
-                        class="label label-primary">Price</label></dt>
-                    <dd ng-hide="marketOffer.price == 0 || marketOffer.offerStatus == 'EXCHANGE'">
-                        <label class="label label-primary">{{marketOffer.price}}</label>
-                        <label class="label label-primary"
-                               ng-hide="marketOffer.shippingCost == 0 || marketOffer.shippingCost == null"> +
-                            {{marketOffer.shippingCost}} shipping cost</label>
+                    <dt ng-hide="marketOffer.price == 0"><span>Cena</span></dt>
+                    <dd ng-hide="marketOffer.price == 0">
+                        <span>{{marketOffer.price}} zł</span>
                     </dd>
-                    <dt><label class="label label-primary">Offer Status</label></dt>
+                    <dt ng-hide="marketOffer.price == 0"><span>Koszt wysyłki</span></dt>
+                    <dd ng-hide="marketOffer.price == 0">
+                        <span>{{marketOffer.shippingCost}} zł</span>
+                    </dd>
+                    <dt><span>Gra</span></dt>
                     <dd>
-                        <label class="label label-primary">{{marketOffer.offerStatus}}</label>
+                        <a ui-sref="game-detail({id:vm.marketOffer.game.id})">
+                            {{marketOffer.game.title + " (" + marketOffer.game.platform.platform + ") (" +
+                            marketOffer.game.yearOfProduction + ")"}}
+                        </a>
                     </dd>
-                    <dt><label class="label label-primary">Game State</label></dt>
+                    <dt><span>Nabywca</span></dt>
                     <dd>
-                        <label class="label label-primary">{{marketOffer.gameState}}</label>
+                        <a ui-sref="gamer-profile-detail({id:vm.marketOffer.endOfferProfile.id})">{{marketOffer.endOfferProfile.name}}</a>
                     </dd>
-                    <dt><label class="label label-primary">Game</label></dt>
+                    <dt><span>Adres nabywcy</span></dt>
                     <dd>
-                        <label class="label label-primary">
-                            <a ui-sref="game-detail({id:marketOffer.game.id})">
-                                {{marketOffer.game.title + " (" + marketOffer.game.platform.platform + ") (" +
-                                marketOffer.game.yearOfProduction + ")"}}
-                            </a>
-                        </label>
-                    </dd>
-                    <dt ng-hide="marketOffer.endOfferProfile == null"><label class="label label-primary">End Offer
-                        Profile</label></dt>
-                    <dd ng-hide="marketOffer.endOfferProfile == null">
-                        <label class="label label-primary">
-                            <a ui-sref="gamer-profile-detail({id:marketOffer.endOfferProfile.id})">{{marketOffer.endOfferProfile.name}}</a>
-                        </label>
+                        <span>{{marketOffer.endOfferProfile.adress.city}}</span>
+                        <span>{{marketOffer.endOfferProfile.adress.streetName}}</span>
+                        <span>{{marketOffer.endOfferProfile.adress.houseNo}}</span>
+                        <span>{{marketOffer.endOfferProfile.adress.zipCode}}</span>
                     </dd>
                 </dl>
-                Wypisywanie komentarzy
-                Button dodawania komentarzy z obu stron
-                Button do gamerprofile
-                Button do konwersacji
-                Odzielenie ofert
-                Uwspolnienie wygladu na obu stronach
-                Poprawne wyszukiwanie
                 <div class="panel panel-heading">
                     <button ng-hide="
                     marketOffer.comments[0].authorProfile.name == vm.account.login || marketOffer.comments[1].authorProfile.name == vm.account.login"
                             ui-sref="comment.new({id:marketOffer.id})"
-                    class="btn btn-success">Add comment </button>
+                    class="btn btn-success btn-sm">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span>Dodaj komentarz</span>
+                    </button>
+                    <button type="button"
+                            class="btn btn-info btn-sm"
+                            ng-click="vm.sendMessage(marketOffer.createProfile.id)">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                        <span class="">Wyślij wiadomość</span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="market-offer-detail({id:marketOffer.id})"
+                            class="btn btn-primary btn-sm">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                        <span class="">Pokaż więcej</span>
+                    </button>
                 </div>
             </div>
         </div>
